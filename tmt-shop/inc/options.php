@@ -101,6 +101,10 @@ function tmt_defaults() {
 		'product.discount_badge' => true,
 		'product.variant_style' => 'buttons',
 		'product.spec_tags'    => 3,
+		'product.promos'       => array(),
+		'checkout.note'        => 'Tiệm gọi xác nhận đơn trong giờ làm việc trước khi giao.',
+		'payment.bank_bin'     => '',
+		'payment.qr_prefix'    => 'DH',
 
 		'contact.enabled'      => true,
 		'contact.hours'        => '8:00 đến 20:00, cả Chủ nhật',
@@ -421,4 +425,43 @@ function tmt_side_banners() {
 		}
 	}
 	return $out;
+}
+
+/** BIN (mã ngân hàng NAPAS) => [tên hiển thị, các tên thường gọi để nhận ra]. */
+function tmt_vietqr_banks() {
+	return array(
+		'970436' => array( 'Vietcombank', array( 'vietcombank', 'vcb', 'ngoai thuong' ) ),
+		'970415' => array( 'VietinBank', array( 'vietinbank', 'cong thuong', 'ctg' ) ),
+		'970418' => array( 'BIDV', array( 'bidv', 'dau tu va phat trien' ) ),
+		'970405' => array( 'Agribank', array( 'agribank', 'nong nghiep' ) ),
+		'970407' => array( 'Techcombank', array( 'techcombank', 'tcb', 'ky thuong' ) ),
+		'970422' => array( 'MB Bank', array( 'mbbank', 'mb bank', 'quan doi', 'mb' ) ),
+		'970416' => array( 'ACB', array( 'acb', 'a chau' ) ),
+		'970432' => array( 'VPBank', array( 'vpbank', 'viet nam thinh vuong' ) ),
+		'970423' => array( 'TPBank', array( 'tpbank', 'tien phong' ) ),
+		'970403' => array( 'Sacombank', array( 'sacombank', 'sai gon thuong tin' ) ),
+		'970441' => array( 'VIB', array( 'vib', 'quoc te' ) ),
+		'970443' => array( 'SHB', array( 'shb', 'sai gon ha noi' ) ),
+		'970437' => array( 'HDBank', array( 'hdbank', 'phat trien tp' ) ),
+		'970448' => array( 'OCB', array( 'ocb', 'phuong dong' ) ),
+		'970426' => array( 'MSB', array( 'msb', 'maritime', 'hang hai' ) ),
+		'970440' => array( 'SeABank', array( 'seabank', 'dong nam a' ) ),
+		'970431' => array( 'Eximbank', array( 'eximbank', 'xuat nhap khau' ) ),
+		'970449' => array( 'LPBank', array( 'lpbank', 'lienvietpostbank', 'buu dien lien viet' ) ),
+		'970454' => array( 'BVBank', array( 'bvbank', 'viet capital', 'ban viet' ) ),
+		'970428' => array( 'Nam A Bank', array( 'nam a', 'namabank' ) ),
+		'970412' => array( 'PVcomBank', array( 'pvcombank', 'dai chung' ) ),
+		'546034' => array( 'CAKE by VPBank', array( 'cake' ) ),
+		'963388' => array( 'Timo', array( 'timo' ) ),
+	);
+}
+
+/** Dạng banner khuyến mãi trang sản phẩm. */
+function tmt_promo_types() {
+	return array( 'box' => 'Hộp ưu đãi', 'strip' => 'Dải (có thể đếm ngược)', 'badges' => 'Huy hiệu', 'image' => 'Ảnh', 'coupon' => 'Mã giảm giá' );
+}
+
+/** Vị trí banner trên trang sản phẩm. */
+function tmt_promo_positions() {
+	return array( 'top' => 'Đầu trang', 'gallery' => 'Dưới ảnh', 'above_price' => 'Trên giá', 'below_price' => 'Dưới giá', 'below_buy' => 'Dưới nút mua', 'below_desc' => 'Dưới mô tả' );
 }

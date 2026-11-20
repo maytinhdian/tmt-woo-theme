@@ -28,8 +28,13 @@ Theme WordPress cho web bán hàng máy tính, linh kiện, camera: giao diện 
 | Sản phẩm chưa có giá | Để trống giá: web hiện "Liên hệ báo giá" và nút "Hỏi giá" qua Zalo. |
 | Trang chủ | Tùy biến → TMT Shop → Trang chủ: bật/tắt, đổi thứ tự section, ảnh slider, banner, khuyến mãi đếm ngược. |
 | Bộ lọc danh sách | Tùy biến → Trang danh sách: thanh ngang, cột trái hoặc cột phải. |
+| Trang giỏ hàng, thanh toán | Kích hoạt theme là tự chuyển 2 trang này sang dạng của theme. Nếu WooCommerce tạo lại trang kiểu khối, bảng tin hiện nút "Đổi sang giao diện theme". |
+| Phí giao, nhận tại tiệm, miễn phí giao | WooCommerce → Cài đặt → Giao hàng: thêm vùng "Việt Nam" với "Phí cố định" (Giao tận nơi), "Nhận tại cửa hàng" và "Miễn phí giao hàng" (đặt số tiền tối thiểu: web tự hiện thanh "Mua thêm x để được giao miễn phí"). |
+| Mã QR chuyển khoản | WooCommerce → Cài đặt → Thanh toán → Chuyển khoản ngân hàng: bật và nhập tài khoản (tài khoản đầu tiên được dùng). Ngân hàng nhận ra theo tên; không nhận ra thì chọn ở Tùy biến → Giỏ hàng & thanh toán. Mã QR có sẵn số tiền + nội dung "DH số đơn", hiện ở trang cảm ơn, trang đơn hàng và trang Tra đơn hàng. |
+| Tra đơn hàng | Trang "Tra đơn hàng" tự tạo khi kích hoạt theme (mã ngắn `[tmt_tra_don]`). Khách nhập số đơn + số điện thoại, không cần tài khoản. Thêm trang này vào menu chân trang "Hỗ trợ". |
+| Banner khuyến mãi trang sản phẩm | Tùy biến → Banner khuyến mãi (trang sản phẩm): 5 dạng (khung quà tặng, dải đếm ngược, nhãn, ảnh, mã giảm giá), 6 vị trí, áp dụng cho tất cả / danh mục / sản phẩm, có ngày bắt đầu, kết thúc. |
 
-## Có gì trong bản này (đợt 1)
+## Có gì trong bản này
 
 - Đầu trang: thanh trên cùng 3 vùng, ô tìm 3 kiểu, menu chính với khung xổ theo danh mục + hãng, mega menu, 15 hiệu ứng rê chuột và 9 kiểu đánh dấu trang đang mở.
 - Trang chủ theo section: slider (2 kiểu), dải cam kết, danh mục nổi bật, khuyến mãi đếm ngược, sản phẩm mới, bài viết.
@@ -38,9 +43,13 @@ Theme WordPress cho web bán hàng máy tính, linh kiện, camera: giao diện 
 - Trang chi tiết: bộ ảnh vuốt + phóng to + toàn màn hình, chọn loại bằng nút, Mua ngay, ưu đãi, bảng thông số, sản phẩm cùng loại, thanh mua dính đáy trên điện thoại.
 - Chân trang, nút liên hệ nổi (Hotline, Zalo, Messenger), banner dọc hai bên, hiệu ứng thẻ và con trỏ chuột.
 - Trang bài viết, trang tĩnh, tìm kiếm, 404.
+- Giỏ hàng + thanh toán trên một trang: sửa số lượng, mã giảm giá, mua kèm, chọn giao tận nơi / nhận tại tiệm, thanh tổng xanh đậm, thanh đặt hàng dính đáy trên điện thoại. Chỉ hỏi họ tên, số điện thoại, email (không bắt buộc), địa chỉ.
+- Mã QR chuyển khoản (VietQR, tạo ngay trên máy chủ, không gọi dịch vụ ngoài), nút chép số tài khoản / số tiền / nội dung.
+- Tra đơn hàng bằng số đơn + số điện thoại.
+- Banner khuyến mãi trang chi tiết sản phẩm.
 
-Các đợt sau: giỏ hàng + thanh toán có mã QR chuyển khoản, tra đơn, banner khuyến mãi trang sản phẩm; plugin **TMT Shop Tools** với trang Lên cấu hình máy tính; Mẹo vặt, Giải pháp, Phần mềm, form yêu cầu báo giá, dữ liệu mẫu.
+Các đợt sau: plugin **TMT Shop Tools** với trang Lên cấu hình máy tính; Mẹo vặt, Giải pháp, Phần mềm, form yêu cầu báo giá, dữ liệu mẫu.
 
 ## Giấy phép
 
-Code theme: GPL v2 trở lên. Thư viện kèm theo: Bootstrap 5.3.3 (MIT), Swiper 11.2.10 (MIT), Font Awesome Free 7.3.1 (icon CC BY 4.0, font SIL OFL 1.1, code MIT). Giấy phép từng thư viện nằm trong `tmt-shop/assets/vendor/`.
+Code theme: GPL v2 trở lên. Thư viện kèm theo: Bootstrap 5.3.3 (MIT), Swiper 11.2.10 (MIT), Font Awesome Free 7.3.1 (icon CC BY 4.0, font SIL OFL 1.1, code MIT), QR Code Generator for PHP của Kazuhiko Arase (MIT, `tmt-shop/inc/vendor/`). Giấy phép từng thư viện nằm trong `tmt-shop/assets/vendor/`.

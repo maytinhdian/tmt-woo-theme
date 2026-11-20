@@ -191,6 +191,48 @@ function tmt_customizer_sections() {
 				array( 'product.related_count', 'number', 'Số sản phẩm cùng loại', array( 'min' => 0, 'max' => 12 ) ),
 			),
 		),
+		'tmt_promos'  => array(
+			'title'  => 'Banner khuyến mãi (trang sản phẩm)',
+			'desc'   => 'Mỗi banner chọn dạng, vị trí, màu, sản phẩm áp dụng và lịch chạy. Hết hạn thì tự ẩn.',
+			'fields' => array(
+				array(
+					'product.promos',
+					'repeater',
+					'Các banner',
+					array(
+						'max'    => 20,
+						'add'    => 'Thêm banner',
+						'fields' => array(
+							'on'        => array( 'checkbox', 'Đang bật' ),
+							'type'      => array( 'select', 'Dạng', tmt_promo_types() ),
+							'position'  => array( 'select', 'Vị trí', tmt_promo_positions() ),
+							'style'     => array( 'select', 'Màu', array( 'red' => 'Đỏ sale', 'yellow' => 'Vàng', 'blue' => 'Xanh', 'dark' => 'Tối' ) ),
+							'title'     => array( 'text', 'Tiêu đề' ),
+							'text'      => array( 'text', 'Dòng phụ' ),
+							'lines'     => array( 'textarea', 'Các ý (mỗi dòng một ý; hộp ưu đãi, huy hiệu)' ),
+							'code'      => array( 'text', 'Mã giảm giá (dạng Mã giảm giá)' ),
+							'image'     => array( 'image', 'Ảnh (dạng Ảnh)' ),
+							'link'      => array( 'text', 'Link khi bấm' ),
+							'link_text' => array( 'text', 'Chữ nút / link' ),
+							'scope'     => array( 'select', 'Áp dụng cho', array( 'all' => 'Mọi sản phẩm', 'categories' => 'Danh mục (slug)', 'products' => 'Sản phẩm (ID hoặc mã SKU)' ) ),
+							'targets'   => array( 'text', 'Danh mục / sản phẩm, cách nhau dấu phẩy' ),
+							'from'      => array( 'text', 'Bắt đầu (YYYY-MM-DD HH:MM, trống = ngay)' ),
+							'to'        => array( 'text', 'Kết thúc (YYYY-MM-DD HH:MM, trống = không hạn)' ),
+							'countdown' => array( 'checkbox', 'Đếm ngược tới lúc kết thúc' ),
+						),
+					),
+				),
+			),
+		),
+		'tmt_checkout' => array(
+			'title'  => 'Giỏ hàng & thanh toán',
+			'desc'   => 'Tài khoản nhận tiền nhập ở WooCommerce → Cài đặt → Thanh toán → Chuyển khoản ngân hàng. Phí giao, nhận tại tiệm, miễn phí giao từ x đồng: WooCommerce → Cài đặt → Giao hàng.',
+			'fields' => array(
+				array( 'checkout.note', 'textarea', 'Ghi chú dưới nút Đặt hàng' ),
+				array( 'payment.bank_bin', 'select', 'Ngân hàng nhận (cho mã QR)', array( 'choices' => array( '' => 'Tự nhận theo tên ngân hàng đã nhập' ) + array_map( function ( $b ) { return $b[0]; }, tmt_vietqr_banks() ) ) ),
+				array( 'payment.qr_prefix', 'text', 'Chữ đầu nội dung chuyển khoản (vd. DH → "DH 1024")' ),
+			),
+		),
 		'tmt_footer'  => array(
 			'title'  => 'Chân trang',
 			'fields' => array(
@@ -388,6 +430,9 @@ function tmt_sanitizer( $type, array $opt ) {
 								break;
 							case 'image':
 								$clean[ $name ] = esc_url_raw( (string) $val );
+								break;
+							case 'textarea':
+								$clean[ $name ] = sanitize_textarea_field( (string) $val );
 								break;
 							case 'icon':
 								$clean[ $name ] = (string) tmt_safe_icon( $val );

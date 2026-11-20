@@ -1,12 +1,18 @@
 <?php
 /**
- * Danh sách bài viết (trang Bài viết, chuyên mục, thẻ, tác giả, tìm kiếm bài viết) dạng lưới thẻ.
+ * Danh sách chung. Bài viết (Mẹo vặt: trang Bài viết, chuyên mục, thẻ, tìm bài) dùng template-parts/blog/list.php.
  *
  * @package TMT_Shop
  */
 
 defined( 'ABSPATH' ) || exit;
 get_header();
+
+if ( tmt_is_blog_list() ) {
+	get_template_part( 'template-parts/blog/list' );
+	get_footer();
+	return;
+}
 
 if ( is_home() && get_option( 'page_for_posts' ) ) {
 	$tmt_title = get_the_title( get_option( 'page_for_posts' ) );

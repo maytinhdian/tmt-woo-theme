@@ -195,7 +195,8 @@ add_action(
 add_filter(
 	'woocommerce_get_catalog_ordering_args',
 	function ( $args ) {
-		if ( ! isset( $_GET['sap-xep'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		// Không có ?sap-xep= thì là "Mới nhất" (mục mặc định của ô sắp xếp), dù cửa hàng đặt thứ tự mặc định khác.
+		if ( ! tmt_is_listing() || isset( $_GET['orderby'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 			return $args;
 		}
 		switch ( tmt_filter_state()['sap_xep'] ) {
@@ -215,7 +216,7 @@ add_filter(
 	'woocommerce_default_catalog_orderby',
 	function ( $default ) {
 		$map = array( 'gia-tang' => 'price', 'gia-giam' => 'price-desc', 'ten' => 'title', 'moi' => 'date' );
-		return isset( $_GET['sap-xep'] ) ? $map[ tmt_filter_state()['sap_xep'] ] : $default; // phpcs:ignore WordPress.Security.NonceVerification
+		return ! tmt_is_listing() || isset( $_GET['orderby'] ) ? $default : $map[ tmt_filter_state()['sap_xep'] ]; // phpcs:ignore WordPress.Security.NonceVerification
 	}
 );
 
@@ -258,7 +259,14 @@ function tmt_filter_url( array $s ) {
 		$params['post_type'] = 'product';
 	}
 	$base = is_search() ? home_url( '/' ) : tmt_listing_base_url();
-	return $params ? $base . '?' . http_build_query( $params ) : $base;
+	// Đường dẫn thường (không bật đường dẫn đẹp) đã có ?post_type=...: gộp tham số, không nối thêm dấu ? thứ hai.
+	$parts = explode( '?', $base, 2 );
+	$query = array();
+	if ( isset( $parts[1] ) ) {
+		wp_parse_str( $parts[1], $query );
+	}
+	$query = array_merge( $query, $params );
+	return $query ? $parts[0] . '?' . http_build_query( $query ) : $parts[0];
 }
 
 /** Đường dẫn trang 1 của trang danh sách đang xem. */

@@ -168,7 +168,8 @@ function tmt_opt_list( $key ) {
 		return $raw;
 	}
 	$list = json_decode( (string) $raw, true );
-	return is_array( $list ) ? array_values( array_filter( $list, 'is_array' ) ) : array();
+	// Repeater lưu mảng các dòng (mảng con), sortable lưu mảng chuỗi (khóa section): giữ cả hai, bỏ giá trị lạ.
+	return is_array( $list ) ? array_values( array_filter( $list, function ( $v ) { return is_array( $v ) || is_string( $v ); } ) ) : array();
 }
 
 /** Ô nhiều dòng thành danh sách dòng không rỗng. */

@@ -156,3 +156,24 @@
 		tabs.forEach((a) => { const t = document.querySelector(a.hash); t && io.observe(t); });
 	}
 })(jQuery);
+
+/* Banner khuyến mãi: đếm ngược tới giờ kết thúc (hết giờ thì ẩn), chép mã giảm giá. */
+(() => {
+	'use strict';
+	const cds = [...document.querySelectorAll('[data-promo-end]')];
+	const pad = (n) => String(n).padStart(2, '0');
+	const tick = () => cds.forEach((el) => {
+		const left = Math.floor((new Date(el.dataset.promoEnd) - Date.now()) / 1000);
+		if (left <= 0) { el.hidden = true; return; }
+		const d = Math.floor(left / 86400), h = Math.floor((left % 86400) / 3600), m = Math.floor((left % 3600) / 60), s = left % 60;
+		const box = el.querySelector('[data-promo-cd]');
+		if (!box) return;
+		if (box.dataset.label === undefined) { const l = box.querySelector('span'); box.dataset.label = l ? l.outerHTML : ''; }
+		box.innerHTML = (d ? '' : box.dataset.label) + (d ? '<em>' + d + '</em> ngày ' : '') + '<em>' + pad(h) + '</em>:<em>' + pad(m) + '</em>:<em>' + pad(s) + '</em>';
+	});
+	if (cds.length) { tick(); setInterval(tick, 1000); }
+	document.querySelectorAll('[data-promo-copy]').forEach((b) => b.addEventListener('click', async () => {
+		try { await navigator.clipboard.writeText(b.dataset.promoCopy); b.textContent = 'Đã chép'; } catch (e) { b.textContent = b.dataset.promoCopy; }
+		setTimeout(() => { b.textContent = 'Chép mã'; }, 2000);
+	}));
+})();

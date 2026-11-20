@@ -25,9 +25,11 @@
 				return `<label for="${id}">${esc(label)}</label><div class="tmt-rep-icon"><i class="${esc(val)}" aria-hidden="true"></i><select id="${id}" data-k="${name}"><option value="">(không icon)</option>${custom}${opts}</select></div>`;
 			}
 			if (type === 'image') return `<span class="tmt-rep-lbl">${esc(label)}</span><div class="tmt-rep-img">${val ? `<img src="${esc(val)}" alt="">` : ''}<input type="hidden" data-k="${name}" value="${esc(val)}"><button type="button" class="button tmt-rep-pick">${val ? 'Đổi ảnh' : 'Chọn ảnh'}</button>${val ? '<button type="button" class="button-link tmt-rep-clear">Bỏ</button>' : ''}</div>`;
+			if (type === 'textarea') return `<label for="${id}">${esc(label)}</label><textarea id="${id}" data-k="${name}" rows="3">${esc(val)}</textarea>`;
 			return `<label for="${id}">${esc(label)}</label><input type="text" id="${id}" data-k="${name}" value="${esc(val)}">`;
 		};
-		const title = (row, i) => row.text || row.title || row.alt || row.link || `Mục ${i + 1}`;
+		// Banner khuyến mãi (có vị trí) đặt tên theo tiêu đề; mục khác theo chữ hiện ra.
+		const title = (row, i) => (row.position && row.title) || row.text || row.title || row.alt || row.code || String(row.lines || '').split('\n')[0] || row.link || `Mục ${i + 1}`;
 		const render = () => {
 			box.innerHTML = rows.map((row, i) => `
 				<div class="tmt-rep-row" data-i="${i}">
@@ -63,7 +65,7 @@
 		add.addEventListener('click', () => {
 			if (rows.length >= max) return;
 			const row = {};
-			Object.entries(fields).forEach(([n, f]) => { row[n] = f[0] === 'checkbox' ? false : (f[0] === 'select' ? Object.keys(f[2])[0] : ''); });
+			Object.entries(fields).forEach(([n, f]) => { row[n] = f[0] === 'checkbox' ? n === 'on' : (f[0] === 'select' ? Object.keys(f[2])[0] : ''); });
 			rows.push(row); render(); save();
 			box.lastElementChild.classList.add('open');
 		});

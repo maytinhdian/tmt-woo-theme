@@ -8,6 +8,8 @@ WooCommerce theme "TMT Shop" (`tmt-shop/`), ported from the web shop (Storefront
 - Every product grid calls `tmt_product_card()` (`template-parts/product/card.php`); never write another card.
 - Home sections = `template-parts/home/<key>.php`, keys from `tmt_home_sections()`.
 - CSS `assets/css/theme.css` is copied from the app's storefront styles (same class names `sf-*`) plus a WP section at the end. JS: `assets/js/theme.js` (all pages), `assets/js/product.js` (product page, global Swiper).
+- Cart + checkout = one page (cart redirects to checkout when not empty): `inc/checkout.php` (fields, shipping helpers, block pages → shortcodes), templates `woocommerce/checkout/form-checkout.php` + `review-order.php` + `cart/cart-empty.php`, styles `assets/css/checkout.css`, JS `assets/js/checkout.js`. Quantity/coupon controls submit the hidden forms `#tmt-qty-form` / `#tmt-coupon-form` via the `form=` attribute.
+- Bank-transfer QR: `inc/payment-qr.php` only (VietQR payload + SVG via `inc/vendor/qrcode.php`, account = first WooCommerce BACS account); call `tmt_order_qr_box($order)`, never build VietQR content elsewhere. Order lookup: `inc/order-lookup.php` (`[tmt_tra_don]`). Product-page promo banners: Customizer `product.promos`, `inc/promos.php`, render with `tmt_promos($position)`.
 - Vendored libraries live in `assets/vendor/` (no CDN except Google Fonts / Material Icons).
 - The PC builder ("Lên cấu hình") will be a separate plugin `tmt-shop-tools`; the theme links to it through the filter `tmt_pc_builder_url`.
 

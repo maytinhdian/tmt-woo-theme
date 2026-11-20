@@ -12,7 +12,7 @@
 .tmt-rep-row.open .tmt-rep-body { display: block; }
 .tmt-rep-f { margin-top: 8px; }
 .tmt-rep-f label, .tmt-rep-lbl { display: block; font-size: 12px; color: #50575e; margin-bottom: 2px; }
-.tmt-rep-f input[type=text], .tmt-rep-f select { width: 100%; }
+.tmt-rep-f input[type=text], .tmt-rep-f select, .tmt-rep-f textarea { width: 100%; }
 .tmt-rep-check { display: flex !important; align-items: center; gap: 6px; }
 .tmt-rep-icon { display: flex; align-items: center; gap: 8px; }
 .tmt-rep-icon i { width: 28px; height: 28px; border-radius: 6px; background: #f0f6fc; color: #2271b1; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }

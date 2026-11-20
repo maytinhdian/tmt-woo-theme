@@ -1078,3 +1078,54 @@ ul.products.sf-grid > li { margin: 0 !important; padding: 0 !important; width: a
 .sf-pager .nav-links { display: flex; gap: .35rem; justify-content: center; flex-wrap: wrap; }
 .sf-pager .nav-links .page-numbers { min-width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid #e3e8f0; border-radius: .6rem; background: #fff; color: var(--sf-navy); font-weight: 500; padding: 0 .5rem; }
 .sf-pager .nav-links .page-numbers.current { background: var(--sf-navy); border-color: var(--sf-navy); color: #fff; }
+
+/* ===== Banner khuyến mãi trang sản phẩm (inc/promos.php) ===== */
+.sf-promos { display: flex; flex-direction: column; gap: .75rem; }
+.sf-promos.at-top { margin: .25rem 0 .75rem; }
+.sf-promos.at-gallery { margin-top: .9rem; }
+.sf-promos.at-above_price { margin-bottom: .65rem; }
+.sf-promos.at-below_price { margin-top: .75rem; }
+.sf-promos.at-below_buy { margin-top: .9rem; }
+.sf-promos.at-below_desc { margin-top: 1rem; }
+.sf-promo { --rad: .75rem; border-radius: var(--rad); overflow: hidden; color: var(--ptext); text-decoration: none; }
+.sf-promo.r-square { --rad: .25rem; } .sf-promo.r-round { --rad: 1.4rem; }
+a.sf-promo:hover { color: var(--ptext); filter: brightness(1.03); }
+/* Hộp ưu đãi */
+.sf-promo.t-box { border: 1px solid var(--pline); background: var(--pbg); }
+.sf-promo-h { display: flex; align-items: center; gap: .5rem; background: linear-gradient(100deg, var(--pa), var(--pb)); color: var(--pink); font-weight: 700; font-size: .9rem; padding: .5rem .9rem; }
+.sf-promo-h .sf-promo-cd { margin-left: auto; }
+.sf-promo.t-box ol { list-style: none; margin: 0; padding: .5rem .8rem .55rem; counter-reset: k; }
+.sf-promo.t-box li { counter-increment: k; display: flex; gap: .55rem; font-size: .85rem; padding: .3rem 0; line-height: 1.45; }
+.sf-promo.t-box li::before { content: counter(k); flex: none; width: 19px; height: 19px; border-radius: 50%; background: var(--pa); color: var(--pink); font-size: .68rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+.sf-promo.t-box li b { color: var(--sf-navy, #1A2B4C); }
+.sf-promo-more { display: inline-block; font-size: .8rem; padding: 0 .9rem .65rem; }
+/* Dải */
+.sf-promo.t-strip { display: flex; align-items: center; gap: .75rem; background: linear-gradient(100deg, var(--pa), var(--pb)); color: var(--pink); padding: .55rem .9rem; }
+a.sf-promo.t-strip:hover { color: var(--pink); }
+.sf-promo.t-strip .ico { font-size: 1.3rem; }
+.sf-promo-txt { display: flex; flex-direction: column; min-width: 0; line-height: 1.3; flex: 1; }
+.sf-promo.t-strip b { font-size: .98rem; font-weight: 900; letter-spacing: .2px; text-transform: uppercase; }
+.sf-promo-txt small { font-size: .75rem; opacity: .92; }
+.sf-promo-go { margin-left: auto; font-weight: 700; font-size: .8rem; white-space: nowrap; }
+.sf-promo-cd { margin-left: auto; display: inline-flex; align-items: center; gap: .2rem; font-size: .72rem; white-space: nowrap; }
+.sf-promo-cd em { font-style: normal; background: rgba(0,0,0,.28); color: #fff; font-weight: 700; font-size: .9rem; min-width: 28px; text-align: center; border-radius: .35rem; padding: .15rem .2rem; }
+.sf-promo-cd > span { margin-right: .2rem; }
+/* Huy hiệu */
+.sf-promo.t-badges { display: flex; flex-wrap: wrap; gap: .4rem; border-radius: 0; overflow: visible; }
+.sf-promo.t-badges > span { display: inline-flex; align-items: center; gap: .4rem; border: 1px solid var(--pline); background: var(--pbg); font-size: .78rem; font-weight: 700; border-radius: var(--rad); padding: .2rem .7rem .2rem .25rem; }
+.sf-promo.t-badges.r-normal > span { border-radius: 1.2rem; }
+.sf-promo.t-badges i { width: 22px; height: 22px; border-radius: 50%; background: var(--pa); color: var(--pink); display: inline-flex; align-items: center; justify-content: center; font-size: .65rem; }
+.sf-promo.t-badges b { color: var(--sf-navy, #1A2B4C); }
+/* Ảnh */
+.sf-promo.t-image { display: block; line-height: 0; }
+.sf-promo.t-image img { width: 100%; height: auto; display: block; }
+/* Mã giảm giá */
+.sf-promo.t-coupon { display: flex; align-items: center; gap: .7rem; border: 2px dashed var(--pline); background: var(--pbg); padding: .6rem .75rem; }
+.sf-promo.t-coupon .ico { font-size: 1.35rem; color: var(--pa); filter: brightness(.85); }
+.sf-promo.t-coupon .code { font-family: ui-monospace, Consolas, monospace; font-weight: 700; color: var(--sf-navy, #1A2B4C); font-size: 1rem; letter-spacing: 1px; }
+.sf-promo-copy { margin-left: auto; border: 0; background: var(--pa); color: var(--pink); border-radius: .5rem; font-size: .75rem; font-weight: 700; padding: .4rem .7rem; white-space: nowrap; }
+@media (max-width: 767px) {
+    .sf-promo.t-strip { flex-wrap: wrap; }
+    .sf-promo.t-strip .sf-promo-cd { margin-left: 0; }
+    .sf-promos.at-gallery { margin: .75rem 0 0; }
+}

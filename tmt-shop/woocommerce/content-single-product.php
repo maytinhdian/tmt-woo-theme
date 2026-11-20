@@ -37,6 +37,7 @@ $tmt_tabs     = array_filter(
 );
 ?>
 <div id="product-<?php the_ID(); ?>" <?php wc_product_class( 'sf-product', $product ); ?>>
+	<?php tmt_promos( 'top' ); ?>
 	<section class="sf-pd">
 		<div class="sf-pd-col">
 			<div class="sf-gal" data-gallery data-delay="4000">
@@ -74,6 +75,7 @@ $tmt_tabs     = array_filter(
 					</div>
 				<?php endif; ?>
 			</div>
+			<?php tmt_promos( 'gallery' ); ?>
 		</div>
 		<div class="sf-pd-col">
 			<div class="sf-sum summary entry-summary">
@@ -87,6 +89,7 @@ $tmt_tabs     = array_filter(
 						<?php foreach ( array_slice( $tmt_specs, 0, 5 ) as $s ) : ?><span><b><?php echo esc_html( $s['label'] ); ?></b> <?php echo esc_html( $s['value'] ); ?></span><?php endforeach; ?>
 					</div>
 				<?php endif; ?>
+				<?php tmt_promos( 'above_price' ); ?>
 				<div class="sf-pricebox">
 					<div class="sf-pricebox-row price"><?php echo wp_kses_post( $product->get_price_html() ); ?><?php if ( $tmt_off ) : ?><span class="sf-off-pill">-<?php echo (int) $tmt_off; ?>%</span><?php endif; ?></div>
 					<?php if ( $product->is_in_stock() ) : ?>
@@ -95,12 +98,14 @@ $tmt_tabs     = array_filter(
 						<span class="sf-stock-line"><?php echo tmt_icon( 'schedule' ); // phpcs:ignore ?><b>Tạm hết</b>, gọi tiệm để hỏi ngày có hàng</span>
 					<?php endif; ?>
 				</div>
+				<?php tmt_promos( 'below_price' ); ?>
 				<div class="sf-buy-wrap" data-variant-style="<?php echo esc_attr( tmt_opt( 'product.variant_style' ) ); ?>">
 					<?php do_action( 'woocommerce_single_product_summary' ); ?>
 				</div>
 				<?php if ( $tmt_zalo ) : ?>
 					<a href="<?php echo esc_url( $tmt_zalo ); ?>" target="_blank" rel="noopener" class="sf-zalo"><?php echo tmt_icon( 'chat' ); // phpcs:ignore ?>Hỏi tiệm qua Zalo <?php echo esc_html( tmt_phone() ); ?></a>
 				<?php endif; ?>
+				<?php tmt_promos( 'below_buy' ); ?>
 				<?php
 				$tmt_perks = array();
 				if ( $tmt_warranty ) {
@@ -145,6 +150,7 @@ $tmt_tabs     = array_filter(
 			<div class="sf-desc entry-content"><?php the_content(); ?></div>
 		</section>
 	<?php endif; ?>
+	<?php tmt_promos( 'below_desc' ); ?>
 
 	<?php if ( isset( $tmt_tabs['danh-gia'] ) ) : ?>
 		<section class="sf-panel" id="danh-gia"><?php comments_template(); ?></section>

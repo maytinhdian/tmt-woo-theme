@@ -201,9 +201,11 @@ add_action(
 			$qty   = $i['qty'];
 			$avail = isset( $i['part']['avail'] ) ? $i['part']['avail'] : null;
 			if ( null !== $avail ) {
+				// Đếm theo món giữ tồn (loại dùng chung tồn của sản phẩm cha thì cộng cả các loại khác đang trong giỏ).
+				$owner   = $product->get_stock_managed_by_id();
 				$in_cart = 0;
 				foreach ( WC()->cart->get_cart() as $line ) {
-					if ( (int) ( $line['variation_id'] ? $line['variation_id'] : $line['product_id'] ) === $product->get_id() ) {
+					if ( isset( $line['data'] ) && $line['data'] instanceof WC_Product && $line['data']->get_stock_managed_by_id() === $owner ) {
 						$in_cart += (int) $line['quantity'];
 					}
 				}

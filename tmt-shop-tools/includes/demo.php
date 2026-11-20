@@ -317,6 +317,14 @@ function tmt_demo_extras( $ids ) {
 	}
 	$gift = tmt_demo_post( 'tmt_gift', 'Mua laptop tặng chuột hoặc bàn phím', array( 'post_name' => 'demo-qua-laptop' ) );
 	update_post_meta( $gift, '_tmt_gift', array( 'target' => 'products', 'products' => array( $ids['LT-DL-15-3530-I5'] ), 'categories' => array(), 'min_price' => 0, 'min_qty' => 1, 'min_order' => 0, 'gifts' => array( $ids['CH-LG-B100'], $ids['BP-LG-K120'] ), 'pick' => 'one', 'starts' => '', 'ends' => '', 'limit' => '' ) );
+	if ( post_type_exists( 'tmt_promo' ) ) {
+		$flash = tmt_demo_post( 'tmt_promo', 'Giá sốc SSD 7 ngày', array( 'post_name' => 'demo-gia-soc-ssd' ) );
+		update_post_meta( $flash, '_tmt_promo', array( 'type' => 'flash', 'rows' => array( array( 'product' => $ids['SSD-SS-990PRO-1T'], 'category' => 0, 'price' => 1990000, 'percent' => 0 ) ), 'groups' => array(), 'items' => array(), 'amount' => 0, 'starts' => '', 'ends' => wp_date( 'Y-m-d H:i', time() + 7 * DAY_IN_SECONDS ), 'limit' => 10 ) );
+		$combo = tmt_demo_post( 'tmt_promo', 'Combo CPU + Main giảm 200.000', array( 'post_name' => 'demo-combo-cpu-main' ) );
+		update_post_meta( $combo, '_tmt_promo', array( 'type' => 'combo', 'rows' => array(), 'groups' => array(), 'items' => array( array( 'product' => $ids['CPU-IN-I5-12400F'], 'qty' => 1 ), array( 'product' => $ids['MB-AS-B760M-A'], 'qty' => 1 ) ), 'amount' => 200000, 'starts' => '', 'ends' => '', 'limit' => '' ) );
+		update_option( 'tmt_promo_ver', time() );
+		delete_transient( 'wc_products_onsale' );
+	}
 }
 
 /** 6 bài Mẹo vặt ở 3 chuyên mục, 2 bài ghim, 2 bài có video, bài có sản phẩm gợi ý. */
@@ -518,7 +526,7 @@ function tmt_demo_site() {
 function tmt_demo_remove() {
 	$posts = get_posts(
 		array(
-			'post_type'   => array( 'product', 'post', 'page', 'tmt_solution', 'tmt_software', 'tmt_gift' ),
+			'post_type'   => array( 'product', 'post', 'page', 'tmt_solution', 'tmt_software', 'tmt_gift', 'tmt_promo' ),
 			'post_status' => 'any',
 			'numberposts' => -1,
 			'fields'      => 'ids',

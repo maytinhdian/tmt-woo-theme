@@ -1150,3 +1150,9 @@ a.sf-promo.t-strip:hover { color: var(--pink); }
 .sf-deal b { display: block; }
 .sf-deal.is-gift { background: #e8f5e9; }
 .sf-deal.is-gift > i { color: #2e7d32; }
+.sf-deal a { color: var(--sf-blue); }
+.sf-deal.is-flash { background: #fdecec; }
+.sf-deal.is-flash > i { color: #d32f2f; }
+.sf-deal.is-flash time { font-weight: 700; color: #d32f2f; font-variant-numeric: tabular-nums; }
+.sf-deal.is-combo > i, .sf-deal.is-group > i { color: var(--sf-blue); }
+.sf-pcard-deal + .sf-pcard-vcount { top: 2rem; }

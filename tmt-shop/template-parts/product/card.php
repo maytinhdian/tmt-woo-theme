@@ -53,6 +53,7 @@ $count     = $variable ? count( $product->get_children() ) : 0;
 			<?php echo tmt_icon( tmt_category_icon( $cat ) ); // phpcs:ignore ?>
 		<?php endif; ?>
 		<?php if ( $off ) : ?><span class="sf-pcard-off">-<?php echo (int) $off; ?>%</span><?php endif; ?>
+		<?php echo function_exists( 'tmt_km_badge' ) ? tmt_km_badge( $product ) : ''; // phpcs:ignore -- "Có quà" / "Mua kèm giảm" (plugin). ?>
 		<?php if ( $variable && $count > 1 ) : ?><span class="sf-pcard-vcount"><?php echo tmt_icon( 'layers' ); // phpcs:ignore ?><?php echo (int) $count; ?> loại</span><?php endif; ?>
 		<?php if ( $tags ) : ?>
 			<span class="sf-pcard-tags"><?php foreach ( $tags as $t ) : ?><span><?php echo esc_html( $t['value'] ); ?></span><?php endforeach; ?></span>

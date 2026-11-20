@@ -113,7 +113,10 @@ $tmt_tabs     = array_filter(
 					</div>
 					<?php tmt_promos( 'below_price' ); ?>
 					<?php
-					// Quà tặng kèm đang chạy cho sản phẩm này (plugin TMT Shop Tools).
+					// Giá KM có hạn / giá nhóm khách / combo và quà tặng kèm đang chạy (plugin TMT Shop Tools).
+					if ( function_exists( 'tmt_km_box' ) ) {
+						tmt_km_box( $product );
+					}
 					if ( function_exists( 'tmt_gift_box' ) ) {
 						tmt_gift_box( $product );
 					}

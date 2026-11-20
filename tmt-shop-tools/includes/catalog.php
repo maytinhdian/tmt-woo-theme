@@ -174,7 +174,7 @@ function tmt_pcb_parts() {
 	if ( null !== $parts ) {
 		return $parts;
 	}
-	$cached = get_transient( 'tmt_pcb_parts_' . TMT_TOOLS_VERSION );
+	$cached = wc_tax_enabled() ? false : get_transient( 'tmt_pcb_parts_' . TMT_TOOLS_VERSION );
 	if ( is_array( $cached ) ) {
 		return $parts = $cached;
 	}
@@ -215,6 +215,10 @@ function tmt_pcb_parts() {
 			if ( $item->is_type( 'variation' ) && 'publish' !== $item->get_status() ) {
 				continue;
 			}
+			// Loại có thuộc tính "Bất kỳ…" cần khách chọn thêm giá trị, trang này không có ô chọn đó: bỏ qua.
+			if ( $item->is_type( 'variation' ) && in_array( '', array_map( 'strval', $item->get_variation_attributes() ), true ) ) {
+				continue;
+			}
 			$price = $item->get_price();
 			$img   = wp_get_attachment_image_url( $item->get_image_id() ? $item->get_image_id() : $product->get_image_id(), 'woocommerce_thumbnail' );
 			$parts[ $item->get_id() ] = array(
@@ -222,8 +226,9 @@ function tmt_pcb_parts() {
 				'slot'     => $slot,
 				'name'     => wp_strip_all_tags( $item->get_name() ),
 				'spec'     => tmt_pcb_summary( $item ),
-				'price'    => '' === $price ? null : (int) round( (float) $price ),
-				'regular'  => $item->is_on_sale() ? (int) round( (float) $item->get_regular_price() ) : null,
+				// Giá hiển thị theo cách tính thuế của cửa hàng (giống thẻ sản phẩm của theme).
+				'price'    => '' === $price ? null : (int) round( (float) wc_get_price_to_display( $item ) ),
+				'regular'  => $item->is_on_sale() ? (int) round( (float) wc_get_price_to_display( $item, array( 'price' => $item->get_regular_price() ) ) ) : null,
 				'bh'       => tmt_pcb_warranty( $item ),
 				'img'      => $img ? $img : null,
 				'url'      => $item->get_permalink(),
@@ -242,7 +247,10 @@ function tmt_pcb_parts() {
 			return array( null === $a['price'] ? PHP_INT_MAX : $a['price'], $a['name'] ) <=> array( null === $b['price'] ? PHP_INT_MAX : $b['price'], $b['name'] );
 		}
 	);
-	set_transient( 'tmt_pcb_parts_' . TMT_TOOLS_VERSION, $parts, 10 * MINUTE_IN_SECONDS );
+	// Có thuế thì giá hiển thị tùy khách (địa chỉ, miễn thuế): không lưu chung cho mọi người.
+	if ( ! wc_tax_enabled() ) {
+		set_transient( 'tmt_pcb_parts_' . TMT_TOOLS_VERSION, $parts, 10 * MINUTE_IN_SECONDS );
+	}
 	return $parts;
 }
 

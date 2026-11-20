@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'TMT_SHOP_VERSION', '0.1.0' );
+define( 'TMT_SHOP_VERSION', '0.2.0' );
 define( 'TMT_SHOP_DIR', get_template_directory() );
 define( 'TMT_SHOP_URI', get_template_directory_uri() );
 

@@ -14,7 +14,7 @@ $tmt_fx = tmt_effects();
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<?php wp_head(); ?>
 </head>
-<body <?php body_class(); ?> style="--fx-k: <?php echo esc_attr( $tmt_fx['k'] ); ?>">
+<body <?php body_class(); ?> style="--fx-k: <?php echo esc_attr( $tmt_fx['k'] ); ?>"<?php echo 'none' !== $tmt_fx['cursor'] ? ' data-fx-cursor="' . esc_attr( $tmt_fx['cursor'] ) . '"' : ''; ?>>
 <?php wp_body_open(); ?>
 <a class="visually-hidden-focusable sf-skip" href="#main">Bỏ qua, tới nội dung</a>
 <?php get_template_part( 'template-parts/header/topbar' ); ?>

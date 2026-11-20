@@ -189,6 +189,9 @@ function tmt_customizer_sections() {
 				array( 'product.show_zalo', 'checkbox', 'Nút hỏi qua Zalo' ),
 				array( 'product.perks', 'textarea', 'Ưu đãi dưới nút mua (mỗi dòng một ý)' ),
 				array( 'product.related_count', 'number', 'Số sản phẩm cùng loại', array( 'min' => 0, 'max' => 12 ) ),
+				array( 'product.intro_style', 'radio', 'Giới thiệu nâng cao: kiểu hiển thị', array( 'choices' => array( 'full' => 'Toàn khổ, kiểu trang của hãng', 'compact' => 'Gọn trong khung, mục lục bên trái' ), 'desc' => 'Soạn khối ở trang sửa sản phẩm (cần plugin TMT Shop Tools).' ) ),
+				array( 'product.intro_accent', 'radio', 'Giới thiệu nâng cao: màu nhấn', array( 'choices' => array( 'blue' => 'Xanh', 'yellow' => 'Vàng' ) ) ),
+				array( 'product.intro_nav', 'checkbox', 'Giới thiệu nâng cao: hiện mục lục' ),
 			),
 		),
 		'tmt_promos'  => array(
@@ -294,6 +297,7 @@ function tmt_customizer_sections() {
 				array( 'effects.product_hover', 'select', 'Rê chuột vào thẻ sản phẩm', array( 'choices' => tmt_card_effects() ) ),
 				array( 'effects.post_hover', 'select', 'Rê chuột vào thẻ bài viết', array( 'choices' => array_diff_key( tmt_card_effects(), array( 'swap' => 1 ) ) ) ),
 				array( 'effects.intensity', 'radio', 'Cường độ', array( 'choices' => array( 'soft' => 'Nhẹ', 'medium' => 'Vừa', 'strong' => 'Mạnh' ) ) ),
+				array( 'effects.cursor', 'select', 'Con trỏ chuột', array( 'choices' => tmt_cursors(), 'desc' => 'Chỉ máy tính có chuột; điện thoại giữ như cũ.' ) ),
 			),
 		),
 	);

@@ -102,6 +102,9 @@ function tmt_defaults() {
 		'product.variant_style' => 'buttons',
 		'product.spec_tags'    => 3,
 		'product.promos'       => array(),
+		'product.intro_style'  => 'full',
+		'product.intro_nav'    => true,
+		'product.intro_accent' => 'blue',
 		'checkout.note'        => 'Tiệm gọi xác nhận đơn trong giờ làm việc trước khi giao.',
 		'payment.bank_bin'     => '',
 		'payment.qr_prefix'    => 'DH',
@@ -125,6 +128,7 @@ function tmt_defaults() {
 		'effects.product_hover' => 'classic',
 		'effects.post_hover'    => 'classic',
 		'effects.intensity'     => 'medium',
+		'effects.cursor'        => 'none',
 	);
 	return $d;
 }
@@ -387,16 +391,28 @@ function tmt_card_effects() {
 		'zoom'    => 'Phóng to ảnh',
 		'glow'    => 'Viền phát sáng',
 		'shine'   => 'Vệt sáng lướt qua ảnh',
+		'tilt'    => 'Nghiêng 3D theo chuột',
 		'overlay' => 'Phủ màu, chữ "Xem chi tiết"',
 		'swap'    => 'Đổi sang ảnh thứ hai (chỉ thẻ sản phẩm)',
 		'none'    => 'Không hiệu ứng',
 	);
 }
 
+/** Kiểu con trỏ chuột (chỉ máy có chuột; tự tắt trên điện thoại và khi máy bật giảm chuyển động). */
+function tmt_cursors() {
+	return array(
+		'none'  => 'Con trỏ thường',
+		'ring'  => 'Chấm + vòng đuổi theo, phóng to khi rê vào nút',
+		'glow'  => 'Quầng sáng mềm theo chuột',
+		'trail' => 'Vệt chấm nối đuôi',
+		'spark' => 'Bung hạt màu khi bấm',
+	);
+}
+
 /**
- * Hiệu ứng đang bật: lớp gắn lên body và hệ số cường độ.
+ * Hiệu ứng đang bật: lớp gắn lên body, hệ số cường độ, kiểu con trỏ, có cần nạp fx.js không.
  *
- * @return array{product: string, post: string, k: string, bodyClass: string}
+ * @return array{product: string, post: string, k: string, cursor: string, bodyClass: string, js: bool}
  */
 function tmt_effects() {
 	$all     = array_keys( tmt_card_effects() );
@@ -404,11 +420,14 @@ function tmt_effects() {
 	$post    = in_array( tmt_opt( 'effects.post_hover' ), array_diff( $all, array( 'swap' ) ), true ) ? tmt_opt( 'effects.post_hover' ) : 'classic';
 	$k       = array( 'soft' => '.6', 'medium' => '1', 'strong' => '1.6' );
 	$i       = isset( $k[ tmt_opt( 'effects.intensity' ) ] ) ? tmt_opt( 'effects.intensity' ) : 'medium';
+	$cursor  = array_key_exists( (string) tmt_opt( 'effects.cursor' ), tmt_cursors() ) ? tmt_opt( 'effects.cursor' ) : 'none';
 	return array(
 		'product'   => $product,
 		'post'      => $post,
 		'k'         => $k[ $i ],
+		'cursor'    => $cursor,
 		'bodyClass' => "sf-fx-p-{$product} sf-fx-a-{$post}",
+		'js'        => 'none' !== $cursor || 'tilt' === $product || 'tilt' === $post,
 	);
 }
 

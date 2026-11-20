@@ -82,11 +82,17 @@ function tmt_enqueue() {
 	wp_add_inline_style( 'tmt-theme', tmt_inline_css( $font ) );
 
 	wp_enqueue_script( 'tmt-theme', TMT_SHOP_URI . '/assets/js/theme.js', array(), $v, array( 'in_footer' => true, 'strategy' => 'defer' ) );
+	if ( tmt_effects()['js'] ) {
+		wp_enqueue_script( 'tmt-fx', TMT_SHOP_URI . '/assets/js/fx.js', array(), $v, array( 'in_footer' => true, 'strategy' => 'defer' ) );
+	}
 
 	if ( function_exists( 'is_product' ) && is_product() ) {
 		wp_enqueue_style( 'tmt-swiper', TMT_SHOP_URI . '/assets/vendor/swiper/swiper-bundle.min.css', array(), '11.2.10' );
 		wp_enqueue_script( 'tmt-swiper', TMT_SHOP_URI . '/assets/vendor/swiper/swiper-bundle.min.js', array(), '11.2.10', true );
 		wp_enqueue_script( 'tmt-product', TMT_SHOP_URI . '/assets/js/product.js', array( 'tmt-swiper', 'jquery' ), $v, true );
+		if ( function_exists( 'tmt_intro_get' ) && tmt_intro_get( get_queried_object_id() ) ) {
+			wp_enqueue_style( 'tmt-intro', TMT_SHOP_URI . '/assets/css/intro.css', array( 'tmt-theme' ), $v );
+		}
 	}
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );

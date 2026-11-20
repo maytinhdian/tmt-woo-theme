@@ -175,6 +175,9 @@ add_action(
 function tmt_cart_savings() {
 	$sum = 0;
 	foreach ( WC()->cart->get_cart() as $item ) {
+		if ( ! empty( $item['tmt_gift'] ) ) {
+			continue; // Quà tặng kèm (giá 0) không tính là giảm giá.
+		}
 		$p       = $item['data'];
 		$regular = (float) $p->get_regular_price();
 		$price   = (float) $p->get_price();

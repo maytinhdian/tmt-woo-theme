@@ -177,3 +177,18 @@
 		setTimeout(() => { b.textContent = 'Chép mã'; }, 2000);
 	}));
 })();
+
+/* Giới thiệu nâng cao: tô mục lục theo khối đang xem. */
+(() => {
+	const root = document.querySelector('[data-gt]');
+	if (!root || !('IntersectionObserver' in window)) return;
+	const links = [...root.querySelectorAll('[data-gt-link]')];
+	if (!links.length) return;
+	const io = new IntersectionObserver((entries) => {
+		entries.forEach((e) => {
+			if (!e.isIntersecting) return;
+			links.forEach((a) => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id));
+		});
+	}, { rootMargin: '-45% 0px -50% 0px' });
+	links.forEach((a) => { const t = document.getElementById(a.getAttribute('href').slice(1)); if (t) io.observe(t); });
+})();

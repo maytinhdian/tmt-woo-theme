@@ -13,6 +13,9 @@ $tmt_cart    = WC()->cart;
 $tmt_savings = tmt_cart_savings();
 $tmt_fee     = tmt_shipping_fee_text();
 $tmt_saved   = $tmt_savings + $tmt_cart->get_discount_total();
+foreach ( $tmt_cart->get_fees() as $tmt_f ) {
+	$tmt_saved += $tmt_f->total < 0 ? -1 * $tmt_f->total : 0; // Phí âm = giảm combo (plugin).
+}
 ?>
 <div class="woocommerce-checkout-review-order-table sfc-sum">
 	<?php do_action( 'woocommerce_review_order_before_cart_contents' ); ?>
@@ -25,7 +28,7 @@ $tmt_saved   = $tmt_savings + $tmt_cart->get_discount_total();
 		<div class="sfc-sr is-save"><span><i class="fa-solid fa-ticket" aria-hidden="true"></i>Mã <?php echo esc_html( strtoupper( $tmt_code ) ); ?></span><b>−<?php echo wp_kses_post( wc_price( $tmt_cart->get_coupon_discount_amount( $tmt_code, $tmt_cart->display_cart_ex_tax ) ) ); ?></b></div>
 	<?php endforeach; ?>
 	<?php foreach ( $tmt_cart->get_fees() as $tmt_f ) : ?>
-		<div class="sfc-sr"><span><?php echo esc_html( $tmt_f->name ); ?></span><b><?php wc_cart_totals_fee_html( $tmt_f ); ?></b></div>
+		<div class="sfc-sr<?php echo $tmt_f->total < 0 ? ' is-save' : ''; ?>"><span><?php if ( $tmt_f->total < 0 ) : ?><i class="fa-solid fa-layer-group" aria-hidden="true"></i><?php endif; ?><?php echo esc_html( $tmt_f->name ); ?></span><b><?php wc_cart_totals_fee_html( $tmt_f ); ?></b></div>
 	<?php endforeach; ?>
 	<?php do_action( 'woocommerce_review_order_before_shipping' ); ?>
 	<?php if ( $tmt_cart->needs_shipping() ) : ?>

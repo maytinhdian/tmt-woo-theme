@@ -192,3 +192,16 @@
 	}, { rootMargin: '-45% 0px -50% 0px' });
 	links.forEach((a) => { const t = document.getElementById(a.getAttribute('href').slice(1)); if (t) io.observe(t); });
 })();
+
+/* Giá KM có hạn (plugin): đếm ngược tới giờ kết thúc. */
+(() => {
+	const els = [...document.querySelectorAll('[data-sf-countdown]')];
+	if (!els.length) return;
+	const tick = () => els.forEach((el) => {
+		const left = Math.max(0, Math.floor((new Date(el.dataset.sfCountdown) - Date.now()) / 1000));
+		const d = Math.floor(left / 86400), h = Math.floor((left % 86400) / 3600), m = Math.floor((left % 3600) / 60), s = left % 60;
+		el.textContent = (d ? d + ' ngày ' : '') + [h, m, s].map((n) => String(n).padStart(2, '0')).join(':');
+	});
+	tick();
+	setInterval(tick, 1000);
+})();

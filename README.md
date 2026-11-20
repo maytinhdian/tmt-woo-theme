@@ -86,9 +86,19 @@ Trang Bài viết (Cài đặt → Đọc → "Trang bài viết", nên đặt t
 - **Quà tặng kèm** (WooCommerce → Quà tặng kèm): mua sản phẩm / nhóm hàng / mọi đơn (kèm điều kiện giá mỗi món, số cái, tổng đơn) thì tặng quà, tặng hết hoặc khách chọn 1, có thời gian và số suất. Trang sản phẩm hiện hộp quà xanh; giỏ tự thêm dòng quà giá 0 (khách đổi quà ngay trong giỏ), đơn hàng ghi "Quà tặng: tên chương trình". Quà là sản phẩm thật nên trừ tồn kho; hết hàng thì không tặng.
 - **Giới thiệu nâng cao**: khung dưới trang sửa sản phẩm, thêm các khối Ảnh bìa, Số nổi bật, Ảnh + chữ, Lưới tính năng, Video YouTube, So sánh, Trong hộp có gì, Đoạn văn. Kiểu hiển thị (toàn khổ như trang hãng / gọn có mục lục trái), màu nhấn và mục lục ở **Tùy biến → Trang sản phẩm**.
 
+## Khuyến mãi (trong plugin TMT Shop Tools)
+
+**WooCommerce → Khuyến mãi → Thêm**, chọn loại:
+
+- **Giá KM có hạn**: giá cố định cho từng sản phẩm, hoặc giảm % cho sản phẩm / nhóm hàng; có giờ bắt đầu, giờ kết thúc (trang sản phẩm hiện đếm ngược) và số suất (hết suất thì về giá thường, giỏ báo "chỉ còn N suất").
+- **Giá nhóm khách**: giá riêng cho Khách quen / VIP / Đại lý, thợ. Gán nhóm ở **Người dùng → Sửa → Nhóm khách**; khách đăng nhập mới thấy giá này.
+- **Combo**: mua đủ các món trong bộ thì giảm một số tiền mỗi bộ (dòng giảm trong giỏ, mua 2 bộ giảm 2 lần).
+
+Giá món luôn là giá thấp nhất trong giá đang bán, giá KM có hạn và giá nhóm (không cộng dồn); combo, quà tặng và mã giảm giá tính thêm. Suất được đếm khi có đơn và trả lại khi đơn hủy / thất bại / hoàn tiền.
+
 ## Dữ liệu mẫu
 
-**WooCommerce → Dữ liệu mẫu → Nạp dữ liệu mẫu**: danh mục, khoảng 28 sản phẩm có thông số (lắp thử được ở Xây dựng cấu hình), 1 sản phẩm chưa có giá, 1 sản phẩm ngừng kinh doanh, laptop có Giới thiệu nâng cao và quà tặng kèm, 2 cấu hình mẫu, 6 bài Mẹo vặt, trang Giải pháp Camera + Mạng WiFi, trang Phần mềm chấm công, và nếu web chưa có thì trang chủ tĩnh, trang Mẹo vặt, menu chính, tiền VNĐ. **Xóa dữ liệu mẫu** gỡ đúng những gì đã nạp, không đụng đồ tự tạo.
+**WooCommerce → Dữ liệu mẫu → Nạp dữ liệu mẫu**: danh mục, khoảng 28 sản phẩm có thông số (lắp thử được ở Xây dựng cấu hình), 1 sản phẩm chưa có giá, 1 sản phẩm ngừng kinh doanh, laptop có Giới thiệu nâng cao và quà tặng kèm, giá sốc SSD 7 ngày và combo CPU + Main, 2 cấu hình mẫu, 6 bài Mẹo vặt, trang Giải pháp Camera + Mạng WiFi, trang Phần mềm chấm công, và nếu web chưa có thì trang chủ tĩnh, trang Mẹo vặt, menu chính, tiền VNĐ. **Xóa dữ liệu mẫu** gỡ đúng những gì đã nạp, không đụng đồ tự tạo.
 
 ## Giấy phép
 

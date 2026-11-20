@@ -1,0 +1,23 @@
+/* Ô riêng của bảng tùy biến TMT Shop. */
+.tmt-rep-rows { display: grid; gap: 6px; margin: 8px 0; }
+.tmt-rep-row { background: #fff; border: 1px solid #dcdcde; border-radius: 6px; }
+.tmt-rep-head { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 8px 10px; }
+.tmt-rep-head b { flex: 1; cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
+.tmt-rep-head b::before { content: "▸ "; color: #8c8f94; }
+.tmt-rep-row.open .tmt-rep-head b::before { content: "▾ "; }
+.tmt-rep-head button, .tmt-sort-list button { border: 0; background: none; cursor: pointer; color: #50575e; padding: 2px 4px; }
+.tmt-rep-head button:disabled, .tmt-sort-list button:disabled { opacity: .3; cursor: default; }
+.tmt-rep-del:hover { color: #d63638; }
+.tmt-rep-body { display: none; padding: 0 10px 10px; border-top: 1px solid #f0f0f1; }
+.tmt-rep-row.open .tmt-rep-body { display: block; }
+.tmt-rep-f { margin-top: 8px; }
+.tmt-rep-f label, .tmt-rep-lbl { display: block; font-size: 12px; color: #50575e; margin-bottom: 2px; }
+.tmt-rep-f input[type=text], .tmt-rep-f select { width: 100%; }
+.tmt-rep-check { display: flex !important; align-items: center; gap: 6px; }
+.tmt-rep-icon { display: flex; align-items: center; gap: 8px; }
+.tmt-rep-icon i { width: 28px; height: 28px; border-radius: 6px; background: #f0f6fc; color: #2271b1; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.tmt-rep-img img { display: block; max-width: 100%; max-height: 90px; margin-bottom: 6px; border-radius: 4px; }
+.tmt-rep-img .button-link { margin-left: 8px; color: #d63638; }
+.tmt-sort-list { margin: 8px 0 0; }
+.tmt-sort-list li { display: flex; align-items: center; justify-content: space-between; background: #fff; border: 1px solid #dcdcde; border-radius: 6px; padding: 6px 8px; margin-bottom: 4px; }
+.tmt-sort-list li.off label { color: #8c8f94; }

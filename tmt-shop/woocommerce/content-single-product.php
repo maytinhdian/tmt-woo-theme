@@ -99,6 +99,13 @@ $tmt_tabs     = array_filter(
 					<?php endif; ?>
 				</div>
 				<?php tmt_promos( 'below_price' ); ?>
+				<?php
+				// Chưa nhập giá bán: nút "Yêu cầu báo giá" (plugin TMT Shop Tools), khách để lại SĐT, tiệm gọi báo giá.
+				$tmt_quote = function_exists( 'tmt_req_needs_quote' ) && tmt_req_needs_quote( $product );
+				if ( $tmt_quote ) {
+					tmt_req_quote_form( $product );
+				}
+				?>
 				<div class="sf-buy-wrap" data-variant-style="<?php echo esc_attr( tmt_opt( 'product.variant_style' ) ); ?>">
 					<?php do_action( 'woocommerce_single_product_summary' ); ?>
 				</div>
@@ -184,6 +191,8 @@ $tmt_tabs     = array_filter(
 		<?php if ( $product->is_purchasable() && $product->is_in_stock() ) : ?>
 			<button type="button" class="sf-btn" data-sf-buy="add"><?php echo tmt_icon( 'add_shopping_cart' ); // phpcs:ignore ?>Thêm giỏ</button>
 			<button type="button" class="sf-btn blue" data-sf-buy="now">Mua ngay</button>
+		<?php elseif ( $tmt_quote ) : ?>
+			<button type="button" class="sf-btn blue sf-mbuy-wide" data-quote-open>Yêu cầu báo giá</button>
 		<?php elseif ( $tmt_zalo ) : ?>
 			<a href="<?php echo esc_url( $tmt_zalo ); ?>" target="_blank" rel="noopener" class="sf-btn blue sf-mbuy-wide">Hỏi giá qua Zalo</a>
 		<?php endif; ?>

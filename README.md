@@ -65,6 +65,25 @@ Cài đặt:
 
 Cấu hình có lỗi đỏ (không lắp được) không vào giỏ được, máy chủ kiểm tra lại. Món chưa có giá, tạm hết hoặc không đủ số lượng không vào giỏ (hoặc vào phần còn), web báo rõ để tiệm gọi xác nhận.
 
+## Mẹo vặt (Bài viết)
+
+Trang Bài viết (Cài đặt → Đọc → "Trang bài viết", nên đặt tên **Mẹo vặt**) hiện kiểu "dòng tin + video" giống web của app:
+
+- **Bài chọn** ở đầu trang = bài tick "Ghim lên đầu blog" (tối đa 5, tự chạy vòng).
+- Cột **Chủ đề** = chuyên mục bài viết (icon tự đoán theo tên: windows, laptop, mạng, linh kiện...), tab **Mới nhất / Đọc nhiều / Video**, ô tìm bài.
+- Trang bài: ảnh đại diện tràn ngang, mục lục tự lấy từ các tiêu đề H2, nút chia sẻ, "Bài này có giúp ích?", khung gọi tiệm, bài đọc tiếp.
+- Khung **Mẹo vặt** bên phải trang sửa bài: link video YouTube/TikTok (hiện ở "Mẹo 60 giây" và tab Video), mức độ Dễ/Vừa/Khó, **Sản phẩm gợi ý** theo mã SKU. Lượt xem và lượt "hữu ích" cũng xem ở đây.
+
+## Giải pháp, Phần mềm, Yêu cầu khách (trong plugin TMT Shop Tools)
+
+- Menu **Giải pháp** (`/giai-phap/`) và **Phần mềm** (`/phan-mem/`): mỗi trang là một trang giới thiệu kiểu landing (đầu trang xanh + ảnh, dải cam kết, "Lắp cho đâu?" hoặc tính năng, gói giá chia tab, các bước, ảnh giới thiệu, thiết bị đang bán theo danh mục, hỏi đáp, form cuối trang). Sửa mọi chữ trong khung **Nội dung trang**, phần nào để trống thì tự ẩn. Ảnh đầu trang = "Ảnh đầu trang" bên phải. Thứ tự trong danh sách = ô "Thứ tự".
+- Sản phẩm **chưa nhập giá bán** có nút **Yêu cầu báo giá** (trang sản phẩm và thẻ sản phẩm). Sản phẩm có giá luôn vào giỏ, kể cả tạm hết.
+- Form báo giá, **Đặt lịch khảo sát** (Giải pháp), **Đăng ký dùng thử** (Phần mềm) vào menu **Yêu cầu khách** với mã YC/KS/DT + tháng (vd. `YC2611-0001`), có tình trạng Mới → Đang liên hệ → Đã báo giá → Đã chốt / Không thành, và gửi email cho tiệm (đổi email ở **Yêu cầu khách → Cài đặt**). Chống spam bằng ô bẫy và giới hạn 5 lần / 10 phút mỗi máy.
+
+## Dữ liệu mẫu
+
+**WooCommerce → Dữ liệu mẫu → Nạp dữ liệu mẫu**: danh mục, khoảng 28 sản phẩm có thông số (lắp thử được ở Xây dựng cấu hình), 1 sản phẩm chưa có giá, 2 cấu hình mẫu, 6 bài Mẹo vặt, trang Giải pháp Camera + Mạng WiFi, trang Phần mềm chấm công, và nếu web chưa có thì trang chủ tĩnh, trang Mẹo vặt, menu chính, tiền VNĐ. **Xóa dữ liệu mẫu** gỡ đúng những gì đã nạp, không đụng đồ tự tạo.
+
 ## Giấy phép
 
 Code theme: GPL v2 trở lên. Thư viện kèm theo: Bootstrap 5.3.3 (MIT), Swiper 11.2.10 (MIT), Font Awesome Free 7.3.1 (icon CC BY 4.0, font SIL OFL 1.1, code MIT), QR Code Generator for PHP của Kazuhiko Arase (MIT, `tmt-shop/inc/vendor/`). Giấy phép từng thư viện nằm trong `tmt-shop/assets/vendor/`.

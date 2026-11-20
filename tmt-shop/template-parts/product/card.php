@@ -85,6 +85,8 @@ $count     = $variable ? count( $product->get_children() ) : 0;
 		<div class="sf-pcard-btns">
 			<?php if ( $variable ) : ?>
 				<a href="<?php echo esc_url( $url ); ?>" class="sf-btn"><?php echo tmt_icon( 'tune' ); // phpcs:ignore ?>Chọn loại</a>
+			<?php elseif ( $no_price && function_exists( 'tmt_req_quote_form' ) ) : ?>
+				<a href="<?php echo esc_url( add_query_arg( 'bao-gia', 1, $url ) ); ?>" class="sf-btn sf-pcard-quote" rel="nofollow"><i class="fa-solid fa-file-invoice-dollar" aria-hidden="true"></i>Báo giá</a>
 			<?php elseif ( $no_price || ! $product->is_purchasable() ) : ?>
 				<a href="<?php echo esc_url( $zalo ? $zalo : $url ); ?>" class="sf-btn sf-pcard-quote"<?php echo $zalo ? ' target="_blank" rel="noopener"' : ''; ?>><i class="fa-solid fa-file-invoice-dollar" aria-hidden="true"></i>Hỏi giá</a>
 			<?php else : ?>

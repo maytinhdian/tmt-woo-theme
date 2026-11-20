@@ -17,6 +17,7 @@ require TMT_SHOP_DIR . '/inc/template-tags.php';
 require TMT_SHOP_DIR . '/inc/menu.php';
 require TMT_SHOP_DIR . '/inc/home.php';
 require TMT_SHOP_DIR . '/inc/customizer.php';
+require TMT_SHOP_DIR . '/inc/blog.php';
 
 if ( class_exists( 'WooCommerce' ) ) {
 	require TMT_SHOP_DIR . '/inc/woocommerce.php';

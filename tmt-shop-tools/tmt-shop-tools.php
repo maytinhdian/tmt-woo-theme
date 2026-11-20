@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name:       TMT Shop Tools
- * Description:       Trang "Xây dựng cấu hình" cho web bán máy tính: khách chọn từng linh kiện, web tự kiểm tra lắp chung được không (socket, RAM, khổ main, nguồn, kích thước vỏ...), báo tổng tiền, thêm cả bộ vào giỏ. Đi kèm theme TMT Shop.
- * Version:           1.0.0
+ * Description:       Trang "Xây dựng cấu hình" cho web bán máy tính: khách chọn từng linh kiện, web tự kiểm tra lắp chung được không (socket, RAM, khổ main, nguồn, kích thước vỏ...), báo tổng tiền, thêm cả bộ vào giỏ. Kèm trang Giải pháp, Phần mềm, yêu cầu báo giá / khảo sát / dùng thử, dữ liệu mẫu. Đi kèm theme TMT Shop.
+ * Version:           1.1.0
  * Requires at least: 6.4
  * Requires PHP:      7.4
  * Requires Plugins:  woocommerce
@@ -15,7 +15,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'TMT_TOOLS_VERSION', '1.0.0' );
+define( 'TMT_TOOLS_VERSION', '1.1.0' );
 define( 'TMT_TOOLS_DIR', __DIR__ );
 define( 'TMT_TOOLS_URL', plugin_dir_url( __FILE__ ) );
 
@@ -36,8 +36,11 @@ add_action(
 		require_once TMT_TOOLS_DIR . '/includes/catalog.php';
 		require_once TMT_TOOLS_DIR . '/includes/checker.php';
 		require_once TMT_TOOLS_DIR . '/includes/builder.php';
+		require_once TMT_TOOLS_DIR . '/includes/requests.php';
+		require_once TMT_TOOLS_DIR . '/includes/landing.php';
 		if ( is_admin() ) {
 			require_once TMT_TOOLS_DIR . '/includes/admin.php';
+			require_once TMT_TOOLS_DIR . '/includes/demo.php';
 		}
 	}
 );

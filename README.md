@@ -48,7 +48,22 @@ Theme WordPress cho web bán hàng máy tính, linh kiện, camera: giao diện 
 - Tra đơn hàng bằng số đơn + số điện thoại.
 - Banner khuyến mãi trang chi tiết sản phẩm.
 
-Các đợt sau: plugin **TMT Shop Tools** với trang Lên cấu hình máy tính; Mẹo vặt, Giải pháp, Phần mềm, form yêu cầu báo giá, dữ liệu mẫu.
+Các đợt sau: Mẹo vặt, Giải pháp, Phần mềm, form yêu cầu báo giá, dữ liệu mẫu.
+
+## Plugin TMT Shop Tools: Xây dựng cấu hình máy tính
+
+Khách tự chọn CPU, mainboard, RAM, SSD, card đồ họa, nguồn, vỏ, tản nhiệt, màn hình... Web tự kiểm tra lắp chung được không (22 luật như app quản lý: socket, loại RAM, số khe RAM / M.2 / SATA, khổ main với vỏ, chiều dài card, chiều cao tản nhiệt, công suất nguồn, đầu cấp nguồn card, BIOS, kênh đôi RAM...), ẩn linh kiện không lắp được, báo tổng tiền, rồi **Thêm cả bộ vào giỏ**, gửi Zalo, chép link, in A5 có mã QR.
+
+Cài đặt:
+
+1. Nén thư mục `tmt-shop-tools` thành `tmt-shop-tools.zip`, vào **Plugin → Cài mới → Tải plugin lên**, bấm **Kích hoạt**. Plugin tự tạo trang **Xây dựng cấu hình** (`/xay-dung-cau-hinh/`) và theme tự hiện nút "Xây dựng cấu hình" ở trang chủ, giỏ trống. Thêm trang này vào menu chính.
+2. Vào **WooCommerce → Lên cấu hình**:
+   - Mục 1: chọn danh mục cho từng linh kiện (CPU, Mainboard...). Lần đầu plugin tự đoán theo tên danh mục, kiểm tra rồi bấm Lưu.
+   - Mục 3: bấm **Tạo thuộc tính còn thiếu**. Plugin tạo các thuộc tính chung (Socket, Loại RAM, Khổ mainboard, Công suất tiêu thụ (W)...) kèm giá trị gợi ý. Đã có thuộc tính tên khác (vd. `pa_loai-ram`) thì plugin dùng luôn.
+3. Sửa từng linh kiện → tab **Thuộc tính**, thêm các thông số ở bảng mục 3 (cột "Gắn cho" nói thông số nào cho loại hàng nào). Số ghi số (65 hoặc 65W đều được), Có / Không ghi "Có" hoặc "Không". Thiếu thông số thì web không đoán, chỉ nhắc khách hỏi tiệm.
+4. Cấu hình mẫu (vd. "Văn phòng 10 triệu"): đăng nhập quản trị, mở trang Xây dựng cấu hình, chọn linh kiện rồi bấm **Lưu làm mẫu**. Bấm × cạnh tên mẫu để xóa.
+
+Cấu hình có lỗi đỏ (không lắp được) không vào giỏ được, máy chủ kiểm tra lại. Món chưa có giá, tạm hết hoặc không đủ số lượng không vào giỏ (hoặc vào phần còn), web báo rõ để tiệm gọi xác nhận.
 
 ## Giấy phép
 

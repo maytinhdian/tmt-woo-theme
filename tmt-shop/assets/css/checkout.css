@@ -342,3 +342,10 @@ form.sfc.checkout .form-row.sfc-wcf .woocommerce-input-wrapper input.input-text 
 .woocommerce-order ul.order_details li:last-of-type { border: 1px solid #E5E9F0; }
 .woocommerce-customer-details address { border: 1px solid #E5E9F0; border-radius: 12px; padding: .8rem 1rem; font-style: normal; line-height: 1.6; background: #fff; }
 .woocommerce-customer-details address p { margin: 0; }
+
+/* Dòng quà tặng kèm (plugin TMT Shop Tools) */
+.sfc-gift { display: inline-flex; align-items: center; gap: .3rem; font-size: .75rem; font-weight: 600; color: #2E7D32; background: #E8F5E9; border-radius: 4px; padding: .1rem .45rem; }
+.sfc-gift-pick { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; margin-top: .4rem; font-size: .75rem; color: #7B809A; }
+.sfc-gift-pick a { border: 1px solid #DCE2EC; border-radius: 4px; padding: .1rem .5rem; color: #344767; text-decoration: none; }
+.sfc-gift-pick a:hover { border-color: var(--sf-blue); color: var(--sf-blue); }
+.sfc-gift-pick a.on { border-color: #2E7D32; background: #E8F5E9; color: #2E7D32; font-weight: 600; }

@@ -18,17 +18,21 @@ if ( post_password_required() ) {
 	return;
 }
 
+$tmt_eol      = function_exists( 'tmt_eol' ) && tmt_eol( $product ); // Ngừng kinh doanh (plugin TMT Shop Tools).
+$tmt_quote    = false;
 $tmt_images   = tmt_product_images( $product );
 $tmt_specs    = tmt_product_specs( $product );
 $tmt_brand    = tmt_product_brand( $product );
 $tmt_cat      = tmt_product_category( $product );
-$tmt_off      = tmt_opt( 'product.discount_badge' ) ? tmt_discount_percent( $product ) : 0;
+$tmt_off      = tmt_opt( 'product.discount_badge' ) && ! $tmt_eol ? tmt_discount_percent( $product ) : 0;
 $tmt_zalo     = tmt_opt( 'product.show_zalo' ) ? tmt_zalo_url() : null;
 $tmt_warranty = tmt_warranty_months( $product );
 $tmt_desc     = trim( (string) $product->get_description() );
+$tmt_intro    = function_exists( 'tmt_intro_blocks' ) ? tmt_intro_blocks( $product ) : array(); // Giới thiệu nâng cao (plugin).
 $tmt_related  = wc_get_related_products( $product->get_id(), max( 0, (int) tmt_opt( 'product.related_count' ) ) );
 $tmt_tabs     = array_filter(
 	array(
+		'gioi-thieu' => $tmt_intro ? 'Giới thiệu' : null,
 		'thong-so'  => $tmt_specs ? 'Thông số' : null,
 		'mo-ta'     => '' !== $tmt_desc ? 'Mô tả' : null,
 		'danh-gia'  => comments_open() && wc_review_ratings_enabled() ? 'Đánh giá' : null,
@@ -89,30 +93,46 @@ $tmt_tabs     = array_filter(
 						<?php foreach ( array_slice( $tmt_specs, 0, 5 ) as $s ) : ?><span><b><?php echo esc_html( $s['label'] ); ?></b> <?php echo esc_html( $s['value'] ); ?></span><?php endforeach; ?>
 					</div>
 				<?php endif; ?>
-				<?php tmt_promos( 'above_price' ); ?>
-				<div class="sf-pricebox">
-					<div class="sf-pricebox-row price"><?php echo wp_kses_post( $product->get_price_html() ); ?><?php if ( $tmt_off ) : ?><span class="sf-off-pill">-<?php echo (int) $tmt_off; ?>%</span><?php endif; ?></div>
-					<?php if ( $product->is_in_stock() ) : ?>
-						<span class="sf-stock-line ok"><?php echo tmt_icon( 'check_circle' ); // phpcs:ignore ?><b>Còn hàng</b> tại tiệm</span>
-					<?php else : ?>
-						<span class="sf-stock-line"><?php echo tmt_icon( 'schedule' ); // phpcs:ignore ?><b>Tạm hết</b>, gọi tiệm để hỏi ngày có hàng</span>
+				<?php if ( $tmt_eol ) : ?>
+					<?php
+					tmt_eol_box( $product );
+					// Khung mua bị bỏ nên gọi riêng phần schema (WooCommerce gắn nó vào woocommerce_single_product_summary).
+					if ( isset( WC()->structured_data ) ) {
+						WC()->structured_data->generate_product_data();
+					}
+					?>
+				<?php else : ?>
+					<?php tmt_promos( 'above_price' ); ?>
+					<div class="sf-pricebox">
+						<div class="sf-pricebox-row price"><?php echo wp_kses_post( $product->get_price_html() ); ?><?php if ( $tmt_off ) : ?><span class="sf-off-pill">-<?php echo (int) $tmt_off; ?>%</span><?php endif; ?></div>
+						<?php if ( $product->is_in_stock() ) : ?>
+							<span class="sf-stock-line ok"><?php echo tmt_icon( 'check_circle' ); // phpcs:ignore ?><b>Còn hàng</b> tại tiệm</span>
+						<?php else : ?>
+							<span class="sf-stock-line"><?php echo tmt_icon( 'schedule' ); // phpcs:ignore ?><b>Tạm hết</b>, gọi tiệm để hỏi ngày có hàng</span>
+						<?php endif; ?>
+					</div>
+					<?php tmt_promos( 'below_price' ); ?>
+					<?php
+					// Quà tặng kèm đang chạy cho sản phẩm này (plugin TMT Shop Tools).
+					if ( function_exists( 'tmt_gift_box' ) ) {
+						tmt_gift_box( $product );
+					}
+					?>
+					<?php
+					// Chưa nhập giá bán: nút "Yêu cầu báo giá" (plugin TMT Shop Tools), khách để lại SĐT, tiệm gọi báo giá.
+					$tmt_quote = function_exists( 'tmt_req_needs_quote' ) && tmt_req_needs_quote( $product );
+					if ( $tmt_quote ) {
+						tmt_req_quote_form( $product );
+					}
+					?>
+					<div class="sf-buy-wrap" data-variant-style="<?php echo esc_attr( tmt_opt( 'product.variant_style' ) ); ?>">
+						<?php do_action( 'woocommerce_single_product_summary' ); ?>
+					</div>
+					<?php if ( $tmt_zalo ) : ?>
+						<a href="<?php echo esc_url( $tmt_zalo ); ?>" target="_blank" rel="noopener" class="sf-zalo"><?php echo tmt_icon( 'chat' ); // phpcs:ignore ?>Hỏi tiệm qua Zalo <?php echo esc_html( tmt_phone() ); ?></a>
 					<?php endif; ?>
-				</div>
-				<?php tmt_promos( 'below_price' ); ?>
-				<?php
-				// Chưa nhập giá bán: nút "Yêu cầu báo giá" (plugin TMT Shop Tools), khách để lại SĐT, tiệm gọi báo giá.
-				$tmt_quote = function_exists( 'tmt_req_needs_quote' ) && tmt_req_needs_quote( $product );
-				if ( $tmt_quote ) {
-					tmt_req_quote_form( $product );
-				}
-				?>
-				<div class="sf-buy-wrap" data-variant-style="<?php echo esc_attr( tmt_opt( 'product.variant_style' ) ); ?>">
-					<?php do_action( 'woocommerce_single_product_summary' ); ?>
-				</div>
-				<?php if ( $tmt_zalo ) : ?>
-					<a href="<?php echo esc_url( $tmt_zalo ); ?>" target="_blank" rel="noopener" class="sf-zalo"><?php echo tmt_icon( 'chat' ); // phpcs:ignore ?>Hỏi tiệm qua Zalo <?php echo esc_html( tmt_phone() ); ?></a>
+					<?php tmt_promos( 'below_buy' ); ?>
 				<?php endif; ?>
-				<?php tmt_promos( 'below_buy' ); ?>
 				<?php
 				$tmt_perks = array();
 				if ( $tmt_warranty ) {
@@ -123,7 +143,7 @@ $tmt_tabs     = array_filter(
 					$tmt_perks[] = array( $tmt_icons[ $i % count( $tmt_icons ) ], $perk );
 				}
 				?>
-				<?php if ( $tmt_perks ) : ?>
+				<?php if ( $tmt_perks && ! $tmt_eol ) : ?>
 					<ul class="sf-perks">
 						<?php foreach ( $tmt_perks as $p ) : ?><li><?php echo tmt_icon( $p[0] ); // phpcs:ignore ?><?php echo esc_html( $p[1] ); ?></li><?php endforeach; ?>
 					</ul>
@@ -136,6 +156,10 @@ $tmt_tabs     = array_filter(
 		<nav class="sf-tabs" aria-label="Các phần của trang">
 			<?php foreach ( $tmt_tabs as $id => $label ) : ?><a href="#<?php echo esc_attr( $id ); ?>"><?php echo esc_html( $label ); ?></a><?php endforeach; ?>
 		</nav>
+	<?php endif; ?>
+
+	<?php if ( $tmt_intro ) : ?>
+		<?php get_template_part( 'template-parts/product/intro', null, array( 'blocks' => $tmt_intro, 'product' => $product, 'eol' => $tmt_eol ) ); ?>
 	<?php endif; ?>
 
 	<?php if ( $tmt_specs || $tmt_brand || $tmt_warranty ) : ?>
@@ -188,7 +212,11 @@ $tmt_tabs     = array_filter(
 		<?php if ( $tmt_zalo ) : ?>
 			<a href="<?php echo esc_url( $tmt_zalo ); ?>" target="_blank" rel="noopener" class="z" aria-label="Hỏi qua Zalo"><?php echo tmt_icon( 'chat' ); // phpcs:ignore ?>Zalo</a>
 		<?php endif; ?>
-		<?php if ( $product->is_purchasable() && $product->is_in_stock() ) : ?>
+		<?php $tmt_alt = $tmt_eol ? tmt_eol_replacement( $product ) : null; ?>
+		<?php if ( $tmt_alt ) : ?>
+			<a href="<?php echo esc_url( $tmt_alt->get_permalink() ); ?>" class="sf-btn blue sf-mbuy-wide">Xem mẫu thay thế</a>
+		<?php elseif ( $tmt_eol ) : // Ngừng bán, không có mẫu thay thế: không nút mua. ?>
+		<?php elseif ( $product->is_purchasable() && $product->is_in_stock() ) : ?>
 			<button type="button" class="sf-btn" data-sf-buy="add"><?php echo tmt_icon( 'add_shopping_cart' ); // phpcs:ignore ?>Thêm giỏ</button>
 			<button type="button" class="sf-btn blue" data-sf-buy="now">Mua ngay</button>
 		<?php elseif ( $tmt_quote ) : ?>

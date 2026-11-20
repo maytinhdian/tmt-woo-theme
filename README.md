@@ -80,9 +80,15 @@ Trang Bài viết (Cài đặt → Đọc → "Trang bài viết", nên đặt t
 - Sản phẩm **chưa nhập giá bán** có nút **Yêu cầu báo giá** (trang sản phẩm và thẻ sản phẩm). Sản phẩm có giá luôn vào giỏ, kể cả tạm hết.
 - Form báo giá, **Đặt lịch khảo sát** (Giải pháp), **Đăng ký dùng thử** (Phần mềm) vào menu **Yêu cầu khách** với mã YC/KS/DT + tháng (vd. `YC2611-0001`), có tình trạng Mới → Đang liên hệ → Đã báo giá → Đã chốt / Không thành, và gửi email cho tiệm (đổi email ở **Yêu cầu khách → Cài đặt**). Chống spam bằng ô bẫy và giới hạn 5 lần / 10 phút mỗi máy.
 
+## Trang sản phẩm: ngừng bán, quà tặng, giới thiệu nâng cao (trong plugin TMT Shop Tools)
+
+- **Ngừng kinh doanh**: sửa sản phẩm → tab **Kho hàng** → tick **Ngừng kinh doanh**, chọn **Sản phẩm thay thế**. Trang vẫn mở để khách tra thông số, nhưng bỏ khỏi danh sách / tìm kiếm / Lên cấu hình, không mua được, khung mua thay bằng hộp "Ngừng kinh doanh" kèm mẫu thay thế (nếu mẫu đó đang bán). Bỏ tick là trang về như cũ.
+- **Quà tặng kèm** (WooCommerce → Quà tặng kèm): mua sản phẩm / nhóm hàng / mọi đơn (kèm điều kiện giá mỗi món, số cái, tổng đơn) thì tặng quà, tặng hết hoặc khách chọn 1, có thời gian và số suất. Trang sản phẩm hiện hộp quà xanh; giỏ tự thêm dòng quà giá 0 (khách đổi quà ngay trong giỏ), đơn hàng ghi "Quà tặng: tên chương trình". Quà là sản phẩm thật nên trừ tồn kho; hết hàng thì không tặng.
+- **Giới thiệu nâng cao**: khung dưới trang sửa sản phẩm, thêm các khối Ảnh bìa, Số nổi bật, Ảnh + chữ, Lưới tính năng, Video YouTube, So sánh, Trong hộp có gì, Đoạn văn. Kiểu hiển thị (toàn khổ như trang hãng / gọn có mục lục trái), màu nhấn và mục lục ở **Tùy biến → Trang sản phẩm**.
+
 ## Dữ liệu mẫu
 
-**WooCommerce → Dữ liệu mẫu → Nạp dữ liệu mẫu**: danh mục, khoảng 28 sản phẩm có thông số (lắp thử được ở Xây dựng cấu hình), 1 sản phẩm chưa có giá, 2 cấu hình mẫu, 6 bài Mẹo vặt, trang Giải pháp Camera + Mạng WiFi, trang Phần mềm chấm công, và nếu web chưa có thì trang chủ tĩnh, trang Mẹo vặt, menu chính, tiền VNĐ. **Xóa dữ liệu mẫu** gỡ đúng những gì đã nạp, không đụng đồ tự tạo.
+**WooCommerce → Dữ liệu mẫu → Nạp dữ liệu mẫu**: danh mục, khoảng 28 sản phẩm có thông số (lắp thử được ở Xây dựng cấu hình), 1 sản phẩm chưa có giá, 1 sản phẩm ngừng kinh doanh, laptop có Giới thiệu nâng cao và quà tặng kèm, 2 cấu hình mẫu, 6 bài Mẹo vặt, trang Giải pháp Camera + Mạng WiFi, trang Phần mềm chấm công, và nếu web chưa có thì trang chủ tĩnh, trang Mẹo vặt, menu chính, tiền VNĐ. **Xóa dữ liệu mẫu** gỡ đúng những gì đã nạp, không đụng đồ tự tạo.
 
 ## Giấy phép
 

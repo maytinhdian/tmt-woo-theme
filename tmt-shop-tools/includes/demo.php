@@ -29,7 +29,7 @@ function tmt_demo_page() {
 		<p>Nạp sẵn để xem web chạy thế nào trước khi nhập hàng thật:</p>
 		<ul style="list-style:disc;padding-left:20px">
 			<li>Danh mục linh kiện, laptop, màn hình, camera, máy chấm công, thiết bị mạng.</li>
-			<li>Khoảng 25 sản phẩm có giá, tồn kho, bảo hành và thông số (lắp thử được ở trang Xây dựng cấu hình), 1 sản phẩm chưa có giá để thử "Yêu cầu báo giá".</li>
+			<li>Khoảng 25 sản phẩm có giá, tồn kho, bảo hành và thông số (lắp thử được ở trang Xây dựng cấu hình), 1 sản phẩm chưa có giá để thử "Yêu cầu báo giá", 1 sản phẩm ngừng kinh doanh, laptop có "Giới thiệu nâng cao" và quà tặng kèm.</li>
 			<li>2 cấu hình mẫu (Văn phòng, Chơi game), 6 bài Mẹo vặt, trang Giải pháp Camera + Mạng WiFi, trang Phần mềm chấm công.</li>
 			<li>Nếu web chưa có: trang chủ tĩnh + trang Mẹo vặt, menu chính, tiền tệ VNĐ.</li>
 		</ul>
@@ -246,6 +246,7 @@ function tmt_demo_import() {
 		array( 'name' => 'SSD Kingston NV3 500GB NVMe', 'sku' => 'SSD-KS-NV3-500', 'cat' => $c['ssd'], 'price' => 890000, 'brand' => 'Kingston', 'specs' => array( 'storage_interface' => 'NVMe' ), 'attrs' => array( 'dung-luong' => '500GB' ) ),
 		array( 'name' => 'SSD Samsung 990 Pro 1TB NVMe', 'sku' => 'SSD-SS-990PRO-1T', 'cat' => $c['ssd'], 'price' => 2890000, 'sale' => 2490000, 'bh' => 60, 'brand' => 'Samsung', 'specs' => array( 'storage_interface' => 'NVMe' ), 'attrs' => array( 'dung-luong' => '1TB' ) ),
 		array( 'name' => 'Card MSI GeForce RTX 4060 Ventus 2X 8GB', 'sku' => 'VGA-MSI-4060-V2X', 'cat' => $c['card-do-hoa'], 'price' => 8490000, 'sale' => 7990000, 'brand' => 'MSI', 'specs' => array( 'tdp' => '115', 'gpu_length' => '199', 'psu_recommended' => '550', 'gpu_power_connector' => '8 pin' ) ),
+		array( 'name' => 'Card ASUS GeForce GTX 1650 4GB', 'sku' => 'VGA-AS-1650-4G', 'cat' => $c['card-do-hoa'], 'price' => 3490000, 'brand' => 'ASUS', 'specs' => array( 'tdp' => '75', 'gpu_length' => '173', 'psu_recommended' => '300', 'gpu_power_connector' => 'Không' ) ),
 		array( 'name' => 'Nguồn Xigmatek X-Power 450W', 'sku' => 'PSU-XG-450', 'cat' => $c['nguon'], 'price' => 590000, 'bh' => 24, 'brand' => 'Xigmatek', 'specs' => array( 'psu_watt' => '450', 'psu_pcie_8pin' => '1', 'psu_12vhpwr' => 'Không' ) ),
 		array( 'name' => 'Nguồn Deepcool PK650D 650W 80 Plus Bronze', 'sku' => 'PSU-DC-PK650D', 'cat' => $c['nguon'], 'price' => 1390000, 'brand' => 'Deepcool', 'specs' => array( 'psu_watt' => '650', 'psu_pcie_8pin' => '2', 'psu_12vhpwr' => 'Không' ) ),
 		array( 'name' => 'Vỏ Xigmatek NYX 3F mATX', 'sku' => 'CASE-XG-NYX3F', 'cat' => $c['vo-case'], 'price' => 690000, 'bh' => 12, 'brand' => 'Xigmatek', 'specs' => array( 'form_factor' => 'mATX', 'max_gpu_length' => '280', 'max_cooler_height' => '155' ) ),
@@ -284,10 +285,38 @@ function tmt_demo_import() {
 	}
 	update_option( 'tmt_pcb_presets', $presets, false );
 
+	tmt_demo_extras( $ids );
 	tmt_demo_posts( $ids );
 	tmt_demo_landings( $c );
 	tmt_demo_site();
 	update_option( 'tmt_demo_done', time() );
+}
+
+/** Sản phẩm ngừng kinh doanh, giới thiệu nâng cao cho laptop, chương trình quà tặng kèm. */
+function tmt_demo_extras( $ids ) {
+	$old = wc_get_product( $ids['VGA-AS-1650-4G'] );
+	if ( $old && 'yes' !== $old->get_meta( '_tmt_eol' ) ) {
+		$old->update_meta_data( '_tmt_eol_vis', $old->get_catalog_visibility() );
+		$old->update_meta_data( '_tmt_eol', 'yes' );
+		$old->update_meta_data( '_tmt_replacement', $ids['VGA-MSI-4060-V2X'] );
+		$old->set_catalog_visibility( 'hidden' );
+		$old->save();
+	}
+	if ( function_exists( 'tmt_intro_clean' ) ) {
+		$blocks = tmt_intro_clean(
+			array(
+				array( 'type' => 'hero', 'eyebrow' => 'Dell Inspiron 15', 'title' => 'Làm việc cả ngày, gọn trong một chiếc balo', 'text' => 'Chip Intel Core i5 thế hệ 13, màn 120Hz, pin dùng cả buổi.' ),
+				array( 'type' => 'stats', 'items' => array( array( 'value' => '120Hz', 'title' => 'Màn hình mượt' ), array( 'value' => '1.65kg', 'title' => 'Nhẹ' ), array( 'value' => '16GB', 'title' => 'RAM' ), array( 'value' => '512GB', 'title' => 'SSD NVMe' ) ) ),
+				array( 'type' => 'media', 'eyebrow' => 'Hiệu năng', 'title' => 'Mở nhiều ứng dụng vẫn mượt', 'body' => "Core i5 10 nhân cho văn phòng, học online, chỉnh ảnh nhẹ.\n\n<ul><li>Turbo đến 4.6GHz</li><li>Card Intel Iris Xe</li></ul>" ),
+				array( 'type' => 'features', 'title' => 'Tiện ích', 'items' => array( array( 'icon' => 'fa-solid fa-wifi', 'title' => 'WiFi 6', 'text' => 'Kết nối nhanh, ổn định' ), array( 'icon' => 'fa-solid fa-fingerprint', 'title' => 'Vân tay', 'text' => 'Mở máy một chạm' ), array( 'icon' => 'fa-solid fa-camera', 'title' => 'Webcam HD', 'text' => 'Họp online rõ nét' ) ) ),
+				array( 'type' => 'compare', 'title' => 'So với đời trước', 'columns' => array( '', 'Inspiron 3520', '' ), 'rows' => array( array( 'label' => 'Màn 120Hz', 'values' => array( '+', '-', '' ) ), array( 'label' => 'WiFi 6', 'values' => array( '+', '+', '' ) ) ) ),
+				array( 'type' => 'box', 'items' => array( array( 'icon' => 'fa-solid fa-laptop', 'title' => 'Máy' ), array( 'icon' => 'fa-solid fa-plug', 'title' => 'Sạc 65W' ) ) ),
+			)
+		);
+		update_post_meta( $ids['LT-DL-15-3530-I5'], '_tmt_intro', $blocks );
+	}
+	$gift = tmt_demo_post( 'tmt_gift', 'Mua laptop tặng chuột hoặc bàn phím', array( 'post_name' => 'demo-qua-laptop' ) );
+	update_post_meta( $gift, '_tmt_gift', array( 'target' => 'products', 'products' => array( $ids['LT-DL-15-3530-I5'] ), 'categories' => array(), 'min_price' => 0, 'min_qty' => 1, 'min_order' => 0, 'gifts' => array( $ids['CH-LG-B100'], $ids['BP-LG-K120'] ), 'pick' => 'one', 'starts' => '', 'ends' => '', 'limit' => '' ) );
 }
 
 /** 6 bài Mẹo vặt ở 3 chuyên mục, 2 bài ghim, 2 bài có video, bài có sản phẩm gợi ý. */
@@ -489,7 +518,7 @@ function tmt_demo_site() {
 function tmt_demo_remove() {
 	$posts = get_posts(
 		array(
-			'post_type'   => array( 'product', 'post', 'page', 'tmt_solution', 'tmt_software' ),
+			'post_type'   => array( 'product', 'post', 'page', 'tmt_solution', 'tmt_software', 'tmt_gift' ),
 			'post_status' => 'any',
 			'numberposts' => -1,
 			'fields'      => 'ids',

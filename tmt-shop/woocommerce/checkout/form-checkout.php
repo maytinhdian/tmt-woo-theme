@@ -65,6 +65,11 @@ $tmt_ship_ico = array( 'local_pickup' => 'storefront', 'pickup_location' => 'sto
 					$warranty = tmt_warranty_months( $p );
 					$meta     = wc_get_formatted_cart_item_data( $tmt_item, true );
 					$max      = $p->get_max_purchase_quantity() > 0 ? min( $tmt_max_qty, $p->get_max_purchase_quantity() ) : $tmt_max_qty;
+					$gift     = function_exists( 'tmt_gift_line' ) ? tmt_gift_line( $tmt_item ) : null; // Dòng quà tặng kèm (plugin).
+					if ( $gift ) {
+						$on_sale = false;
+						$off     = 0;
+					}
 					?>
 					<div class="sfc-it <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $tmt_item, $tmt_key ) ); ?>">
 						<<?php echo $url ? 'a href="' . esc_url( $url ) . '"' : 'span'; // phpcs:ignore ?> class="sfc-th" tabindex="-1" aria-hidden="true">
@@ -84,10 +89,17 @@ $tmt_ship_ico = array( 'local_pickup' => 'storefront', 'pickup_location' => 'sto
 									<span class="sfc-stk no"><i class="fa-regular fa-clock" aria-hidden="true"></i>Tạm hết, tiệm gọi báo ngày có hàng</span>
 								<?php endif; ?>
 								<?php if ( $warranty ) : ?><span class="sfc-bh"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i>BH <?php echo (int) $warranty; ?> tháng</span><?php endif; ?>
-								<?php if ( $meta && ! $p->is_type( 'variation' ) ) : ?><span class="sfc-var"><?php echo esc_html( $meta ); ?></span><?php endif; ?>
+								<?php if ( $gift ) : ?>
+									<span class="sfc-gift"><i class="fa-solid fa-gift" aria-hidden="true"></i>Quà tặng · <?php echo esc_html( $gift['name'] ); ?></span>
+								<?php elseif ( $meta && ! $p->is_type( 'variation' ) ) : ?><span class="sfc-var"><?php echo esc_html( $meta ); ?></span><?php endif; ?>
 							</div>
+							<?php if ( $gift && $gift['choices'] ) : ?>
+								<div class="sfc-gift-pick"><span>Đổi quà:</span><?php foreach ( $gift['choices'] as $c ) : ?><a href="<?php echo esc_url( $c['url'] ); ?>"<?php echo $c['on'] ? ' class="on" aria-current="true"' : ''; ?>><?php echo esc_html( $c['name'] ); ?></a><?php endforeach; ?></div>
+							<?php endif; ?>
 						</div>
-						<?php if ( $p->is_sold_individually() ) : ?>
+						<?php if ( $gift ) : ?>
+							<span class="sfc-qty is-fixed">x<?php echo (int) $qty; ?></span>
+						<?php elseif ( $p->is_sold_individually() ) : ?>
 							<span class="sfc-qty is-fixed">x1</span>
 						<?php else : ?>
 							<span class="sfc-qty">
@@ -97,10 +109,15 @@ $tmt_ship_ico = array( 'local_pickup' => 'storefront', 'pickup_location' => 'sto
 							</span>
 						<?php endif; ?>
 						<div class="sfc-pc">
-							<b><?php echo wp_kses_post( $tmt_cart->get_product_subtotal( $p, $qty ) ); ?></b>
+							<b><?php echo wp_kses_post( $gift ? 'Tặng' : $tmt_cart->get_product_subtotal( $p, $qty ) ); ?></b>
+							<?php if ( $gift && $gift['regular'] > 0 ) : ?><s><?php echo wp_kses_post( wc_price( $gift['regular'] ) ); ?></s><?php endif; ?>
 							<?php if ( $on_sale ) : ?><s><?php echo wp_kses_post( wc_price( wc_get_price_to_display( $p, array( 'price' => $regular, 'qty' => $qty ) ) ) ); ?></s><?php endif; ?>
 						</div>
+						<?php if ( $gift ) : ?>
+							<span class="sfc-rm" aria-hidden="true"></span>
+						<?php else : ?>
 						<a href="<?php echo esc_url( wc_get_cart_remove_url( $tmt_key ) ); ?>" class="sfc-rm" aria-label="<?php echo esc_attr( 'Bỏ ' . $p->get_name() ); ?>" title="Bỏ khỏi giỏ"><i class="fa-solid fa-xmark" aria-hidden="true"></i></a>
+						<?php endif; ?>
 					</div>
 				<?php endforeach; ?>
 			</section>

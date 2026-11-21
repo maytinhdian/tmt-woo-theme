@@ -863,3 +863,11 @@ add_filter(
 	10,
 	3
 );
+
+/* Mã chương trình trên dòng đơn chỉ để đếm suất: ẩn khỏi trang sửa đơn (dòng "Khuyến mãi" / "Quà tặng" vẫn hiện). */
+add_filter(
+	'woocommerce_hidden_order_itemmeta',
+	function ( $keys ) {
+		return array_merge( (array) $keys, array( '_tmt_promo', '_tmt_promo_sets', '_tmt_gift' ) );
+	}
+);

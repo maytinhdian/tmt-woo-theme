@@ -38,10 +38,13 @@ Theme WordPress cho web bán hàng máy tính, linh kiện, camera: giao diện 
 
 - Đầu trang: thanh trên cùng 3 vùng, ô tìm 3 kiểu, menu chính với khung xổ theo danh mục + hãng, mega menu, 15 hiệu ứng rê chuột và 9 kiểu đánh dấu trang đang mở.
 - Trang chủ theo section: slider (2 kiểu), dải cam kết, danh mục nổi bật, khuyến mãi đếm ngược, phần mềm bản quyền (tab theo danh mục, khung cam kết, các bước mua key), sản phẩm mới, bài viết.
+- Section **Quy trình sửa máy** (cần plugin TMT Shop Tools): 4 bước + 3 ô phí, dẫn sang trang `/sua-may/`.
 - Danh sách sản phẩm: bộ lọc theo hãng, giá, còn hàng, mọi thuộc tính; sắp xếp; trang lọc không cho Google lập chỉ mục.
 - Thẻ sản phẩm: nhãn thông số trên ảnh, vài dòng thông số, % giảm, "N loại", nút Thêm vào giỏ (AJAX), Hỏi giá, Zalo.
 - Trang chi tiết: bộ ảnh vuốt + phóng to + toàn màn hình, chọn loại bằng nút, Mua ngay, ưu đãi, bảng thông số, sản phẩm cùng loại, thanh mua dính đáy trên điện thoại.
 - Chân trang, nút liên hệ nổi (Hotline, Zalo, Messenger), banner dọc hai bên, hiệu ứng thẻ và con trỏ chuột.
+- Hiệu ứng (Tùy biến → Hiệu ứng): nút **Thêm vào giỏ** xe đẩy đón túi (túi bay lên giỏ đầu trang, thêm không tải lại trang), **chữ cạnh logo** 6 kiểu (ánh kim, gõ chữ, phát sáng, hiện từng chữ, đổi câu, lật chữ), **máy bay giấy** ở nút Đăng ký nhận tin.
+- Ô **Nhận tin khuyến mãi** ở chân trang có sẵn (cần plugin TMT Shop Tools): email lưu ở **WooCommerce → Email nhận tin**, nút tải CSV mở bằng Excel.
 - Trang bài viết, trang tĩnh, tìm kiếm, 404.
 - Giỏ hàng + thanh toán trên một trang: sửa số lượng, mã giảm giá, mua kèm, chọn giao tận nơi / nhận tại tiệm, thanh tổng xanh đậm, thanh đặt hàng dính đáy trên điện thoại. Chỉ hỏi họ tên, số điện thoại, email (không bắt buộc), địa chỉ.
 - Mã QR chuyển khoản (VietQR, tạo ngay trên máy chủ, không gọi dịch vụ ngoài), nút chép số tài khoản / số tiền / nội dung.
@@ -72,7 +75,8 @@ Cấu hình có lỗi đỏ (không lắp được) không vào giỏ được, 
 Trang Bài viết (Cài đặt → Đọc → "Trang bài viết", nên đặt tên **Mẹo vặt**) hiện kiểu "dòng tin + video" giống web của app:
 
 - **Bài chọn** ở đầu trang = bài tick "Ghim lên đầu blog" (tối đa 5, tự chạy vòng).
-- Cột **Chủ đề** = chuyên mục bài viết (icon tự đoán theo tên: windows, laptop, mạng, linh kiện...), tab **Mới nhất / Đọc nhiều / Video**, ô tìm bài.
+- Cột **Chủ đề** = chuyên mục bài viết (icon tự đoán theo tên: windows, laptop, mạng, linh kiện...), tab **Mới nhất / Đọc nhiều / Video**, ô tìm bài ngay dưới Chủ đề (điện thoại: trên tab).
+- Khối **Nhờ tiệm làm** (Tùy biến → Mẹo vặt: khối nhờ tiệm làm): 3 kiểu (vàng / kỹ thuật / dịch vụ), chữ, các ý, 2 nút, đang mở cửa hay đã đóng; chọn hiện ở trang danh sách, trang bài hay cả hai.
 - Trang bài: ảnh đại diện tràn ngang, mục lục tự lấy từ các tiêu đề H2, nút chia sẻ, "Bài này có giúp ích?", khung gọi tiệm, bài đọc tiếp.
 - Khung **Mẹo vặt** bên phải trang sửa bài: link video YouTube/TikTok (hiện ở "Mẹo 60 giây" và tab Video), mức độ Dễ/Vừa/Khó, **Sản phẩm gợi ý** theo mã SKU. Lượt xem và lượt "hữu ích" cũng xem ở đây.
 
@@ -80,7 +84,11 @@ Trang Bài viết (Cài đặt → Đọc → "Trang bài viết", nên đặt t
 
 - Menu **Giải pháp** (`/giai-phap/`) và **Phần mềm** (`/phan-mem/`): mỗi trang là một trang giới thiệu kiểu landing (đầu trang xanh + ảnh, dải cam kết, "Lắp cho đâu?" hoặc tính năng, gói giá chia tab, các bước, ảnh giới thiệu, thiết bị đang bán theo danh mục, hỏi đáp, form cuối trang). Sửa mọi chữ trong khung **Nội dung trang**, phần nào để trống thì tự ẩn. Ảnh đầu trang = "Ảnh đầu trang" bên phải. Thứ tự trong danh sách = ô "Thứ tự".
 - Sản phẩm **chưa nhập giá bán** có nút **Yêu cầu báo giá** (trang sản phẩm và thẻ sản phẩm). Sản phẩm có giá luôn vào giỏ, kể cả tạm hết.
-- Form báo giá, **Đặt lịch khảo sát** (Giải pháp), **Đăng ký dùng thử** (Phần mềm) vào menu **Yêu cầu khách** với mã YC/KS/DT + tháng (vd. `YC2611-0001`), có tình trạng Mới → Đang liên hệ → Đã báo giá → Đã chốt / Không thành, và gửi email cho tiệm (đổi email ở **Yêu cầu khách → Cài đặt**). Chống spam bằng ô bẫy và giới hạn 5 lần / 10 phút mỗi máy.
+- Form báo giá, **Đặt lịch khảo sát** (Giải pháp), **Đăng ký dùng thử** (Phần mềm), **Gửi yêu cầu sửa máy** vào menu **Yêu cầu khách** với mã YC/KS/DT/SM + tháng (vd. `YC2611-0001`), có tình trạng Mới → Đang liên hệ → Đã báo giá → Đã chốt / Không thành, và gửi email cho tiệm (đổi email ở **Yêu cầu khách → Cài đặt**). Chống spam bằng ô bẫy và giới hạn 5 lần / 10 phút mỗi máy.
+
+## Sửa máy (trong plugin TMT Shop Tools)
+
+Trang **`/sua-may/`** giới thiệu cách tiệm nhận sửa máy: 5 bước, 3 trường hợp sau kiểm tra (không hư / sửa / không sửa), bảng phí, khối **Tính thử** (khách chọn mang tới hay thợ tới, số máy, kết quả kiểm tra thì thấy phải trả bao nhiêu), hỏi đáp và form **Gửi yêu cầu sửa máy** (vào **Yêu cầu khách** với mã `SM`). Phí kiểm tra mỗi máy, phí di chuyển tối thiểu + mỗi km, hạn mức "dưới bao nhiêu cứ thay", miễn hay trừ phí kiểm tra khi đồng ý sửa: **Tùy biến → Sửa máy: quy trình và phí**; trang và section trang chủ luôn cùng số. Thêm link `/sua-may/` vào menu chính.
 
 ## Trang sản phẩm: ngừng bán, quà tặng, giới thiệu nâng cao (trong plugin TMT Shop Tools)
 

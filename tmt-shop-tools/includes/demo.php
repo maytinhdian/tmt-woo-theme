@@ -525,6 +525,7 @@ function tmt_demo_site() {
 					'Xây dựng cấu hình' => function_exists( 'tmt_pcb_url' ) ? tmt_pcb_url() : '',
 					'Giải pháp'         => get_post_type_archive_link( 'tmt_solution' ),
 					'Phần mềm'          => get_post_type_archive_link( 'tmt_software' ),
+					'Sửa máy'           => function_exists( 'tmt_repair_url' ) ? tmt_repair_url() : '',
 					'Mẹo vặt'           => get_option( 'page_for_posts' ) ? get_permalink( get_option( 'page_for_posts' ) ) : '',
 				);
 				foreach ( $links as $title => $url ) {

@@ -1,0 +1,95 @@
+/* Trang /sua-may + khối "Quy trình sửa máy" trang chủ (lớp rin-*, port từ app), dùng kèm landing.css. */
+.rin-ticket { background: #fff; color: #344767; border-radius: 12px; box-shadow: 0 24px 60px rgba(8,20,50,.3); padding: 20px; max-width: 440px; margin-left: auto; }
+.rin-ticket .hd { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px dashed #e5e9f0; padding-bottom: 10px; margin-bottom: 8px; }
+.rin-ticket .hd b { color: var(--sf-navy); display: block; } .rin-ticket .hd small { color: #7b809a; }
+.rin-ticket .tag { font-size: .7rem; color: #8a5a00; background: #fff8dc; border-radius: 4px; padding: 1px 6px; }
+.rin-ticket .ln, .rin-calc .bill .ln { display: flex; justify-content: space-between; gap: 12px; padding: 5px 0; font-size: .9rem; }
+.rin-ticket .ln span:last-child, .rin-calc .bill .ln span:last-child { font-weight: 500; color: var(--sf-navy); white-space: nowrap; }
+.rin-ticket .ln.off span:last-child, .rin-calc .bill .ln.off span:last-child { color: #7b809a; text-decoration: line-through; }
+.rin-ticket .ln.tot, .rin-calc .bill .ln.tot { border-top: 1px dashed #e5e9f0; margin-top: 4px; padding-top: 9px; font-weight: 700; color: var(--sf-navy); }
+.rin-ticket .ln.tot span:last-child, .rin-calc .bill .ln.tot span:last-child { color: #d32f2f; font-size: 1.05rem; font-weight: 700; }
+.rin-ticket .note { margin-top: 10px; background: #fff8dc; border-radius: 8px; padding: 8px 10px; font-size: .82rem; display: flex; gap: 8px; align-items: center; }
+.rin-ticket .note i { color: #c77800; }
+.rin-flow { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; counter-reset: rin; }
+.rin-flow li { background: #fff; border: 1px solid #e5e9f0; border-radius: 12px; padding: 18px 16px; position: relative; counter-increment: rin; }
+.rin-flow li::before { content: counter(rin); width: 34px; height: 34px; border-radius: 50%; background: var(--sf-blue); color: #fff; font-weight: 700; display: grid; place-items: center; margin-bottom: 10px; }
+.rin-flow li:not(:last-child)::after { content: "\f054"; font-family: "Font Awesome 7 Free", "Font Awesome 6 Free"; font-weight: 900; position: absolute; right: -13px; top: 26px; color: var(--sf-blue); font-size: .8rem; z-index: 1; }
+.rin-flow b { color: var(--sf-navy); display: block; margin-bottom: 4px; }
+.rin-flow p { margin: 0; color: #7b809a; font-size: .88rem; }
+.rin-flow .fee { display: block; margin-top: 10px; font-size: .8rem; background: #eef3fd; color: var(--sf-navy); border-radius: 8px; padding: 6px 8px; }
+.rin-split { display: flex; align-items: center; gap: 12px; color: #7b809a; font-size: .85rem; margin: 26px 0 16px; }
+.rin-split::before, .rin-split::after { content: ""; flex: 1; border-top: 1px solid #e5e9f0; }
+.rin-cases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.rin-cases > div { border-radius: 12px; padding: 18px; border: 1px solid; }
+.rin-cases h3 { font-size: 1rem; color: var(--sf-navy); font-weight: 700; display: flex; gap: 8px; align-items: center; margin: 0 0 6px; }
+.rin-cases p { margin: 0 0 10px; font-size: .9rem; } .rin-cases b { font-size: .85rem; font-weight: 500; color: var(--sf-navy); }
+.rin-cases .g { background: #e8f5e9; border-color: #cde7cf; } .rin-cases .g i { color: #2e7d32; }
+.rin-cases .b { background: #eef3fd; border-color: #dce7fb; } .rin-cases .b i { color: var(--sf-blue); }
+.rin-cases .y { background: #fff8dc; border-color: #f2e2a0; } .rin-cases .y i { color: #c77800; }
+.rin-fees { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.rin-fees > div { background: #fff; border: 1px solid #e5e9f0; border-radius: 12px; padding: 22px; }
+.rin-fees .ic { width: 46px; height: 46px; border-radius: 10px; background: #eef3fd; color: var(--sf-blue); display: grid; place-items: center; font-size: 1.15rem; margin-bottom: 12px; }
+.rin-fees h3 { font-size: 1.05rem; color: var(--sf-navy); font-weight: 700; margin: 0; }
+.rin-fees .price { font-size: 1.6rem; font-weight: 900; color: #d32f2f; margin-top: 8px; line-height: 1.2; } .rin-fees .price.navy { color: var(--sf-navy); }
+.rin-fees small { color: #7b809a; }
+.rin-fees ul { list-style: none; padding: 0; margin: 12px 0 0; font-size: .9rem; }
+.rin-fees li { padding: 3px 0 3px 22px; position: relative; }
+.rin-fees li::before { content: "\f00c"; font-family: "Font Awesome 7 Free", "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; color: #2e7d32; font-size: .8rem; top: 6px; }
+.rin-calc { display: grid; grid-template-columns: 340px 1fr; gap: 24px; margin-top: 28px; background: var(--sf-bg); border-radius: 14px; padding: 24px; }
+.rin-calc h3 { font-size: 1.1rem; color: var(--sf-navy); font-weight: 700; margin: 0 0 12px; }
+.rin-calc .f { display: block; font-size: .82rem; font-weight: 500; color: var(--sf-navy); margin: 14px 0 6px; }
+.rin-calc input[type=radio] { position: absolute; opacity: 0; pointer-events: none; }
+.rin-calc input:focus-visible + span { outline: 2px solid var(--sf-blue); outline-offset: 2px; }
+.rin-seg { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: #e9edf4; border-radius: 8px; padding: 4px; }
+.rin-seg label { margin: 0; cursor: pointer; }
+.rin-seg span { display: flex; gap: 6px; align-items: center; justify-content: center; padding: 8px 6px; border-radius: 6px; font-size: .88rem; min-height: 40px; }
+.rin-seg input:checked + span { background: #fff; color: var(--sf-blue); font-weight: 500; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+.rin-qty { display: flex; align-items: center; gap: 10px; }
+.rin-qty button { width: 40px; height: 40px; border-radius: 8px; border: 1px solid #cfd6e2; background: #fff; font-size: 1.1rem; color: var(--sf-navy); }
+.rin-qty output { min-width: 18px; text-align: center; font-weight: 700; color: var(--sf-navy); }
+.rin-qty small { color: #7b809a; font-size: .8rem; }
+.rin-res { display: grid; gap: 8px; }
+.rin-res label { margin: 0; cursor: pointer; }
+.rin-res span { display: block; background: #fff; border: 1px solid #e5e9f0; border-radius: 8px; padding: 9px 12px; }
+.rin-res b { display: block; color: var(--sf-navy); font-size: .9rem; } .rin-res small { color: #7b809a; font-size: .8rem; }
+.rin-res input:checked + span { border-color: var(--sf-blue); background: #eef3fd; }
+.rin-calc .out { background: #fff; border: 1px solid #e5e9f0; border-radius: 12px; padding: 22px; }
+.rin-calc .path { list-style: none; padding: 0; margin: 0 0 14px; }
+.rin-calc .path li { position: relative; padding: 0 0 12px 34px; }
+.rin-calc .path li::before { content: ""; position: absolute; left: 6px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--sf-blue); }
+.rin-calc .path li:not(:last-child)::after { content: ""; position: absolute; left: 12px; top: 20px; bottom: 0; border-left: 2px solid #dce7fb; }
+.rin-calc .path b { color: var(--sf-navy); font-size: .92rem; margin-right: 8px; } .rin-calc .path span { color: #7b809a; font-size: .88rem; }
+.rin-calc .path li.skip b { color: #9aa3b5; text-decoration: line-through; } .rin-calc .path li.skip::before { background: #dfe4ec; }
+.rin-calc .path li.wait::before { background: var(--sf-yellow); } .rin-calc .path li.done::before { background: #2e7d32; }
+.rin-calc .bill { border-top: 2px solid var(--sf-navy); padding-top: 10px; }
+.rin-calc .hint { margin: 12px 0 0; color: #7b809a; font-size: .8rem; }
+.rin-buy { display: grid; grid-template-columns: auto 1fr auto; gap: 20px; align-items: center; background: var(--sf-navy); color: #fff; border-radius: 14px; padding: 22px 26px; margin-top: 28px; }
+.rin-buy .ic { width: 54px; height: 54px; border-radius: 50%; background: var(--sf-yellow); color: var(--sf-navy); display: grid; place-items: center; font-size: 1.3rem; }
+.rin-buy h3 { color: #fff; font-size: 1.2rem; font-weight: 700; margin: 0; } .rin-buy p { margin: 4px 0 0; color: #c9d4ea; font-size: .9rem; }
+/* Section trang chủ */
+.rin-home { background: linear-gradient(180deg, #fff, #eef3fd); border: 1px solid #dce7fb; border-radius: 14px; padding: 26px; }
+.rin-home .top { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; margin-bottom: 22px; }
+.rin-home h2 { font-size: 1.5rem; color: var(--sf-navy); font-weight: 700; margin: 0; } .rin-home .top p { color: #7b809a; margin: 4px 0 0; }
+.rin-home .btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.rin-hsteps { display: grid; grid-template-columns: repeat(4, 1fr); list-style: none; padding: 0; margin: 0; position: relative; }
+.rin-hsteps::before { content: ""; position: absolute; left: 12%; right: 12%; top: 27px; border-top: 2px dashed #dce7fb; }
+.rin-hsteps li { text-align: center; padding: 0 8px; position: relative; }
+.rin-hsteps i { width: 56px; height: 56px; border-radius: 50%; background: #fff; border: 2px solid var(--sf-blue); color: var(--sf-blue); display: grid; place-items: center; margin: 0 auto 10px; font-size: 1.2rem; }
+.rin-hsteps b { color: var(--sf-navy); display: block; } .rin-hsteps small { color: #7b809a; }
+.rin-hfees { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 22px; }
+.rin-hfees div { background: #fff; border: 1px solid #e5e9f0; border-radius: 10px; padding: 12px 14px; display: flex; gap: 12px; align-items: center; }
+.rin-hfees i { color: var(--sf-blue); font-size: 1.2rem; width: 24px; text-align: center; }
+.rin-hfees b { color: var(--sf-navy); display: block; font-size: .92rem; } .rin-hfees small { color: #7b809a; }
+@media (max-width: 991px) {
+    .rin-ticket { margin: 0 auto; }
+    .rin-flow { grid-template-columns: 1fr; } .rin-flow li:not(:last-child)::after { content: "\f078"; right: auto; left: 50%; top: auto; bottom: -15px; transform: translateX(-50%); }
+    .rin-cases, .rin-fees, .rin-calc, .rin-hfees { grid-template-columns: 1fr; }
+    .rin-buy { grid-template-columns: auto 1fr; } .rin-buy .lp-btn { grid-column: 1 / -1; }
+    .rin-hsteps { grid-template-columns: 1fr 1fr; row-gap: 18px; } .rin-hsteps::before { display: none; }
+    .rin-home .top { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 767px) {
+    .rin-calc { padding: 14px; margin-left: -4px; margin-right: -4px; } .rin-calc .out { padding: 16px; }
+    .rin-home { padding: 20px 16px; } .rin-home h2 { font-size: 1.3rem; }
+    .rin-home .btns { width: 100%; } .rin-home .btns .lp-btn { flex: 1; }
+}

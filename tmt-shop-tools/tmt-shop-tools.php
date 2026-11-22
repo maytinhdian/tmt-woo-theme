@@ -38,6 +38,7 @@ add_action(
 		require_once TMT_TOOLS_DIR . '/includes/builder.php';
 		require_once TMT_TOOLS_DIR . '/includes/requests.php';
 		require_once TMT_TOOLS_DIR . '/includes/landing.php';
+		require_once TMT_TOOLS_DIR . '/includes/repair-intake.php';
 		require_once TMT_TOOLS_DIR . '/includes/discontinued.php';
 		require_once TMT_TOOLS_DIR . '/includes/promotions.php';
 		require_once TMT_TOOLS_DIR . '/includes/gifts.php';

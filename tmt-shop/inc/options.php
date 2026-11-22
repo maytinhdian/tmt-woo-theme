@@ -75,7 +75,7 @@ function tmt_defaults() {
 		'footer.youtube'    => '',
 		'footer.tiktok'     => '',
 
-		'home.sections'     => array( 'slider', 'promises', 'categories', 'sale', 'software', 'products', 'posts' ),
+		'home.sections'     => array( 'slider', 'promises', 'categories', 'sale', 'software', 'repair', 'products', 'posts' ),
 		'home.slider_style' => 'banners',
 		'home.slides'       => array(),
 		'home.slide_seconds' => 5,
@@ -93,6 +93,8 @@ function tmt_defaults() {
 		'home.software_banner_text'  => 'Dùng cho máy nhà, máy văn phòng, có hóa đơn đỏ.',
 		'home.software_points' => "Key chính hãng, kích hoạt online\nGửi key qua email, Zalo trong 15 phút\nTiệm cài giúp qua UltraViewer hoặc tại tiệm\nNhắc gia hạn trước 30 ngày\nXuất hóa đơn VAT cho công ty",
 		'home.software_steps'  => "Chọn phần mềm | Mua online hoặc nhắn Zalo\nThanh toán | Chuyển khoản, quét QR\nNhận key | Qua email, Zalo trong 15 phút\nCài đặt | Tiệm hỗ trợ từ xa miễn phí",
+		'home.repair_title' => 'Kiểm tra trước, đồng ý mới sửa',
+		'home.repair_text'  => '',
 		'home.products_title' => 'Sản phẩm mới về',
 		'home.products_count' => 8,
 		'home.posts_title'  => 'Mẹo vặt máy tính',

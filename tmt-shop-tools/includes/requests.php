@@ -14,6 +14,7 @@ function tmt_req_types() {
 		'bao-gia'  => array( 'YC', 'Báo giá sản phẩm' ),
 		'khao-sat' => array( 'KS', 'Khảo sát giải pháp' ),
 		'dung-thu' => array( 'DT', 'Dùng thử phần mềm' ),
+		'sua-may'  => array( 'SM', 'Sửa máy / tư vấn tận nơi' ),
 	);
 }
 
@@ -185,6 +186,15 @@ function tmt_req_handle() {
 			$fail( 'gui' );
 		}
 		$data['item'] = $product->get_name() . ( $product->get_sku() ? ' (' . $product->get_sku() . ')' : '' );
+	} elseif ( 'sua-may' === $type ) {
+		$kinds        = function_exists( 'tmt_repair_kinds' ) ? tmt_repair_kinds() : array( 'Sửa máy' );
+		$kind         = $text( 'kind', 100 );
+		$data['ref']  = 0;
+		$data['item'] = in_array( $kind, $kinds, true ) ? $kind : $kinds[0];
+		$address      = $text( 'address', 255 );
+		if ( '' !== $address ) {
+			$data['extra']['Địa chỉ'] = $address;
+		}
 	} else {
 		$page = get_post( $data['ref'] );
 		if ( ! $page || ! in_array( $page->post_type, array( 'tmt_solution', 'tmt_software' ), true ) || 'publish' !== $page->post_status ) {
@@ -215,7 +225,7 @@ add_action( 'admin_post_nopriv_tmt_req', 'tmt_req_handle' );
 /** Mã vừa gửi (?da-gui=), chỉ nhận đúng dạng mã để khỏi in chữ lạ lên trang. */
 function tmt_req_sent() {
 	$n = isset( $_GET['da-gui'] ) ? sanitize_text_field( wp_unslash( $_GET['da-gui'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
-	return preg_match( '/^(YC|KS|DT)\d{4}-\d{4,}$/', $n ) ? $n : '';
+	return preg_match( '/^(YC|KS|DT|SM)\d{4}-\d{4,}$/', $n ) ? $n : '';
 }
 
 /** Lỗi khi gửi (?yc-loi=) thành câu cho khách. */
@@ -230,8 +240,8 @@ function tmt_req_error() {
 }
 
 /** Các ô ẩn chung của form yêu cầu. Gửi xong quay về trang của sản phẩm / giải pháp $ref. */
-function tmt_req_hidden( $type, $ref, $anchor ) {
-	$back = get_permalink( $ref );
+function tmt_req_hidden( $type, $ref, $anchor, $back = '' ) {
+	$back = $back ? $back : get_permalink( $ref );
 	echo '<input type="hidden" name="action" value="tmt_req">';
 	echo '<input type="hidden" name="type" value="' . esc_attr( $type ) . '">';
 	echo '<input type="hidden" name="ref" value="' . (int) $ref . '">';

@@ -34,6 +34,7 @@ function tmt_home_sections() {
 		'categories' => 'Danh mục nổi bật',
 		'sale'       => 'Khuyến mãi đếm ngược',
 		'software'   => 'Phần mềm bản quyền',
+		'repair'     => 'Quy trình sửa máy (cần plugin TMT Shop Tools)',
 		'products'   => 'Sản phẩm mới',
 		'posts'      => 'Bài viết',
 	);
@@ -174,6 +175,8 @@ function tmt_customizer_sections() {
 				array( 'home.software_banner_text', 'text', 'Phần mềm bản quyền: dòng mô tả khung trái' ),
 				array( 'home.software_points', 'textarea', 'Phần mềm bản quyền: cam kết (mỗi dòng một ý)' ),
 				array( 'home.software_steps', 'textarea', 'Phần mềm bản quyền: các bước mua (mỗi dòng "Tên bước | mô tả", tối đa 4)' ),
+				array( 'home.repair_title', 'text', 'Quy trình sửa máy: tiêu đề', array( 'desc' => 'Phí kiểm tra, di chuyển, hạn mức chỉnh ở mục "Sửa máy: quy trình và phí".' ) ),
+				array( 'home.repair_text', 'text', 'Quy trình sửa máy: dòng mô tả (để trống thì ẩn)' ),
 				array( 'home.products_title', 'text', 'Tiêu đề sản phẩm mới' ),
 				array( 'home.products_count', 'number', 'Số sản phẩm mới', array( 'min' => 4, 'max' => 24 ) ),
 				array( 'home.posts_title', 'text', 'Tiêu đề bài viết' ),

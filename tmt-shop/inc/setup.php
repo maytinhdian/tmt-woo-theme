@@ -82,6 +82,9 @@ function tmt_enqueue() {
 	wp_add_inline_style( 'tmt-theme', tmt_inline_css( $font ) );
 
 	wp_enqueue_script( 'tmt-theme', TMT_SHOP_URI . '/assets/js/theme.js', array(), $v, array( 'in_footer' => true, 'strategy' => 'defer' ) );
+	if ( tmt_brand_fx()['js'] ) {
+		wp_enqueue_script( 'tmt-brand-fx', TMT_SHOP_URI . '/assets/js/brand-fx.js', array(), $v, array( 'in_footer' => true, 'strategy' => 'defer' ) );
+	}
 	if ( tmt_effects()['js'] ) {
 		wp_enqueue_script( 'tmt-fx', TMT_SHOP_URI . '/assets/js/fx.js', array(), $v, array( 'in_footer' => true, 'strategy' => 'defer' ) );
 	}

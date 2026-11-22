@@ -21,9 +21,10 @@ $tmt_fx = tmt_effects();
 <?php get_template_part( 'template-parts/header/topbar' ); ?>
 <header class="sf-header" id="sf-header">
 	<div class="sf-wrap sf-head-row">
-		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="sf-brand" rel="home">
+		<?php $tmt_bfx = tmt_brand_fx(); ?>
+		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="sf-brand sf-bfx-run-<?php echo esc_attr( $tmt_bfx['run'] ); ?> sf-bfx-c-<?php echo esc_attr( $tmt_bfx['color'] ); ?>" rel="home"<?php echo 'none' !== $tmt_bfx['fx'] ? ' style="--bfx-k: ' . esc_attr( $tmt_bfx['k'] ) . '" data-bfx-run="' . esc_attr( $tmt_bfx['run'] ) . '"' : ''; ?>>
 			<img src="<?php echo esc_url( tmt_logo_url() ); ?>" alt="<?php echo esc_attr( 'Logo ' . tmt_opt( 'shop.brand' ) ); ?>" height="44">
-			<span class="sf-brand-t d-none d-sm-block"><b><?php echo esc_html( tmt_opt( 'shop.brand' ) ); ?></b><?php if ( tmt_opt( 'shop.brand_by' ) ) : ?><br><small>by <?php echo esc_html( tmt_opt( 'shop.brand_by' ) ); ?></small><?php endif; ?></span>
+			<span class="sf-brand-t d-none d-sm-block"><b><?php echo tmt_brand_text( tmt_opt( 'shop.brand' ), $tmt_bfx['name'], $tmt_bfx ); // phpcs:ignore WordPress.Security.EscapeOutput ?></b><?php if ( tmt_opt( 'shop.brand_by' ) ) : ?><br><small><?php echo tmt_brand_text( 'by ' . tmt_opt( 'shop.brand_by' ), $tmt_bfx['by'], $tmt_bfx ); // phpcs:ignore WordPress.Security.EscapeOutput ?></small><?php endif; ?></span>
 		</a>
 		<?php get_template_part( 'template-parts/header/search' ); ?>
 		<div class="sf-head-actions">

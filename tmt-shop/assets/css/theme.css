@@ -1265,3 +1265,63 @@ body[data-cart-look="dark"] .sf-atc:hover { background: var(--sf-navy); color: #
 .sf-mbuy .sf-atc { --h: 44px; }
 a.sf-atc { text-decoration: none; }
 .sf-cart-n.is-bump { animation: sf-atc-bump .45s cubic-bezier(.3, 1.6, .5, 1); }
+
+/* ---------- Chữ cạnh logo (port _storefront-brand-fx.scss, tmt_brand_fx()) ---------- */
+/* Hiệu ứng chữ cạnh logo đầu trang web bán hàng (Anh 2 chọn 6 kiểu 22/11/2026, mockup /mnt/project-files/mockup/hieu-ung-chu-logo/). */
+/* Chọn ở Tùy biến web › Hiệu ứng › Chữ cạnh logo (Theme::brandFx()); chữ dựng ở storefront::partials.brand-text. */
+/* Lớp trên thẻ <a class="sf-brand">: sf-bfx-run-loop|once|hover (lúc chạy), sf-bfx-c-primary|dark (màu nhấn), biến --bfx-k (tốc độ). */
+/* Gõ chữ và Đổi câu do resources/js/storefront-brand-fx.js chạy; CSS ở đây chỉ lo phần nhìn. */
+
+.sf-brand { --bfx-k: 1; --bfx-c: var(--sf-blue); }
+.sf-brand.sf-bfx-c-dark { --bfx-c: var(--sf-navy); }
+.sf-bfx { position: relative; display: inline-block; }
+.sf-bfx .ch { display: inline-block; }
+
+/* Chạy một lần: mọi vòng lặp thành 1 lần. Khi rê chuột: đứng yên tới khi rê vào logo (rời ra thì về như cũ). */
+.sf-bfx-run-once .sf-bfx, .sf-bfx-run-once .sf-bfx * { animation-iteration-count: 1 !important; }
+.sf-bfx-run-hover:not(:hover) .sf-bfx, .sf-bfx-run-hover:not(:hover) .sf-bfx * { animation: none !important; }
+
+/* Ánh kim lướt: vệt sáng vàng lướt qua chữ rồi nghỉ. */
+.sf-bfx-shimmer {
+    background: linear-gradient(100deg, currentColor 0 40%, color-mix(in srgb, var(--sf-yellow) 45%, white) 47%, var(--sf-yellow) 50%, color-mix(in srgb, var(--sf-yellow) 45%, white) 53%, currentColor 60% 100%);
+    background-size: 300% 100%; background-position: 100% 0;
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    animation: sf-bfx-shimmer calc(3.2s * var(--bfx-k)) ease-in-out infinite;
+}
+@keyframes sf-bfx-shimmer { 0%, 25% { background-position: 100% 0; } 75%, 100% { background-position: 0 0; } }
+
+/* Phát sáng nhẹ: chữ đổi sang màu nhấn, quầng xanh + vàng như nhịp thở. */
+.sf-bfx-glow { animation: sf-bfx-glow calc(2.6s * var(--bfx-k)) ease-in-out infinite; }
+@keyframes sf-bfx-glow {
+    0%, 100% { text-shadow: none; }
+    50% { color: var(--bfx-c); text-shadow: 0 0 6px color-mix(in srgb, var(--bfx-c) 45%, transparent), 0 0 14px color-mix(in srgb, var(--sf-yellow) 55%, transparent); }
+}
+
+/* Hiện từng chữ: mờ rồi rõ dần từ trái qua phải. */
+.sf-bfx-reveal .ch { animation: sf-bfx-reveal calc(4s * var(--bfx-k)) ease-out infinite; animation-delay: calc(var(--i) * 35ms * var(--bfx-k)); }
+@keyframes sf-bfx-reveal { 0% { opacity: 0; filter: blur(4px); transform: translateY(4px); } 18%, 100% { opacity: 1; filter: none; transform: none; } }
+
+/* Lật chữ: từng chữ lật một vòng như bảng số sân bay. */
+.sf-bfx-flip { perspective: 300px; }
+.sf-bfx-flip .ch { animation: sf-bfx-flip calc(4s * var(--bfx-k)) ease-in-out infinite; animation-delay: calc(var(--i) * 40ms * var(--bfx-k)); backface-visibility: hidden; }
+@keyframes sf-bfx-flip { 0%, 25%, 100% { transform: none; } 12% { transform: rotateX(360deg); color: var(--bfx-c); } }
+
+/* Gõ chữ / Đổi câu: các lớp chồng lên một ô lưới, ô rộng theo câu dài nhất nên logo, thanh tìm kiếm không xê dịch. */
+.sf-bfx-stack { display: inline-grid; }
+.sf-bfx-stack > * { grid-area: 1 / 1; white-space: nowrap; }
+.sf-bfx-type .sz { visibility: hidden; }
+.sf-bfx-type .tx.typing::after { content: ""; display: inline-block; width: 1px; height: 1em; margin-left: 1px; vertical-align: -2px; background: var(--bfx-c); animation: sf-bfx-caret .8s steps(1) infinite; }
+@keyframes sf-bfx-caret { 50% { opacity: 0; } }
+
+.sf-bfx-rotate .ln { visibility: hidden; }
+.sf-bfx-rotate .ln.on { visibility: visible; }
+.sf-bfx-rotate .ln.alt { color: var(--bfx-c); font-weight: 500; }
+.sf-bfx-rotate .ln.on.run .ch { animation: sf-bfx-reveal calc(1.2s * var(--bfx-k)) ease-out both; animation-delay: calc(var(--i) * 25ms * var(--bfx-k)); }
+/* Rê chuột: lớp "run" do JS gắn khi đổi câu, nên không bị luật "đứng yên khi chưa rê" chặn. */
+.sf-bfx-run-hover .sf-bfx-rotate .ln.on.run .ch { animation: sf-bfx-reveal calc(1.2s * var(--bfx-k)) ease-out both !important; animation-delay: calc(var(--i) * 25ms * var(--bfx-k)) !important; }
+
+@media (prefers-reduced-motion: reduce) {
+    .sf-bfx, .sf-bfx * { animation: none !important; }
+    .sf-bfx-shimmer { -webkit-text-fill-color: currentColor; background: none; }
+}
+

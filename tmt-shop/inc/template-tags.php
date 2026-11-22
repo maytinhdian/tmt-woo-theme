@@ -112,3 +112,75 @@ function tmt_post_card( $post = null ) {
 	</article>
 	<?php
 }
+
+/**
+ * Hiệu ứng chữ cạnh logo (Tùy biến → Hiệu ứng → Chữ cạnh logo; port Theme::brandFx của app).
+ *
+ * @return array{fx: string, name: bool, by: bool, run: string, k: string, color: string, lines: list<string>, letters: bool, js: bool}
+ */
+function tmt_brand_fx() {
+	$fx     = array_key_exists( (string) tmt_opt( 'effects.brand_fx' ), tmt_brand_fx_choices() ) ? tmt_opt( 'effects.brand_fx' ) : 'none';
+	$target = in_array( tmt_opt( 'effects.brand_target' ), array( 'by', 'name', 'both' ), true ) ? tmt_opt( 'effects.brand_target' ) : 'by';
+	$k      = array( 'fast' => '.65', 'normal' => '1', 'slow' => '1.5' );
+	$on     = 'none' !== $fx;
+	$lines  = array();
+	foreach ( preg_split( '/\R/u', (string) tmt_opt( 'effects.brand_lines' ) ) as $l ) {
+		$l = trim( $l );
+		if ( '' !== $l && count( $lines ) < 5 ) {
+			$lines[] = mb_substr( $l, 0, 60 );
+		}
+	}
+	return array(
+		'fx'      => $fx,
+		'name'    => $on && 'rotate' !== $fx && 'by' !== $target,
+		'by'      => $on && ( 'rotate' === $fx || 'name' !== $target ),
+		'run'     => in_array( tmt_opt( 'effects.brand_run' ), array( 'loop', 'once', 'hover' ), true ) ? tmt_opt( 'effects.brand_run' ) : 'loop',
+		'k'       => isset( $k[ tmt_opt( 'effects.brand_speed' ) ] ) ? $k[ tmt_opt( 'effects.brand_speed' ) ] : '1',
+		'color'   => 'dark' === tmt_opt( 'effects.brand_color' ) ? 'dark' : 'primary',
+		'lines'   => $lines,
+		'letters' => in_array( $fx, array( 'reveal', 'flip' ), true ),
+		'js'      => in_array( $fx, array( 'type', 'rotate' ), true ),
+	);
+}
+
+/** Kiểu chữ cạnh logo. */
+function tmt_brand_fx_choices() {
+	return array(
+		'none'    => 'Đứng yên (như cũ)',
+		'shimmer' => 'Ánh kim lướt',
+		'type'    => 'Gõ chữ',
+		'glow'    => 'Phát sáng nhẹ',
+		'reveal'  => 'Hiện từng chữ',
+		'rotate'  => 'Đổi câu (chữ hiện dần)',
+		'flip'    => 'Lật chữ',
+	);
+}
+
+/** Chữ cạnh logo đã dựng cho hiệu ứng (port partials/brand-text của app). $on: dòng này có hiệu ứng không. */
+function tmt_brand_text( $text, $on, $b ) {
+	$letters = function ( $t ) {
+		$out = '';
+		foreach ( preg_split( '/(\X)/u', $t, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY ) as $i => $ch ) {
+			$out .= ' ' === $ch ? ' ' : '<span class="ch" style="--i:' . (int) $i . '">' . esc_html( $ch ) . '</span>';
+		}
+		return $out;
+	};
+	$hidden = '<span class="visually-hidden">' . esc_html( $text ) . '</span>';
+	if ( ! $on ) {
+		return esc_html( $text );
+	}
+	if ( 'type' === $b['fx'] ) {
+		return '<span class="sf-bfx sf-bfx-type" data-sf-bfx="type">' . $hidden . '<span class="sf-bfx-stack" aria-hidden="true"><span class="sz">' . esc_html( $text ) . '</span><span class="tx" data-text="' . esc_attr( $text ) . '">' . esc_html( $text ) . '</span></span></span>';
+	}
+	if ( 'rotate' === $b['fx'] ) {
+		$html = '';
+		foreach ( array_merge( array( $text ), $b['lines'] ) as $n => $line ) {
+			$html .= '<span class="ln' . ( 0 === $n ? ' on' : ' alt' ) . '">' . $letters( $line ) . '</span>';
+		}
+		return '<span class="sf-bfx sf-bfx-rotate" data-sf-bfx="rotate">' . $hidden . '<span class="sf-bfx-stack" aria-hidden="true">' . $html . '</span></span>';
+	}
+	if ( $b['letters'] ) {
+		return '<span class="sf-bfx sf-bfx-' . esc_attr( $b['fx'] ) . '">' . $hidden . '<span aria-hidden="true">' . $letters( $text ) . '</span></span>';
+	}
+	return '<span class="sf-bfx sf-bfx-' . esc_attr( $b['fx'] ) . '">' . esc_html( $text ) . '</span>';
+}

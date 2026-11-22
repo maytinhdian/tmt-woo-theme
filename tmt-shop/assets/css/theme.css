@@ -209,6 +209,7 @@
     .sf-nl-form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
     .sf-nl-ok { color: #9be7b1; font-weight: 500; margin-top: .4rem; font-size: .8125rem; }
     .sf-nl-err { color: #ffb4b4; margin-top: .4rem; font-size: .8125rem; }
+    #nhan-tin { margin-bottom: 1.25rem; }
     .sf-copy { text-align: center; padding: 1rem 0 1.1rem; font-size: .875rem; border-top: 1px solid rgba(255,255,255,.1); }
     .sf-copy b { color: var(--sf-yellow); font-weight: 500; }
     @media (max-width: 1199px) { .sf-ft-main { grid-template-columns: 1fr 1fr 1fr; } .sf-ft-main > :first-child { grid-column: span 2; } }

@@ -270,7 +270,7 @@ function tmt_customizer_sections() {
 				array( 'footer.shipping', 'text', 'Dòng giao hàng (cột Hỗ trợ)' ),
 				array( 'footer.map', 'checkbox', 'Bản đồ Google ghim tiệm' ),
 				array( 'footer.map_query', 'text', 'Địa chỉ ghim trên bản đồ', array( 'desc' => 'Để trống thì dùng địa chỉ cửa hàng.' ) ),
-				array( 'footer.newsletter', 'checkbox', 'Ô nhận tin (thả widget form vào vùng "Chân trang: ô nhận tin")' ),
+				array( 'footer.newsletter', 'checkbox', 'Ô nhận tin khuyến mãi', array( 'desc' => 'Có plugin TMT Shop Tools: dùng ô có sẵn, email lưu ở WooCommerce → Email nhận tin (tải CSV). Không có plugin đó thì hiện widget ở vùng "Chân trang: ô nhận tin" (ví dụ form MailPoet).' ) ),
 				array( 'footer.zalo', 'text', 'Zalo (số hoặc link, trống = số tiệm)' ),
 				array( 'footer.facebook', 'url', 'Facebook (https://...)' ),
 				array( 'footer.tiktok', 'url', 'TikTok (https://...)' ),
@@ -340,6 +340,7 @@ function tmt_customizer_sections() {
 				array( 'effects.cart_where', 'radio', 'Áp dụng ở', array( 'choices' => array( 'both' => 'Trang chi tiết và thẻ sản phẩm', 'product' => 'Chỉ trang chi tiết sản phẩm', 'card' => 'Chỉ thẻ sản phẩm (danh sách, trang chủ)' ) ) ),
 				array( 'effects.cart_speed', 'radio', 'Tốc độ', array( 'choices' => array( 'fast' => 'Nhanh', 'normal' => 'Vừa', 'slow' => 'Chậm' ), 'desc' => 'Nhanh khoảng 1,4 giây, vừa 2 giây, chậm 2,6 giây.' ) ),
 				array( 'effects.cart_count', 'checkbox', 'Hiện dòng "Trong giỏ: N món" dưới nút (trang chi tiết)' ),
+				array( 'effects.nl_plane', 'checkbox', 'Nút "Đăng ký nhận tin": máy bay giấy bay lượn 2 vòng rồi về chỗ', array( 'desc' => 'Gửi email không tải lại trang. Chỉ với ô nhận tin có sẵn của plugin TMT Shop Tools.' ) ),
 			),
 		),
 	);

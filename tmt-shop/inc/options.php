@@ -67,7 +67,7 @@ function tmt_defaults() {
 			array( 'icon' => 'fa-solid fa-screwdriver-wrench', 'title' => 'Ráp máy miễn phí', 'sub' => 'Cài Windows, test kỹ trước khi giao' ),
 			array( 'icon' => 'fa-solid fa-certificate', 'title' => 'Hàng chính hãng', 'sub' => 'Có serial, xuất hóa đơn công ty' ),
 		),
-		'footer.newsletter' => false,
+		'footer.newsletter' => true,
 		'footer.map'        => true,
 		'footer.map_query'  => '',
 		'footer.zalo'       => '',
@@ -164,6 +164,7 @@ function tmt_defaults() {
 		'effects.cart_where'    => 'both',
 		'effects.cart_speed'    => 'normal',
 		'effects.cart_count'    => false,
+		'effects.nl_plane'      => true,
 	);
 	return $d;
 }

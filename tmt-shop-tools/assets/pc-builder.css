@@ -114,8 +114,11 @@ a.pcb-name:hover { color: var(--pcb-blue); }
 }
 @media (max-width: 575px) {
 	.pcb-slot { flex-wrap: wrap; padding: .8rem; }
-	.pcb-slot > .pcb-right { width: 100%; justify-content: flex-end; padding-left: calc(48px + .9rem); }
-	.pcb-price { min-width: 0; }
+	/* Giá không co lại dưới nút Đổi; thiếu chỗ thì xuống dòng thay vì đè (theo app, 21/11/2026). */
+	.pcb-slot > .pcb-right { width: 100%; justify-content: flex-end; flex-wrap: wrap; row-gap: .4rem; padding-left: 0; }
+	.pcb-price { min-width: 0; flex-shrink: 0; margin-right: auto; }
+	.pcb-qty + .pcb-price { margin-right: 0; }
+	.pcb-qty { margin-right: auto; }
 	.pcb-picker { padding: 0 .8rem .8rem; }
 	.pcb-opt { flex-wrap: wrap; }
 	.pcb-opt .pcb-right { width: 100%; justify-content: flex-end; }

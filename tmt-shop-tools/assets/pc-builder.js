@@ -36,8 +36,9 @@
 	}
 
 	function renderSlots() {
-		let html = '';
+		let html = '', acc = false;
 		for (const [slot, s] of Object.entries(D.slots)) {
+			if (s.extra && !acc) { acc = true; html += '<div class="pcb-group">Phụ kiện</div>'; }
 			const p = pick(slot), q = qty(slot), open = S.open === slot, bad = p && reasons(p).length;
 			html += '<div class="pcb-slot' + (p ? '' : ' empty') + (bad ? ' bad' : '') + (open ? ' open' : '') + '">'
 				+ '<div class="pcb-ico">' + thumb(p, s.icon) + '</div><div class="pcb-main">'

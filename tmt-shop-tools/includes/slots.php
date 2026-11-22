@@ -11,10 +11,10 @@ defined( 'ABSPATH' ) || exit;
  * Khe linh kiện theo thứ tự hiển thị.
  * guess = từ khóa nhận ra danh mục WooCommerce khi chủ tiệm chưa gán (so với slug danh mục).
  *
- * @return array<string, array{label: string, icon: string, required: bool, max: int, guess: list<string>}>
+ * @return array<string, array{label: string, icon: string, required: bool, max: int, guess: list<string>, extra?: bool}>
  */
 function tmt_pcb_slots() {
-	return array(
+	$slots = array(
 		'cpu'      => array( 'label' => 'CPU', 'icon' => 'memory', 'required' => true, 'max' => 1, 'guess' => array( 'cpu', 'bo-xu-ly', 'vi-xu-ly' ) ),
 		'main'     => array( 'label' => 'Mainboard', 'icon' => 'developer_board', 'required' => true, 'max' => 1, 'guess' => array( 'mainboard', 'bo-mach-chu', 'main' ) ),
 		'ram'      => array( 'label' => 'RAM', 'icon' => 'sd_card', 'required' => true, 'max' => 4, 'guess' => array( 'ram' ) ),
@@ -28,6 +28,55 @@ function tmt_pcb_slots() {
 		'keyboard' => array( 'label' => 'Bàn phím', 'icon' => 'keyboard', 'required' => false, 'max' => 1, 'guess' => array( 'ban-phim' ) ),
 		'mouse'    => array( 'label' => 'Chuột', 'icon' => 'mouse', 'required' => false, 'max' => 1, 'guess' => array( 'chuot' ) ),
 	);
+	// Khe phụ kiện chủ tiệm tự thêm (WooCommerce → Lên cấu hình): không bắt buộc, không có luật lắp ráp.
+	foreach ( tmt_pcb_extra_slots() as $x ) {
+		$slots[ $x['key'] ] = array( 'label' => $x['label'], 'icon' => $x['icon'], 'required' => false, 'max' => $x['max'], 'guess' => array( sanitize_title( $x['label'] ) ), 'extra' => true );
+	}
+	return $slots;
+}
+
+/** Biểu tượng (Material Icons) chọn được cho khe phụ kiện: tên icon => nhãn. */
+function tmt_pcb_extra_icons() {
+	return array(
+		'extension'             => 'Phụ kiện chung',
+		'headphones'            => 'Tai nghe',
+		'speaker'               => 'Loa',
+		'videocam'              => 'Webcam',
+		'mic'                   => 'Micro',
+		'wifi'                  => 'WiFi, mạng',
+		'cyclone'               => 'Quạt',
+		'window'                => 'Windows, phần mềm',
+		'cable'                 => 'Cáp, dây',
+		'sports_esports'        => 'Tay cầm',
+		'battery_charging_full' => 'UPS, ổ cắm',
+		'print'                 => 'Máy in',
+		'backpack'              => 'Balo, túi',
+		'light'                 => 'Đèn LED',
+	);
+}
+
+/**
+ * Khe phụ kiện đã lưu (option tmt_pcb_extra_slots), đã làm sạch.
+ *
+ * @return list<array{key: string, label: string, icon: string, max: int}>
+ */
+function tmt_pcb_extra_slots() {
+	$out   = array();
+	$icons = tmt_pcb_extra_icons();
+	foreach ( (array) get_option( 'tmt_pcb_extra_slots', array() ) as $x ) {
+		$key   = isset( $x['key'] ) ? (string) $x['key'] : '';
+		$label = isset( $x['label'] ) ? trim( (string) $x['label'] ) : '';
+		if ( ! preg_match( '/^x[a-z0-9]{1,12}$/', $key ) || '' === $label ) {
+			continue;
+		}
+		$out[] = array(
+			'key'   => $key,
+			'label' => $label,
+			'icon'  => isset( $x['icon'], $icons[ $x['icon'] ] ) ? $x['icon'] : 'extension',
+			'max'   => max( 1, min( 10, isset( $x['max'] ) ? (int) $x['max'] : 1 ) ),
+		);
+	}
+	return $out;
 }
 
 /**

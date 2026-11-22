@@ -65,6 +65,8 @@ Cài đặt:
 
 Cấu hình có lỗi đỏ (không lắp được) không vào giỏ được, máy chủ kiểm tra lại. Món chưa có giá, tạm hết hoặc không đủ số lượng không vào giỏ (hoặc vào phần còn), web báo rõ để tiệm gọi xác nhận.
 
+
+**Phụ kiện thêm**: WooCommerce → Lên cấu hình → mục 2, mỗi dòng một khe (Tai nghe, Loa, Webcam, Card WiFi, Windows...): tên, biểu tượng, số tối đa. Lưu xong chọn nhóm hàng cho khe ở mục 1 (nhóm trùng tên khe được tự nhận). Khe phụ kiện không bắt buộc, không có luật lắp ráp, hiện cuối trang dưới tiêu đề "Phụ kiện", có trong giỏ, link chia sẻ và bản in.
 ## Mẹo vặt (Bài viết)
 
 Trang Bài viết (Cài đặt → Đọc → "Trang bài viết", nên đặt tên **Mẹo vặt**) hiện kiểu "dòng tin + video" giống web của app:

@@ -27,6 +27,7 @@
 
 .pcb-slot { display: flex; align-items: center; gap: .9rem; padding: .85rem 1.1rem; border-top: 1px solid var(--pcb-line); }
 .pcb-slot.open { background: #f6f8fc; }
+.pcb-group { padding: .7rem 1.1rem .35rem; border-top: 1px solid var(--pcb-line); font-size: .78rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #8392ab; }
 .pcb-ico { width: 48px; height: 48px; flex-shrink: 0; border-radius: .6rem; background: #eef3fd; color: var(--pcb-blue); display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .pcb-ico.sm { width: 42px; height: 42px; }
 .pcb-ico img { width: 100%; height: 100%; object-fit: contain; background: #fff; }

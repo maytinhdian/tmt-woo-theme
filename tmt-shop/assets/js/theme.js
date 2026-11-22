@@ -163,4 +163,25 @@
 		t = setInterval(tick, 1000);
 		tick();
 	});
+
+	/* Phần mềm bản quyền trang chủ: đổi tab tại chỗ, phím mũi tên trái/phải. */
+	document.querySelectorAll('[data-sw]').forEach((sec) => {
+		const tabs = [...sec.querySelectorAll('[data-sw-tab]')], more = sec.querySelector('[data-sw-more]');
+		const pick = (tab) => {
+			tabs.forEach((t) => {
+				const on = t === tab;
+				t.setAttribute('aria-selected', on);
+				t.tabIndex = on ? 0 : -1;
+				document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+			});
+			if (more) more.href = tab.dataset.href;
+		};
+		tabs.forEach((t, i) => {
+			t.addEventListener('click', () => pick(t));
+			t.addEventListener('keydown', (e) => {
+				const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+				if (d) { const n = tabs[(i + d + tabs.length) % tabs.length]; pick(n); n.focus(); }
+			});
+		});
+	});
 })();

@@ -97,6 +97,9 @@ add_action(
 				$extra[] = array( 'key' => $key, 'label' => $label, 'icon' => sanitize_key( isset( $x['icon'] ) ? $x['icon'] : '' ), 'max' => absint( isset( $x['max'] ) ? $x['max'] : 1 ) );
 			}
 			update_option( 'tmt_pcb_extra_slots', $extra, false );
+			if ( isset( $_POST['soft_slots'] ) ) {
+				$msg = 'soft-' . count( tmt_pcb_add_software_slots() );
+			}
 			update_option( 'tmt_pcb_note', sanitize_text_field( wp_unslash( isset( $_POST['note'] ) ? $_POST['note'] : '' ) ), false );
 			update_option( 'tmt_pcb_zalo', preg_replace( '/[^\d]/', '', (string) wp_unslash( isset( $_POST['zalo'] ) ? $_POST['zalo'] : '' ) ), false );
 			tmt_pcb_flush();
@@ -152,6 +155,8 @@ function tmt_pcb_admin_page() {
 			<div class="notice notice-success is-dismissible"><p>Đã lưu.</p></div>
 		<?php elseif ( 0 === strpos( $msg, 'attrs-' ) ) : ?>
 			<div class="notice notice-success is-dismissible"><p>Đã tạo <?php echo (int) substr( $msg, 6 ); ?> thuộc tính mới. Giờ vào sửa từng linh kiện → tab Thuộc tính để chọn giá trị.</p></div>
+		<?php elseif ( 0 === strpos( $msg, 'soft-' ) ) : ?>
+			<div class="notice notice-success is-dismissible"><p><?php echo (int) substr( $msg, 5 ) ? 'Đã thêm ' . (int) substr( $msg, 5 ) . ' khe phần mềm. Chọn danh mục cho chúng ở mục 1.' : 'Các khe phần mềm đã có sẵn.'; ?></p></div>
 		<?php endif; ?>
 		<p>
 			<?php if ( $page ) : ?>
@@ -210,6 +215,8 @@ function tmt_pcb_admin_page() {
 					<?php endforeach; ?>
 				</tbody>
 			</table>
+			<p><button type="submit" class="button" name="soft_slots" value="1">Thêm sẵn khe Windows, Office, Diệt virus</button>
+				<span class="description">Khe nào đã có thì bỏ qua. Danh mục tên Windows / Office / Diệt virus được tự nhận.</span></p>
 
 			<h2>3. Hiển thị</h2>
 			<table class="form-table" role="presentation">

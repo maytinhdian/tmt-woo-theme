@@ -142,3 +142,41 @@ function tmt_pcb_spec_aliases() {
 		)
 	);
 }
+
+/**
+ * Khe phần mềm bản quyền có sẵn (nút "Thêm sẵn khe phần mềm" ở trang cài đặt, dữ liệu mẫu cũng dùng).
+ *
+ * @return list<array{key: string, label: string, icon: string, max: int}>
+ */
+function tmt_pcb_software_slots() {
+	return array(
+		array( 'key' => 'xwin', 'label' => 'Windows', 'icon' => 'window', 'max' => 1 ),
+		array( 'key' => 'xoffice', 'label' => 'Office', 'icon' => 'description', 'max' => 1 ),
+		array( 'key' => 'xav', 'label' => 'Diệt virus', 'icon' => 'security', 'max' => 1 ),
+	);
+}
+
+/**
+ * Thêm các khe phần mềm còn thiếu (so theo tên, không phân biệt hoa thường).
+ *
+ * @return list<string> Khóa các khe vừa thêm.
+ */
+function tmt_pcb_add_software_slots() {
+	$saved = (array) get_option( 'tmt_pcb_extra_slots', array() );
+	$have  = array();
+	foreach ( tmt_pcb_extra_slots() as $x ) {
+		$have[ mb_strtolower( $x['label'] ) ] = true;
+		$have[ $x['key'] ]                    = true;
+	}
+	$added = array();
+	foreach ( tmt_pcb_software_slots() as $x ) {
+		if ( empty( $have[ mb_strtolower( $x['label'] ) ] ) && empty( $have[ $x['key'] ] ) ) {
+			$saved[] = $x;
+			$added[] = $x['key'];
+		}
+	}
+	if ( $added ) {
+		update_option( 'tmt_pcb_extra_slots', array_values( $saved ), false );
+	}
+	return $added;
+}

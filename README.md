@@ -37,7 +37,7 @@ Theme WordPress cho web bán hàng máy tính, linh kiện, camera: giao diện 
 ## Có gì trong bản này
 
 - Đầu trang: thanh trên cùng 3 vùng, ô tìm 3 kiểu, menu chính với khung xổ theo danh mục + hãng, mega menu, 15 hiệu ứng rê chuột và 9 kiểu đánh dấu trang đang mở.
-- Trang chủ theo section: slider (2 kiểu), dải cam kết, danh mục nổi bật, khuyến mãi đếm ngược, sản phẩm mới, bài viết.
+- Trang chủ theo section: slider (2 kiểu), dải cam kết, danh mục nổi bật, khuyến mãi đếm ngược, phần mềm bản quyền (tab theo danh mục, khung cam kết, các bước mua key), sản phẩm mới, bài viết.
 - Danh sách sản phẩm: bộ lọc theo hãng, giá, còn hàng, mọi thuộc tính; sắp xếp; trang lọc không cho Google lập chỉ mục.
 - Thẻ sản phẩm: nhãn thông số trên ảnh, vài dòng thông số, % giảm, "N loại", nút Thêm vào giỏ (AJAX), Hỏi giá, Zalo.
 - Trang chi tiết: bộ ảnh vuốt + phóng to + toàn màn hình, chọn loại bằng nút, Mua ngay, ưu đãi, bảng thông số, sản phẩm cùng loại, thanh mua dính đáy trên điện thoại.
@@ -66,7 +66,7 @@ Cài đặt:
 Cấu hình có lỗi đỏ (không lắp được) không vào giỏ được, máy chủ kiểm tra lại. Món chưa có giá, tạm hết hoặc không đủ số lượng không vào giỏ (hoặc vào phần còn), web báo rõ để tiệm gọi xác nhận.
 
 
-**Phụ kiện thêm**: WooCommerce → Lên cấu hình → mục 2, mỗi dòng một khe (Tai nghe, Loa, Webcam, Card WiFi, Windows...): tên, biểu tượng, số tối đa. Lưu xong chọn nhóm hàng cho khe ở mục 1 (nhóm trùng tên khe được tự nhận). Khe phụ kiện không bắt buộc, không có luật lắp ráp, hiện cuối trang dưới tiêu đề "Phụ kiện", có trong giỏ, link chia sẻ và bản in.
+**Phụ kiện thêm**: WooCommerce → Lên cấu hình → mục 2, mỗi dòng một khe (Tai nghe, Loa, Webcam, Card WiFi, Windows...): tên, biểu tượng, số tối đa. Lưu xong chọn nhóm hàng cho khe ở mục 1 (nhóm trùng tên khe được tự nhận). Khe phụ kiện không bắt buộc, không có luật lắp ráp, hiện cuối trang dưới tiêu đề "Phụ kiện", có trong giỏ, link chia sẻ và bản in. Nút **Thêm sẵn khe Windows, Office, Diệt virus** tạo 3 khe phần mềm bản quyền (khe nào có rồi thì bỏ qua).
 ## Mẹo vặt (Bài viết)
 
 Trang Bài viết (Cài đặt → Đọc → "Trang bài viết", nên đặt tên **Mẹo vặt**) hiện kiểu "dòng tin + video" giống web của app:
@@ -100,7 +100,7 @@ Giá món luôn là giá thấp nhất trong giá đang bán, giá KM có hạn 
 
 ## Dữ liệu mẫu
 
-**WooCommerce → Dữ liệu mẫu → Nạp dữ liệu mẫu**: danh mục, khoảng 28 sản phẩm có thông số (lắp thử được ở Xây dựng cấu hình), 1 sản phẩm chưa có giá, 1 sản phẩm ngừng kinh doanh, laptop có Giới thiệu nâng cao và quà tặng kèm, giá sốc SSD 7 ngày và combo CPU + Main, 2 cấu hình mẫu, 6 bài Mẹo vặt, trang Giải pháp Camera + Mạng WiFi, trang Phần mềm chấm công, và nếu web chưa có thì trang chủ tĩnh, trang Mẹo vặt, menu chính, tiền VNĐ. **Xóa dữ liệu mẫu** gỡ đúng những gì đã nạp, không đụng đồ tự tạo.
+**WooCommerce → Dữ liệu mẫu → Nạp dữ liệu mẫu**: danh mục, khoảng 28 sản phẩm có thông số (lắp thử được ở Xây dựng cấu hình), 6 phần mềm bản quyền (Windows, Office, Diệt virus) kèm 3 khe phần mềm ở Lên cấu hình, 1 sản phẩm chưa có giá, 1 sản phẩm ngừng kinh doanh, laptop có Giới thiệu nâng cao và quà tặng kèm, giá sốc SSD 7 ngày và combo CPU + Main, 2 cấu hình mẫu, 6 bài Mẹo vặt, trang Giải pháp Camera + Mạng WiFi, trang Phần mềm chấm công, và nếu web chưa có thì trang chủ tĩnh, trang Mẹo vặt, menu chính, tiền VNĐ. **Xóa dữ liệu mẫu** gỡ đúng những gì đã nạp, không đụng đồ tự tạo.
 
 ## Giấy phép
 

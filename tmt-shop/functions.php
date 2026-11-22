@@ -21,6 +21,7 @@ require TMT_SHOP_DIR . '/inc/blog.php';
 
 if ( class_exists( 'WooCommerce' ) ) {
 	require TMT_SHOP_DIR . '/inc/woocommerce.php';
+	require TMT_SHOP_DIR . '/inc/cart-fx.php';
 	require TMT_SHOP_DIR . '/inc/filters.php';
 	require TMT_SHOP_DIR . '/inc/checkout.php';
 	require TMT_SHOP_DIR . '/inc/payment-qr.php';

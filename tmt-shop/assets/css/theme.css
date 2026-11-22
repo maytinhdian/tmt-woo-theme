@@ -984,7 +984,7 @@ ul.products.sf-grid > li { margin: 0 !important; padding: 0 !important; width: a
 .sf-buy-wrap .quantity .sf-q { width: 36px; height: 100%; border: 0; background: transparent; color: var(--sf-navy); display: flex; align-items: center; justify-content: center; }
 .sf-buy-wrap .quantity .sf-q:hover { background: #f6f8fc; }
 .sf-buy-wrap .single_add_to_cart_button, .sf-buy-wrap .sf-buy-now { display: flex !important; align-items: center; justify-content: center; gap: .4rem; height: 50px; padding: 0 1rem !important; border-radius: .65rem !important; white-space: nowrap; float: none !important; font-weight: 700 !important; font-size: 1rem !important; border: 0 !important; }
-.sf-buy-wrap .single_add_to_cart_button { background: var(--sf-yellow) !important; color: var(--sf-navy) !important; }
+.sf-buy-wrap .single_add_to_cart_button, .woocommerce .sf-buy-wrap button.single_add_to_cart_button.button.alt { background: var(--sf-yellow) !important; color: var(--sf-navy) !important; }
 .sf-buy-wrap .single_add_to_cart_button::before { content: "add_shopping_cart"; font-family: 'Material Icons Round'; font-size: 1.3rem; font-weight: 400; }
 .sf-buy-wrap .single_add_to_cart_button.disabled { opacity: .5; }
 .sf-buy-wrap .sf-buy-now { background: var(--sf-blue); color: #fff; }
@@ -1156,3 +1156,112 @@ a.sf-promo.t-strip:hover { color: var(--pink); }
 .sf-deal.is-flash time { font-weight: 700; color: #d32f2f; font-variant-numeric: tabular-nums; }
 .sf-deal.is-combo > i, .sf-deal.is-group > i { color: var(--sf-blue); }
 .sf-pcard-deal + .sf-pcard-vcount { top: 2rem; }
+
+/* ---------- Nút "Thêm vào giỏ" xe đẩy đón túi (port _storefront-atc.scss, inc/cart-fx.php) ---------- */
+/* Nút "Thêm vào giỏ" có hiệu ứng xe đẩy đón túi hàng (web bán hàng, /tuy-bien-web mục "Hiệu ứng", Theme::cartFx()). */
+/* Markup: app/Modules/Storefront/Views/partials/atc-button.blade.php. JS resources/js/storefront-cart-fx.js */
+/* đo --h (chiều cao nút) và --slot (chỗ icon xe bên trái chữ), thêm lớp is-adding trong --atc-ms rồi gỡ. */
+/* Diễn biến: nút nhún, chữ mờ, xe chạy ra giữa, túi hiện phía trên rồi rơi vào xe (xe đầy), xe chở ra mép phải, */
+/* xe mới chạy vào chỗ cũ, chữ hiện lại. Túi có hai bản: .sf-atc-sky (trên nút) và trong .sf-atc-stage (trong nút), */
+/* cùng một chuyển động, mỗi bản bị cắt theo khung của nó nên nhìn như một túi rơi xuyên mép nút. */
+
+body { --atc-ms: 2000ms; }
+
+.sf-atc {
+    --h: 46px;
+    --cw: calc(var(--h) * .5);
+    --slot: 1rem;
+    --land: calc(var(--h) * .2);
+    position: relative;
+    overflow: visible;
+    isolation: isolate;
+}
+.sf-atc .sf-atc-ghost, .sf-atc .sf-atc-face { display: inline-flex; align-items: center; gap: .5rem; white-space: nowrap; }
+.sf-atc .sf-atc-ghost { visibility: hidden; }
+.sf-atc .sf-atc-face { position: absolute; inset: 0; justify-content: center; }
+.sf-atc .sf-atc-sp { width: var(--cw); height: 1px; flex: none; }
+.sf-atc .sf-atc-sh { display: none; }
+.sf-atc .sf-atc-stage { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; pointer-events: none; container-type: inline-size; }
+.sf-atc .sf-atc-sky { position: absolute; left: 0; right: 0; bottom: 100%; height: 64px; overflow: hidden; pointer-events: none; }
+.sf-atc .sf-atc-cart { position: absolute; top: 0; left: 0; width: var(--cw); height: 100%; transform: translateX(var(--slot)); }
+.sf-atc .sf-atc-cart svg { position: absolute; left: 0; top: 50%; width: 100%; height: auto; transform: translateY(-52%); }
+.sf-atc .sf-atc-fill { opacity: 0; }
+.sf-atc .sf-atc-bag { position: absolute; left: 50%; top: 0; width: calc(var(--h) * .3); margin-left: calc(var(--h) * -.15); transform: translateY(-150%) scale(0); }
+.sf-atc .sf-atc-sky .sf-atc-bag { top: 64px; color: var(--sf-navy); }
+.sf-atc .sf-atc-bag svg { display: block; width: 100%; height: auto; }
+
+/* Thẻ sản phẩm: nút nhỏ hơn. Rút chữ thành "Vào giỏ" theo bề rộng hàng nút của chính thẻ (không theo màn hình): */
+/* thẻ hẹp (khối "Mua kèm" ở giỏ hàng, lưới nhiều cột, điện thoại) thì chữ dài không vừa nút cạnh nút Zalo. */
+.sf-pcard-btns:has(.sf-atc-sm) { container-type: inline-size; }
+.sf-atc.sf-atc-sm { --h: 36px; min-width: 0; }
+.sf-atc.sf-atc-sm .sf-atc-ghost, .sf-atc.sf-atc-sm .sf-atc-face { gap: .35rem; }
+@container (max-width: 185px) {
+    .sf-atc.sf-atc-sm .sf-atc-lg { display: none; }
+    .sf-atc.sf-atc-sm .sf-atc-sh { display: inline; }
+}
+@media (max-width: 575px) {
+    .sf-atc.sf-atc-sm .sf-atc-lg { display: none; }
+    .sf-atc.sf-atc-sm .sf-atc-sh { display: inline; }
+}
+
+/* Kiểu "Tối, bo tròn" (giống video Anh 2 gửi): nền màu đậm, chữ và xe trắng. */
+body[data-cart-look="dark"] .sf-atc,
+body[data-cart-look="dark"] .sf-atc:hover { background: var(--sf-navy); color: #fff; border-radius: 999px; }
+
+.sf-atc.is-adding { animation: sf-atc-press var(--atc-ms) linear; pointer-events: none; }
+.sf-atc.is-adding .sf-atc-face .sf-atc-txt { animation: sf-atc-text var(--atc-ms) linear; }
+.sf-atc.is-adding .sf-atc-cart { animation: sf-atc-cart var(--atc-ms) linear; }
+.sf-atc.is-adding .sf-atc-fill { animation: sf-atc-fill var(--atc-ms) linear; }
+.sf-atc.is-adding .sf-atc-bag { animation: sf-atc-bag var(--atc-ms) linear; }
+
+@keyframes sf-atc-press { 0% { transform: scale(1); } 5% { transform: scale(.96); } 12%, 100% { transform: scale(1); } }
+@keyframes sf-atc-text {
+    0% { opacity: 1; filter: blur(0); }
+    15%, 74% { opacity: 0; filter: blur(3px); }
+    90%, 100% { opacity: 1; filter: blur(0); }
+}
+@keyframes sf-atc-cart {
+    0%, 4% { transform: translateX(var(--slot)); animation-timing-function: cubic-bezier(.6, 0, .3, 1); }
+    30% { transform: translateX(calc(50cqw - var(--cw) / 2)); }
+    42% { transform: translateX(calc(50cqw - var(--cw) / 2)); }
+    46% { transform: translateX(calc(50cqw - var(--cw) / 2)) translateY(calc(var(--h) * .07)); }
+    52% { transform: translateX(calc(50cqw - var(--cw) / 2)); animation-timing-function: cubic-bezier(.6, 0, .9, .5); }
+    72% { transform: translateX(calc(100cqw + 8px)); }
+    72.1% { transform: translateX(calc(-1 * var(--cw) - 8px)); animation-timing-function: cubic-bezier(.2, .7, .3, 1); }
+    90%, 100% { transform: translateX(var(--slot)); }
+}
+@keyframes sf-atc-fill { 0%, 41% { opacity: 0; } 43%, 71.9% { opacity: 1; } 72%, 100% { opacity: 0; } }
+@keyframes sf-atc-bag {
+    0%, 7% { transform: translateY(-150%) scale(0); opacity: 1; }
+    14% { transform: translateY(-150%) scale(1.12); }
+    18%, 30% { transform: translateY(-150%) scale(1); animation-timing-function: cubic-bezier(.5, 0, 1, .6); }
+    42% { transform: translateY(var(--land)) scale(1); opacity: 1; }
+    43%, 100% { transform: translateY(var(--land)) scale(1); opacity: 0; }
+}
+
+/* Số trên icon giỏ đầu trang và dòng "Trong giỏ: N món" nảy lên khi thêm xong. */
+.sf-atc-count { font-size: .8125rem; color: #7b809a; margin: .25rem 0 .5rem; }
+.sf-atc-count b { color: var(--sf-navy); display: inline-block; }
+[data-sf-cart-count].is-bump { animation: sf-atc-bump .45s cubic-bezier(.3, 1.6, .5, 1); }
+[data-sf-cart-link].is-bump > i { display: inline-block; animation: sf-atc-shake .45s ease; }
+@keyframes sf-atc-bump { 40% { scale: 1.45; } }
+@keyframes sf-atc-shake { 25% { transform: rotate(-12deg); } 60% { transform: rotate(9deg); } }
+
+/* Túi bay lên icon giỏ (kiểu "túi bay lên giỏ đầu trang"), JS tạo rồi gỡ. */
+.sf-atc-fly {
+    position: fixed; z-index: 1100; width: 32px; height: 32px; padding: 7px; border-radius: 50%; pointer-events: none;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--sf-yellow); color: var(--sf-navy); box-shadow: 0 8px 24px rgba(52, 71, 103, .15);
+}
+.sf-atc-fly svg { display: block; width: 100%; height: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+    .sf-atc.is-adding, .sf-atc.is-adding * { animation: none !important; }
+}
+
+/* WordPress: nút chính trang chi tiết dùng ::before làm icon giỏ, có xe rồi thì bỏ; thanh đáy điện thoại. */
+.sf-buy-wrap .single_add_to_cart_button.sf-atc::before { content: none; }
+.sf-buy-wrap .single_add_to_cart_button.sf-atc { position: relative; }
+.sf-mbuy .sf-atc { --h: 44px; }
+a.sf-atc { text-decoration: none; }
+.sf-cart-n.is-bump { animation: sf-atc-bump .45s cubic-bezier(.3, 1.6, .5, 1); }

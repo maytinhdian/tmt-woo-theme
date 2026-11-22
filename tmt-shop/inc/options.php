@@ -136,6 +136,11 @@ function tmt_defaults() {
 		'effects.post_hover'    => 'classic',
 		'effects.intensity'     => 'medium',
 		'effects.cursor'        => 'none',
+		'effects.cart_fx'       => 'none',
+		'effects.cart_look'     => 'theme',
+		'effects.cart_where'    => 'both',
+		'effects.cart_speed'    => 'normal',
+		'effects.cart_count'    => false,
 	);
 	return $d;
 }

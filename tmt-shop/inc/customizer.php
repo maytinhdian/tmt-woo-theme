@@ -306,6 +306,11 @@ function tmt_customizer_sections() {
 				array( 'effects.post_hover', 'select', 'Rê chuột vào thẻ bài viết', array( 'choices' => array_diff_key( tmt_card_effects(), array( 'swap' => 1 ) ) ) ),
 				array( 'effects.intensity', 'radio', 'Cường độ', array( 'choices' => array( 'soft' => 'Nhẹ', 'medium' => 'Vừa', 'strong' => 'Mạnh' ) ) ),
 				array( 'effects.cursor', 'select', 'Con trỏ chuột', array( 'choices' => tmt_cursors(), 'desc' => 'Chỉ máy tính có chuột; điện thoại giữ như cũ.' ) ),
+				array( 'effects.cart_fx', 'select', 'Nút "Thêm vào giỏ": hiệu ứng khi bấm', array( 'choices' => array( 'none' => 'Không có (như cũ)', 'cart' => 'Xe đẩy đón túi hàng', 'fly' => 'Xe đẩy đón túi + túi bay lên giỏ đầu trang' ), 'desc' => 'Bật thì thêm vào giỏ không tải lại trang. Máy khách bật "giảm chuyển động" thì chỉ tăng số giỏ.' ) ),
+				array( 'effects.cart_look', 'radio', 'Kiểu nút', array( 'choices' => array( 'theme' => 'Theo màu web (nút vàng)', 'dark' => 'Tối, bo tròn' ) ) ),
+				array( 'effects.cart_where', 'radio', 'Áp dụng ở', array( 'choices' => array( 'both' => 'Trang chi tiết và thẻ sản phẩm', 'product' => 'Chỉ trang chi tiết sản phẩm', 'card' => 'Chỉ thẻ sản phẩm (danh sách, trang chủ)' ) ) ),
+				array( 'effects.cart_speed', 'radio', 'Tốc độ', array( 'choices' => array( 'fast' => 'Nhanh', 'normal' => 'Vừa', 'slow' => 'Chậm' ), 'desc' => 'Nhanh khoảng 1,4 giây, vừa 2 giây, chậm 2,6 giây.' ) ),
+				array( 'effects.cart_count', 'checkbox', 'Hiện dòng "Trong giỏ: N món" dưới nút (trang chi tiết)' ),
 			),
 		),
 	);

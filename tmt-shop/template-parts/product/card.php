@@ -90,6 +90,8 @@ $count     = $variable ? count( $product->get_children() ) : 0;
 				<a href="<?php echo esc_url( add_query_arg( 'bao-gia', 1, $url ) ); ?>" class="sf-btn sf-pcard-quote" rel="nofollow"><i class="fa-solid fa-file-invoice-dollar" aria-hidden="true"></i>Báo giá</a>
 			<?php elseif ( $no_price || ! $product->is_purchasable() ) : ?>
 				<a href="<?php echo esc_url( $zalo ? $zalo : $url ); ?>" class="sf-btn sf-pcard-quote"<?php echo $zalo ? ' target="_blank" rel="noopener"' : ''; ?>><i class="fa-solid fa-file-invoice-dollar" aria-hidden="true"></i>Hỏi giá</a>
+			<?php elseif ( function_exists( 'tmt_cart_fx' ) && tmt_cart_fx()['card'] && $product->supports( 'ajax_add_to_cart' ) ) : ?>
+				<a href="<?php echo esc_url( $product->add_to_cart_url() ); ?>" data-quantity="1" data-product_id="<?php echo (int) $product->get_id(); ?>" class="sf-btn sf-atc sf-atc-sm" data-sf-atc rel="nofollow" aria-label="<?php echo esc_attr( 'Thêm ' . $name . ' vào giỏ' ); ?>"><?php echo tmt_atc_inner( 'Thêm vào giỏ' ); // phpcs:ignore ?></a>
 			<?php else : ?>
 				<a href="<?php echo esc_url( $product->add_to_cart_url() ); ?>" data-quantity="1" data-product_id="<?php echo (int) $product->get_id(); ?>" data-product_sku="<?php echo esc_attr( $product->get_sku() ); ?>" class="sf-btn add_to_cart_button<?php echo $product->supports( 'ajax_add_to_cart' ) ? ' ajax_add_to_cart' : ''; ?>" rel="nofollow" aria-label="<?php echo esc_attr( 'Thêm ' . $name . ' vào giỏ' ); ?>"><?php echo tmt_icon( 'add_shopping_cart' ); // phpcs:ignore ?>Thêm vào giỏ</a>
 			<?php endif; ?>

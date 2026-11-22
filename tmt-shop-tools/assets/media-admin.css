@@ -1,0 +1,20 @@
+/* Media → Ảnh sản phẩm + ô kéo thả ảnh ở trang sửa sản phẩm (includes/media.php). */
+.tmt-media .tmt-mfilter, .tmt-media .tmt-mhead, .tmt-media .tmt-mbar { margin: 14px 0; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.tmt-media .tmt-mfilter .cnt { color: #646970; }
+.tmt-media form.inl { display: inline; }
+.tmt-mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin: 0; }
+.tmt-mt { position: relative; background: #fff; border: 1px solid #dcdcde; border-radius: 8px; padding: 8px; margin: 0; font-size: 12px; }
+.tmt-mt .im { display: block; aspect-ratio: 1; background: #f6f7f7; border-radius: 6px; overflow: hidden; }
+.tmt-mt .im img { width: 100%; height: 100%; object-fit: contain; }
+.tmt-mt .nm { margin-top: 6px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tmt-mt .mt { color: #646970; } .tmt-mt .warn { color: #b26200; }
+.tmt-mt .us { margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tmt-mt .ck { position: absolute; top: 12px; left: 12px; background: #fff; border-radius: 4px; padding: 2px 3px; line-height: 1; }
+.tmt-mpager { margin-top: 16px; } .tmt-mpager a, .tmt-mpager b { display: inline-block; padding: 4px 9px; }
+/* Trang sửa sản phẩm */
+.tmt-drop { margin: 10px 0 4px; border: 2px dashed #c3c4c7; border-radius: 8px; padding: 14px 10px; text-align: center; color: #50575e; cursor: pointer; font-size: 12px; line-height: 1.5; }
+.tmt-drop b { display: block; font-size: 13px; color: #1d2327; }
+.tmt-drop.is-over { border-color: #3271e0; background: #eef3fd; }
+.tmt-drop.is-busy { opacity: .7; pointer-events: none; }
+.tmt-drop .st { display: block; margin-top: 4px; color: #3271e0; }
+.tmt-drop .st.err { color: #d63638; }

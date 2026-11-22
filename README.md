@@ -90,6 +90,13 @@ Trang Bài viết (Cài đặt → Đọc → "Trang bài viết", nên đặt t
 
 Trang **`/sua-may/`** giới thiệu cách tiệm nhận sửa máy: 5 bước, 3 trường hợp sau kiểm tra (không hư / sửa / không sửa), bảng phí, khối **Tính thử** (khách chọn mang tới hay thợ tới, số máy, kết quả kiểm tra thì thấy phải trả bao nhiêu), hỏi đáp và form **Gửi yêu cầu sửa máy** (vào **Yêu cầu khách** với mã `SM`). Phí kiểm tra mỗi máy, phí di chuyển tối thiểu + mỗi km, hạn mức "dưới bao nhiêu cứ thay", miễn hay trừ phí kiểm tra khi đồng ý sửa: **Tùy biến → Sửa máy: quy trình và phí**; trang và section trang chủ luôn cùng số. Thêm link `/sua-may/` vào menu chính.
 
+## Ảnh (trong plugin TMT Shop Tools)
+
+- Tải ảnh lên là tự **thu nhỏ** (cạnh dài tối đa 2400px), xoay đúng chiều ảnh điện thoại, **đổi sang WebP**, bỏ thông tin GPS / máy chụp. Ảnh chụp 3–4 MB còn khoảng 300–600 KB.
+- Ảnh tải lên ở trang sửa sản phẩm tự đặt **tên file + chữ mô tả theo tên sản phẩm** (`laptop-dell-3530-i5-1.webp`).
+- Trang sửa sản phẩm, khung **Bộ ảnh sản phẩm**: kéo thả nhiều ảnh, bấm chọn, hoặc **Ctrl+V** dán ảnh vừa chụp màn hình / chép từ web. Chưa có ảnh đại diện thì ảnh đầu làm ảnh đại diện. Kéo ảnh để đổi thứ tự.
+- **Media → Ảnh sản phẩm**: xem ảnh theo nhóm hàng, tìm theo tên / SKU / tên file; tab **Ảnh không dùng** (không nằm ở sản phẩm, bài, trang, nhóm hàng, Tùy biến) chọn rồi xóa hàng loạt để dọn hosting; tab **Cài đặt** bật tắt từng việc, cạnh tối đa, chất lượng, nút điền chữ mô tả cho ảnh sản phẩm cũ.
+
 ## Trang sản phẩm: ngừng bán, quà tặng, giới thiệu nâng cao (trong plugin TMT Shop Tools)
 
 - **Ngừng kinh doanh**: sửa sản phẩm → tab **Kho hàng** → tick **Ngừng kinh doanh**, chọn **Sản phẩm thay thế**. Trang vẫn mở để khách tra thông số, nhưng bỏ khỏi danh sách / tìm kiếm / Lên cấu hình, không mua được, khung mua thay bằng hộp "Ngừng kinh doanh" kèm mẫu thay thế (nếu mẫu đó đang bán). Bỏ tick là trang về như cũ.

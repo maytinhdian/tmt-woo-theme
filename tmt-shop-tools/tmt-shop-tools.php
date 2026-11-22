@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       TMT Shop Tools
  * Description:       Trang "Xây dựng cấu hình" cho web bán máy tính: khách chọn từng linh kiện, web tự kiểm tra lắp chung được không (socket, RAM, khổ main, nguồn, kích thước vỏ...), báo tổng tiền, thêm cả bộ vào giỏ. Kèm trang Giải pháp, Phần mềm, Sửa máy, ô nhận tin, yêu cầu báo giá / khảo sát / dùng thử, dữ liệu mẫu. Đi kèm theme TMT Shop.
- * Version:           1.6.0
+ * Version:           1.7.0
  * Requires at least: 6.4
  * Requires PHP:      7.4
  * Requires Plugins:  woocommerce
@@ -15,7 +15,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'TMT_TOOLS_VERSION', '1.6.0' );
+define( 'TMT_TOOLS_VERSION', '1.7.0' );
 define( 'TMT_TOOLS_DIR', __DIR__ );
 define( 'TMT_TOOLS_URL', plugin_dir_url( __FILE__ ) );
 
@@ -40,6 +40,7 @@ add_action(
 		require_once TMT_TOOLS_DIR . '/includes/landing.php';
 		require_once TMT_TOOLS_DIR . '/includes/repair-intake.php';
 		require_once TMT_TOOLS_DIR . '/includes/newsletter.php';
+		require_once TMT_TOOLS_DIR . '/includes/media.php';
 		require_once TMT_TOOLS_DIR . '/includes/discontinued.php';
 		require_once TMT_TOOLS_DIR . '/includes/promotions.php';
 		require_once TMT_TOOLS_DIR . '/includes/gifts.php';

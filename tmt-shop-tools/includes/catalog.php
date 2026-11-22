@@ -16,13 +16,20 @@ defined( 'ABSPATH' ) || exit;
 function tmt_pcb_slot_categories() {
 	$saved = get_option( 'tmt_pcb_slot_categories' );
 	$out   = array_fill_keys( array_keys( tmt_pcb_slots() ), array() );
-	if ( is_array( $saved ) ) {
-		foreach ( $out as $slot => $ids ) {
-			$out[ $slot ] = array_values( array_map( 'intval', (array) ( isset( $saved[ $slot ] ) ? $saved[ $slot ] : array() ) ) );
-		}
-		return $out;
+	if ( ! is_array( $saved ) ) {
+		return tmt_pcb_guess_slot_categories();
 	}
-	return tmt_pcb_guess_slot_categories();
+	foreach ( $out as $slot => $ids ) {
+		$out[ $slot ] = array_values( array_map( 'intval', (array) ( isset( $saved[ $slot ] ) ? $saved[ $slot ] : array() ) ) );
+	}
+	// Khe để trống lúc lưu (vd. lưu khi chưa có nhóm HDD, sau mới thêm): vẫn đoán theo slug, bỏ danh mục khe khác đã dùng.
+	$used = array_fill_keys( array_merge( array(), ...array_values( $out ) ), true );
+	foreach ( tmt_pcb_guess_slot_categories() as $slot => $ids ) {
+		if ( ! $out[ $slot ] ) {
+			$out[ $slot ] = array_values( array_filter( $ids, function ( $id ) use ( $used ) { return empty( $used[ $id ] ); } ) );
+		}
+	}
+	return $out;
 }
 
 /** @return array<string, list<int>> Đoán danh mục cho từng khe theo slug (cpu, ram, vo-case...). */
@@ -37,7 +44,7 @@ function tmt_pcb_guess_slot_categories() {
 		foreach ( $s['guess'] as $word ) {
 			foreach ( $terms as $t ) {
 				$slug = $t->slug;
-				$hit  = $slug === $word || preg_match( '/(^|-)' . preg_quote( $word, '/' ) . '$/', $slug );
+				$hit  = $slug === $word || preg_match( '/(^|-)' . preg_quote( $word, '/' ) . '(-|$)/', $slug );
 				if ( $hit && empty( $taken[ $t->term_id ] ) ) {
 					$out[ $slot ][]       = (int) $t->term_id;
 					$taken[ $t->term_id ] = true;

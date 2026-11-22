@@ -257,20 +257,156 @@ function tmt_blog_shorts_box( $shorts ) {
 	<?php
 }
 
-/** Khung vàng "Không muốn tự làm?": nhắn Zalo hoặc gọi tiệm. */
-function tmt_blog_ask( $title = 'Không muốn tự làm?' ) {
-	$phone = tmt_phone();
-	$zalo  = tmt_zalo_url( tmt_opt( 'contact.zalo' ) );
+/** Kiểu khối "Nhờ tiệm làm" (port Theme::BLOG_CTA_STYLES của app). */
+function tmt_blog_cta_styles() {
+	return array( 'yellow' => 'A. Vàng gọn', 'tech' => 'B. Thẻ kỹ thuật viên', 'service' => 'C. Bảng dịch vụ' );
+}
+
+/** Loại nút của khối "Nhờ tiệm làm". */
+function tmt_blog_cta_buttons() {
+	return array( 'zalo' => 'Nhắn Zalo', 'phone' => 'Gọi điện', 'messenger' => 'Messenger', 'link' => 'Link riêng', 'none' => 'Không hiện' );
+}
+
+/**
+ * Đang mở cửa không, đọc từ ô Giờ làm việc ("8:00 đến 20:00..."), giờ theo múi giờ WordPress. Không đọc được thì null.
+ *
+ * @return array{open: bool, text: string}|null
+ */
+function tmt_open_state( $hours ) {
+	if ( ! preg_match( '/(\d{1,2})\s*(?:[:h]\s*(\d{2}))?\D+?(\d{1,2})\s*(?:[:h]\s*(\d{2}))?/u', (string) $hours, $m ) ) {
+		return null;
+	}
+	$from = (int) $m[1] * 60 + (int) ( isset( $m[2] ) ? $m[2] : 0 );
+	$to   = (int) $m[3] * 60 + (int) ( isset( $m[4] ) ? $m[4] : 0 );
+	if ( $from >= $to || $to > 24 * 60 ) {
+		return null;
+	}
+	$now  = (int) wp_date( 'G' ) * 60 + (int) wp_date( 'i' );
+	$fmt  = function ( $t ) {
+		return intdiv( $t, 60 ) . ':' . str_pad( (string) ( $t % 60 ), 2, '0', STR_PAD_LEFT );
+	};
+	$open = $now >= $from && $now < $to;
+	return array( 'open' => $open, 'text' => $open ? 'Đang mở cửa · đến ' . $fmt( $to ) : 'Đã đóng cửa · mở lại ' . $fmt( $from ) );
+}
+
+/**
+ * Khối "Nhờ tiệm làm" đã ghép (Tùy biến → Mẹo vặt: khối nhờ tiệm làm). null = tắt ở chỗ này.
+ *
+ * @param string $place list|post.
+ * @return array|null
+ */
+function tmt_blog_cta( $place ) {
+	if ( ! tmt_opt( 'blog.cta_on' ) || ! tmt_opt( 'post' === $place ? 'blog.cta_on_post' : 'blog.cta_on_list' ) ) {
+		return null;
+	}
+	$style   = array_key_exists( (string) tmt_opt( 'blog.cta_style' ), tmt_blog_cta_styles() ) ? tmt_opt( 'blog.cta_style' ) : 'yellow';
+	$phone   = trim( (string) ( tmt_opt( 'contact.hotline' ) ? tmt_opt( 'contact.hotline' ) : tmt_phone() ) );
+	$digits  = preg_replace( '/[^0-9+]/', '', $phone );
+	$msg     = trim( (string) tmt_opt( 'contact.messenger' ) );
+	$link    = trim( (string) tmt_opt( 'blog.cta_link' ) );
+	$labels  = array( 1 => 'Nhắn tiệm', 2 => 'Gọi tiệm' );
+	$buttons = array();
+	foreach ( array( 1, 2 ) as $n ) {
+		$type  = (string) tmt_opt( "blog.cta_btn{$n}" );
+		$label = trim( (string) tmt_opt( "blog.cta_btn{$n}_label" ) );
+		$href  = null;
+		$ext   = false;
+		if ( 'zalo' === $type ) {
+			$href = tmt_zalo_url( tmt_opt( 'contact.zalo' ) );
+			$ext  = true;
+		} elseif ( 'phone' === $type && strlen( $digits ) >= 8 ) {
+			$href = 'tel:' . $digits;
+		} elseif ( 'messenger' === $type && preg_match( '#^https://#i', $msg ) ) {
+			$href = $msg;
+			$ext  = true;
+		} elseif ( 'link' === $type && preg_match( '#^(https://\S+|/(?!/)\S*)$#i', $link ) ) {
+			$href = 0 === strpos( $link, '/' ) ? home_url( $link ) : $link;
+			$ext  = 0 === strpos( $link, 'https://' ) && false === strpos( $link, home_url() );
+		}
+		if ( $href ) {
+			$buttons[] = array( 'type' => $type, 'label' => '' !== $label ? $label : $labels[ $n ], 'href' => $href, 'external' => $ext );
+		}
+	}
+	$sub    = trim( (string) tmt_opt( 'blog.cta_sub' ) );
+	$hours  = trim( (string) tmt_opt( 'contact.hours' ) );
+	$points = trim( (string) tmt_opt( 'blog.cta_points' ) );
+	$title  = trim( (string) tmt_opt( 'blog.cta_title' ) );
+	$text   = trim( (string) tmt_opt( 'blog.cta_text' ) );
+	if ( '' === $sub ) {
+		$sub = 'tech' === $style ? 'Kỹ thuật viên của tiệm trả lời' : $hours;
+	}
+	return array(
+		'style'   => $style,
+		'title'   => '' !== $title ? $title : 'Không muốn tự làm?',
+		'text'    => '' !== $text ? $text : 'Mang máy ghé tiệm, kiểm tra miễn phí và báo giá trước khi làm. Có câu hỏi thì nhắn tiệm, kỹ thuật viên trả lời.',
+		'sub'     => '' !== $sub ? $sub : null,
+		'points'  => array_slice( array_values( array_filter( array_map( 'trim', preg_split( '/\R/u', '' !== $points ? $points : "Kiểm tra máy miễn phí\nBáo giá trước, đồng ý mới làm\nBảo hành công sửa" ) ) ) ), 0, 3 ),
+		'buttons' => $buttons,
+		'open'    => tmt_opt( 'blog.cta_open' ) ? tmt_open_state( $hours ) : null,
+		'phone'   => strlen( $digits ) >= 8 ? $phone : null,
+	);
+}
+
+/** Một nút của khối "Nhờ tiệm làm". */
+function tmt_blog_cta_button( $b, $class, $text = null ) {
+	$icons = array(
+		'zalo'      => '<b>Zalo</b>',
+		'phone'     => '<i class="fa-solid fa-phone" aria-hidden="true"></i>',
+		'messenger' => '<i class="fa-brands fa-facebook-messenger" aria-hidden="true"></i>',
+		'link'      => '<i class="fa-solid fa-arrow-right" aria-hidden="true"></i>',
+	);
+	return '<a href="' . esc_url( $b['href'] ) . '" class="mv-btn ' . esc_attr( 'zalo' === $b['type'] ? 'zalo' : $class ) . '"' . ( $b['external'] ? ' target="_blank" rel="noopener nofollow"' : '' ) . '>'
+		. ( isset( $icons[ $b['type'] ] ) ? $icons[ $b['type'] ] : '' ) . esc_html( null === $text ? $b['label'] : $text ) . '</a>';
+}
+
+/** Khối "Nhờ tiệm làm" ở cột phải (3 kiểu, port blog::public._ask của app). $place: list|post. */
+function tmt_blog_ask( $place = 'list' ) {
+	$cta = tmt_blog_cta( $place );
+	if ( ! $cta ) {
+		return;
+	}
+	$post = 'post' === $place ? ' is-post' : '';
+	$open = $cta['open'] ? '<p class="mv-open' . ( $cta['open']['open'] ? ' on' : '' ) . '"><span></span>' . esc_html( $cta['open']['text'] ) . '</p>' : '';
+	$sub  = $cta['sub'] ? '<small>' . esc_html( $cta['sub'] ) . '</small>' : '';
+	$btns = '';
+	if ( 'tech' === $cta['style'] ) {
+		foreach ( $cta['buttons'] as $b ) {
+			$btns .= 'phone' === $b['type'] && $cta['phone']
+				? '<a href="' . esc_url( $b['href'] ) . '" class="tel" aria-label="' . esc_attr( $b['label'] ) . '"><i class="fa-solid fa-phone-volume" aria-hidden="true"></i>' . esc_html( $cta['phone'] ) . '</a>'
+				: tmt_blog_cta_button( $b, 'y' );
+		}
+		echo '<div class="mv-ask mv-ask-tech' . $post . '"><div class="who"><span class="av"><img src="' . esc_url( tmt_logo_url() ) . '" alt="" width="36" height="36"></span><div><h2>' . esc_html( $cta['title'] ) . '</h2>' . $sub . '</div></div>'
+			. $open . '<p>' . esc_html( $cta['text'] ) . '</p><div class="btns">' . $btns . '</div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput
+		return;
+	}
+	if ( 'service' === $cta['style'] ) {
+		$ul = '';
+		foreach ( $cta['points'] as $pt ) {
+			$ul .= '<li><i class="fa-solid fa-check" aria-hidden="true"></i>' . esc_html( $pt ) . '</li>';
+		}
+		foreach ( $cta['buttons'] as $b ) {
+			$btns .= tmt_blog_cta_button( $b, 'y' );
+		}
+		echo '<div class="mv-ask mv-ask-service' . $post . '"><div class="hd"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i><div><h2>' . esc_html( $cta['title'] ) . '</h2>' . $sub . '</div></div>'
+			. $open . ( $ul ? '<ul>' . $ul . '</ul>' : '' ) . ( $btns ? '<div class="btns">' . $btns . '</div>' : '' ) . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput
+		return;
+	}
+	foreach ( $cta['buttons'] as $b ) {
+		$btns .= tmt_blog_cta_button( $b, 'o' );
+	}
+	echo '<div class="mv-ask' . $post . '"><i class="fa-solid fa-screwdriver-wrench big" aria-hidden="true"></i>' . $open . '<h2>' . esc_html( $cta['title'] ) . '</h2><p>' . esc_html( $cta['text'] ) . '</p>'
+		. ( $btns ? '<div class="btns">' . $btns . '</div>' : '' ) . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput
+}
+
+/** Ô tìm bài Mẹo vặt: dưới khối Chủ đề (máy tính) hoặc dưới hàng chủ đề (điện thoại). WordPress tìm cả tiêu đề, tóm tắt, nội dung. */
+function tmt_blog_search( $search, $total, $class = '' ) {
 	?>
-	<div class="mv-ask">
-		<i class="fa-solid fa-screwdriver-wrench big" aria-hidden="true"></i>
-		<h2><?php echo esc_html( $title ); ?></h2>
-		<p>Mang máy ghé tiệm, kiểm tra miễn phí và báo giá trước khi làm. Có câu hỏi thì nhắn tiệm, kỹ thuật viên trả lời.</p>
-		<div class="btns">
-			<?php if ( $zalo ) : ?><a href="<?php echo esc_url( $zalo ); ?>" target="_blank" rel="noopener nofollow" class="mv-btn zalo"><b>Zalo</b>Nhắn tiệm</a><?php endif; ?>
-			<?php if ( $phone ) : ?><a href="tel:<?php echo esc_attr( tmt_digits( $phone ) ); ?>" class="mv-btn o"><i class="fa-solid fa-phone" aria-hidden="true"></i>Gọi tiệm</a><?php endif; ?>
-		</div>
-	</div>
+	<form class="mv-search<?php echo $class ? ' ' . esc_attr( $class ) : ''; ?>" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+		<i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+		<input type="search" name="s" value="<?php echo esc_attr( $search ); ?>" placeholder="<?php echo esc_attr( 'Tìm trong ' . $total . ' bài...' ); ?>" aria-label="Tìm bài mẹo vặt" maxlength="100" enterkeyhint="search">
+		<input type="hidden" name="post_type" value="post">
+		<button type="submit" aria-label="Tìm"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+	</form>
 	<?php
 }
 

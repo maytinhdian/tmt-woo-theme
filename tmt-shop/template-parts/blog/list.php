@@ -62,12 +62,6 @@ $tmt_shorts = tmt_blog_shorts();
 				<p class="mv-sub"><?php echo esc_html( $tmt_intro ); ?></p>
 			<?php endif; ?>
 		</div>
-		<form class="mv-search" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
-			<i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-			<input type="search" name="s" value="<?php echo esc_attr( $tmt_search ); ?>" placeholder="<?php echo esc_attr( 'Tìm trong ' . $tmt_total . ' bài mẹo...' ); ?>" aria-label="Tìm bài mẹo vặt" maxlength="100">
-			<input type="hidden" name="post_type" value="post">
-			<button type="submit">Tìm</button>
-		</form>
 	</div>
 
 	<?php if ( $tmt_featured ) : ?>
@@ -100,6 +94,8 @@ $tmt_shorts = tmt_blog_shorts();
 				<b class="mt-3">Dạng bài</b>
 				<a href="<?php echo esc_url( add_query_arg( 'xem', 'video', tmt_blog_url() ) ); ?>"<?php echo is_home() && 'video' === $tmt_tab ? ' class="on"' : ''; ?>><i class="fa-solid fa-circle-play" aria-hidden="true"></i>Video ngắn</a>
 			<?php endif; ?>
+			<b class="mt-3">Tìm bài</b>
+			<?php tmt_blog_search( $tmt_search, $tmt_total ); ?>
 		</nav>
 
 		<div class="min-w-0">
@@ -111,6 +107,7 @@ $tmt_shorts = tmt_blog_shorts();
 					<?php endforeach; ?>
 				</nav>
 			<?php endif; ?>
+			<?php tmt_blog_search( $tmt_search, $tmt_total, 'd-md-none mb-2' ); ?>
 			<nav class="mv-tabs" aria-label="Sắp xếp">
 				<?php foreach ( tmt_blog_tabs() as $key => $t ) : ?>
 					<a href="<?php echo esc_url( '' === $key ? $tmt_base : add_query_arg( 'xem', $key, $tmt_base ) ); ?>"<?php echo $tmt_tab === $key ? ' class="on" aria-current="page"' : ''; ?>><i class="<?php echo esc_attr( $t[1] ); ?>" aria-hidden="true"></i><?php echo esc_html( $t[0] ); ?></a>

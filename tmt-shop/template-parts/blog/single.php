@@ -109,16 +109,22 @@ $tmt_toc  = array_values( array_filter( tmt_post_toc(), function ( $h ) { return
 					</div>
 				</div>
 
-				<div class="mv-endcta g-blue">
-					<div>
-						<h2>Không muốn tự làm?</h2>
-						<p>Mang máy ghé tiệm: kiểm tra miễn phí, báo giá trước khi làm.</p>
+				<?php $tmt_cta = tmt_blog_cta( 'post' ); ?>
+				<?php if ( $tmt_cta ) : ?>
+					<div class="mv-endcta g-blue">
+						<div>
+							<h2><?php echo esc_html( $tmt_cta['title'] ); ?></h2>
+							<p><?php echo esc_html( $tmt_cta['text'] ); ?></p>
+						</div>
+						<?php if ( $tmt_cta['buttons'] ) : ?>
+							<div class="btns">
+								<?php foreach ( $tmt_cta['buttons'] as $b ) : ?>
+									<?php echo tmt_blog_cta_button( $b, 'y', 'phone' === $b['type'] && $tmt_cta['phone'] ? $b['label'] . ' ' . $tmt_cta['phone'] : null ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+								<?php endforeach; ?>
+							</div>
+						<?php endif; ?>
 					</div>
-					<div class="btns">
-						<?php if ( $tmt_zalo ) : ?><a href="<?php echo esc_url( $tmt_zalo ); ?>" target="_blank" rel="noopener nofollow" class="mv-btn zalo"><b>Zalo</b>Nhắn tiệm</a><?php endif; ?>
-						<?php if ( $tmt_phone ) : ?><a href="tel:<?php echo esc_attr( tmt_digits( $tmt_phone ) ); ?>" class="mv-btn y"><i class="fa-solid fa-phone" aria-hidden="true"></i>Gọi <?php echo esc_html( $tmt_phone ); ?></a><?php endif; ?>
-					</div>
-				</div>
+				<?php endif; ?>
 
 				<?php if ( comments_open() || get_comments_number() ) : ?>
 					<div class="mv-comments"><?php comments_template(); ?></div>
@@ -137,7 +143,7 @@ $tmt_toc  = array_values( array_filter( tmt_post_toc(), function ( $h ) { return
 						<?php endforeach; ?>
 					</section>
 				<?php endif; ?>
-				<?php tmt_blog_ask( 'Cần tiệm làm giúp?' ); ?>
+				<?php tmt_blog_ask( 'post' ); ?>
 			</aside>
 		</div>
 	</div>

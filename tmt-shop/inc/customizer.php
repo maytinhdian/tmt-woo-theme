@@ -299,6 +299,26 @@ function tmt_customizer_sections() {
 				array( 'banners.right_link', 'text', 'Link bên phải' ),
 			),
 		),
+		'tmt_blog'    => array(
+			'title'  => 'Mẹo vặt: khối nhờ tiệm làm',
+			'desc'   => 'Khối ở cột phải trang Mẹo vặt và bài viết; khung cuối bài dùng chung chữ và nút. Số Zalo, hotline, Messenger, giờ làm việc lấy từ mục Nút liên hệ nổi.',
+			'fields' => array(
+				array( 'blog.cta_on', 'checkbox', 'Hiện khối "Nhờ tiệm làm"' ),
+				array( 'blog.cta_style', 'radio', 'Kiểu', array( 'choices' => tmt_blog_cta_styles() ) ),
+				array( 'blog.cta_title', 'text', 'Tiêu đề', array( 'desc' => 'Để trống: "Không muốn tự làm?"' ) ),
+				array( 'blog.cta_text', 'textarea', 'Lời mời', array( 'desc' => 'Để trống dùng câu mặc định.' ) ),
+				array( 'blog.cta_sub', 'text', 'Dòng phụ dưới tiêu đề (kiểu B, C)', array( 'desc' => 'Để trống: kiểu B "Kỹ thuật viên của tiệm trả lời", kiểu C giờ làm việc.' ) ),
+				array( 'blog.cta_points', 'textarea', 'Điểm cam kết (kiểu C)', array( 'desc' => 'Mỗi dòng một điểm, tối đa 3 dòng; để trống dùng 3 dòng mặc định.' ) ),
+				array( 'blog.cta_btn1', 'select', 'Nút 1', array( 'choices' => tmt_blog_cta_buttons() ) ),
+				array( 'blog.cta_btn1_label', 'text', 'Chữ nút 1', array( 'desc' => 'Để trống: "Nhắn tiệm"' ) ),
+				array( 'blog.cta_btn2', 'select', 'Nút 2', array( 'choices' => tmt_blog_cta_buttons(), 'desc' => 'Kiểu B hiện nút Gọi điện thành số điện thoại to.' ) ),
+				array( 'blog.cta_btn2_label', 'text', 'Chữ nút 2', array( 'desc' => 'Để trống: "Gọi tiệm"' ) ),
+				array( 'blog.cta_link', 'text', 'Link riêng', array( 'desc' => 'Cho nút chọn "Link riêng": https://... hoặc đường dẫn trong web như /tra-don-hang' ) ),
+				array( 'blog.cta_on_list', 'checkbox', 'Hiện ở danh sách Mẹo vặt' ),
+				array( 'blog.cta_on_post', 'checkbox', 'Hiện ở trang bài viết' ),
+				array( 'blog.cta_open', 'checkbox', 'Dòng "Đang mở cửa" (theo Giờ làm việc ở mục Nút liên hệ nổi)' ),
+			),
+		),
 		'tmt_effects' => array(
 			'title'  => 'Hiệu ứng',
 			'fields' => array(

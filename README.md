@@ -39,6 +39,7 @@ Theme WordPress cho web bán hàng máy tính, linh kiện, camera: giao diện 
 - Đầu trang: thanh trên cùng 3 vùng, ô tìm 3 kiểu, menu chính với khung xổ theo danh mục + hãng, mega menu, 15 hiệu ứng rê chuột và 9 kiểu đánh dấu trang đang mở.
 - Trang chủ theo section: slider (2 kiểu), dải cam kết, danh mục nổi bật, khuyến mãi đếm ngược, phần mềm bản quyền (tab theo danh mục, khung cam kết, các bước mua key), sản phẩm mới, bài viết.
 - Section **Quy trình sửa máy** (cần plugin TMT Shop Tools): 4 bước + 3 ô phí, dẫn sang trang `/sua-may/`.
+- **Bảo hành theo nhóm hàng**: Sản phẩm → Danh mục → sửa nhóm → ô **Bảo hành (tháng)**; nhóm con chưa đặt thì lấy nhóm cha. Sản phẩm khác nhóm thì nhập riêng ở tab Chung, hoặc tick nhiều sản phẩm → **Chỉnh sửa hàng loạt → Bảo hành** (đặt số tháng / theo nhóm hàng).
 - Danh sách sản phẩm: bộ lọc theo hãng, giá, còn hàng, mọi thuộc tính; sắp xếp; trang lọc không cho Google lập chỉ mục.
 - Thẻ sản phẩm: nhãn thông số trên ảnh, vài dòng thông số, % giảm, "N loại", nút Thêm vào giỏ (AJAX), Hỏi giá, Zalo.
 - Trang chi tiết: bộ ảnh vuốt + phóng to + toàn màn hình, chọn loại bằng nút, Mua ngay, ưu đãi, bảng thông số, sản phẩm cùng loại, thanh mua dính đáy trên điện thoại.

@@ -5,6 +5,7 @@ WooCommerce theme "TMT Shop" (`tmt-shop/`), ported from the web shop (Storefront
 ## Layout
 
 - `functions.php` loads `inc/`: `options.php` (defaults `tmt_defaults()`, read with `tmt_opt('group.key')` = theme_mod `tmt_group_key`; list options are JSON, read with `tmt_opt_list()`), `setup.php` (supports, menus, assets, inline CSS vars), `template-tags.php`, `menu.php` (main menu, mega menu, nav effects), `home.php`, `customizer.php` + `customizer-controls.php` (repeater + sortable controls), and with WooCommerce `woocommerce.php` + `filters.php` (GET filters `hang[]`, `gia`, `con-hang`, `ts[attr]`, `sap-xep`).
+- Warranty: read only through `tmt_warranty_months($product)` (product meta `_tmt_warranty_months`, else category term meta `tmt_warranty_months` walking up parents, max over categories); bulk edit field `tmt_wm_bulk`.
 - Every product grid calls `tmt_product_card()` (`template-parts/product/card.php`); never write another card.
 - Home sections = `template-parts/home/<key>.php`, keys from `tmt_home_sections()`. `software` = app's licence section (tabs from `tmt_home_software_tabs()`, options `home.software_*`). The filter switch is `span.sf-sw`; never style a bare `.sf-sw` (the section uses that class).
 - CSS `assets/css/theme.css` is copied from the app's storefront styles (same class names `sf-*`) plus a WP section at the end. JS: `assets/js/theme.js` (all pages), `assets/js/product.js` (product page, global Swiper).

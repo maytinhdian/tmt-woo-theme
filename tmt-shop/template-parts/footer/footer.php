@@ -91,7 +91,30 @@ $tmt_menu     = function ( $location, $fallback ) {
 			<?php if ( tmt_opt( 'footer.shipping' ) ) : ?><p class="sf-ft-ship"><?php echo esc_html( tmt_opt( 'footer.shipping' ) ); ?></p><?php endif; ?>
 		</div>
 		<div class="sf-ft-nl">
-			<?php if ( tmt_opt( 'footer.newsletter' ) && is_active_sidebar( 'footer-newsletter' ) ) : ?>
+			<?php if ( tmt_opt( 'footer.newsletter' ) && function_exists( 'tmt_nl_action' ) ) : ?>
+				<?php
+				$tmt_nl  = tmt_nl_result();
+				$tmt_uri = isset( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '/';
+				?>
+				<div id="nhan-tin">
+					<h3>Nhận tin khuyến mãi</h3>
+					<form method="post" action="<?php echo esc_url( tmt_nl_action() ); ?>" class="sf-nl-form"<?php echo tmt_opt( 'effects.nl_plane' ) ? ' data-sf-nl-plane' : ''; ?>>
+						<input type="hidden" name="action" value="tmt_nl">
+						<input type="hidden" name="back" value="<?php echo esc_url( set_url_scheme( '//' . wp_parse_url( home_url(), PHP_URL_HOST ) . ( wp_parse_url( home_url(), PHP_URL_PORT ) ? ':' . wp_parse_url( home_url(), PHP_URL_PORT ) : '' ) . $tmt_uri ) ); ?>">
+						<label><i class="fa-regular fa-envelope" aria-hidden="true"></i><span class="visually-hidden">Email của bạn</span>
+							<input type="email" name="email" placeholder="Email của bạn" required maxlength="191" autocomplete="email"></label>
+						<span class="hp" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off"></span>
+						<button type="submit"><i class="fa-solid fa-paper-plane sf-nl-icon" aria-hidden="true"></i> Đăng ký nhận tin</button>
+					</form>
+					<div data-sf-nl-msg>
+						<?php if ( 'ok' === $tmt_nl ) : ?>
+							<p class="sf-nl-ok mb-0" role="status"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Cảm ơn Anh/Chị, tiệm sẽ gửi tin mới qua email.</p>
+						<?php elseif ( $tmt_nl ) : ?>
+							<p class="sf-nl-err mb-0" role="alert"><?php echo 'nhieu' === $tmt_nl ? 'Anh/chị gửi nhiều lần quá, đợi ít phút rồi thử lại nhé.' : 'Email chưa đúng, anh/chị kiểm tra lại giúp tiệm.'; ?></p>
+						<?php endif; ?>
+					</div>
+				</div>
+			<?php elseif ( tmt_opt( 'footer.newsletter' ) && is_active_sidebar( 'footer-newsletter' ) ) : ?>
 				<h3>Nhận tin khuyến mãi</h3>
 				<?php dynamic_sidebar( 'footer-newsletter' ); ?>
 			<?php endif; ?>

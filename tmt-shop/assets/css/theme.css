@@ -209,6 +209,7 @@
     .sf-nl-form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
     .sf-nl-ok { color: #9be7b1; font-weight: 500; margin-top: .4rem; font-size: .8125rem; }
     .sf-nl-err { color: #ffb4b4; margin-top: .4rem; font-size: .8125rem; }
+    #nhan-tin { margin-bottom: 1.25rem; }
     .sf-copy { text-align: center; padding: 1rem 0 1.1rem; font-size: .875rem; border-top: 1px solid rgba(255,255,255,.1); }
     .sf-copy b { color: var(--sf-yellow); font-weight: 500; }
     @media (max-width: 1199px) { .sf-ft-main { grid-template-columns: 1fr 1fr 1fr; } .sf-ft-main > :first-child { grid-column: span 2; } }
@@ -283,11 +284,11 @@
     .sf-chip-x { display: inline-flex; align-items: center; gap: .2rem; background: #eef3fd; color: var(--sf-blue) !important; border: 1px solid #dce7fb; border-radius: 2rem; padding: .25rem .4rem .25rem .75rem; font-weight: 500; white-space: nowrap; }
     .sf-chip-x i { font-size: 1rem; }
     .sf-chip-x:hover { background: #dce7fb; }
-    .sf-sw { width: 34px; height: 20px; border-radius: 12px; background: #cfd6e2; position: relative; flex-shrink: 0; transition: background .2s; }
-    .sf-sw::after { content: ""; position: absolute; width: 16px; height: 16px; border-radius: 50%; background: #fff; top: 2px; left: 2px; box-shadow: 0 1px 2px rgba(0,0,0,.2); transition: left .2s; }
-    .sf-sw.on, .sf-pill.on .sf-sw { background: var(--sf-yellow); }
-    .sf-sw.on::after, .sf-pill.on .sf-sw::after { left: 16px; }
-    .sf-side .sf-sw.on { background: var(--sf-blue); }
+    span.sf-sw { width: 34px; height: 20px; border-radius: 12px; background: #cfd6e2; position: relative; flex-shrink: 0; transition: background .2s; }
+    span.sf-sw::after { content: ""; position: absolute; width: 16px; height: 16px; border-radius: 50%; background: #fff; top: 2px; left: 2px; box-shadow: 0 1px 2px rgba(0,0,0,.2); transition: left .2s; }
+    span.sf-sw.on, .sf-pill.on span.sf-sw { background: var(--sf-yellow); }
+    span.sf-sw.on::after, .sf-pill.on span.sf-sw::after { left: 16px; }
+    .sf-side span.sf-sw.on { background: var(--sf-blue); }
     /* Nút thả xuống (dùng chung) */
     .sf-dd { position: relative; }
     .sf-dd > summary { list-style: none; cursor: pointer; }
@@ -331,7 +332,7 @@
     .sf-side-h b { display: flex; align-items: center; gap: .4rem; color: var(--sf-navy); margin-right: auto; }
     .sf-side-body { overflow: auto; }
     .sf-stock { display: flex; align-items: center; gap: .6rem; padding: .85rem 1rem; border-bottom: 1px solid #eef1f6; color: var(--sf-navy) !important; font-weight: 500; font-size: .875rem; }
-    .sf-stock .sf-sw { margin-left: auto; }
+    .sf-stock span.sf-sw { margin-left: auto; }
     .sf-sec { border-bottom: 1px solid #eef1f6; padding: 0 1rem; }
     .sf-sec:last-child { border-bottom: 0; }
     .sf-sec > summary { list-style: none; display: flex; align-items: center; gap: .4rem; padding: .7rem 0; font-weight: 500; color: var(--sf-navy); font-size: .875rem; cursor: pointer; }
@@ -408,7 +409,7 @@
     .sf-gal-thumbs .swiper-slide img { width: 100%; height: 100%; object-fit: contain; }
     .sf-gal-thumbs .swiper-slide-thumb-active, .sf-gal-thumbs .swiper-slide:hover { opacity: 1; border-color: var(--sf-blue); }
     .sf-gal.is-full { position: fixed; inset: 0; z-index: 2000; background: rgba(10,18,36,.96); display: flex; flex-direction: column; justify-content: center; padding: 3rem 1rem 1rem; }
-    .sf-gal.is-full .sf-gal-main { border: 0; background: transparent; flex: 1; }
+    .sf-gal.is-full .sf-gal-main { border: 0; background: transparent; flex: 1 1 0; width: 100%; min-width: 0; min-height: 0; }
     .sf-gal.is-full .sf-gal-main .swiper-slide { aspect-ratio: auto; height: 100%; background: transparent; }
     .sf-gal.is-full .sf-gal-full { display: none; }
     .sf-gal.is-full .sf-gal-close { display: inline-flex; position: fixed; top: 12px; right: 12px; z-index: 6; }
@@ -460,6 +461,7 @@
         .sf-gal { margin: 0 calc(-1 * var(--sf-gutter)); }
         .sf-gal-main { border-radius: 0; border-width: 0 0 1px; }
         .sf-gal-nav, .sf-gal-thumbs { display: none !important; }
+        .sf-gal.is-full { margin: 0; }
         .sf-gal.is-full .sf-gal-nav { display: none !important; }
         .sf-sum { background: #fff; margin: 0 calc(-1 * var(--sf-gutter)); padding: 1rem var(--sf-gutter) 1.25rem; }
         .sf-sum-name { font-size: 1.25rem; }
@@ -984,7 +986,7 @@ ul.products.sf-grid > li { margin: 0 !important; padding: 0 !important; width: a
 .sf-buy-wrap .quantity .sf-q { width: 36px; height: 100%; border: 0; background: transparent; color: var(--sf-navy); display: flex; align-items: center; justify-content: center; }
 .sf-buy-wrap .quantity .sf-q:hover { background: #f6f8fc; }
 .sf-buy-wrap .single_add_to_cart_button, .sf-buy-wrap .sf-buy-now { display: flex !important; align-items: center; justify-content: center; gap: .4rem; height: 50px; padding: 0 1rem !important; border-radius: .65rem !important; white-space: nowrap; float: none !important; font-weight: 700 !important; font-size: 1rem !important; border: 0 !important; }
-.sf-buy-wrap .single_add_to_cart_button { background: var(--sf-yellow) !important; color: var(--sf-navy) !important; }
+.sf-buy-wrap .single_add_to_cart_button, .woocommerce .sf-buy-wrap button.single_add_to_cart_button.button.alt { background: var(--sf-yellow) !important; color: var(--sf-navy) !important; }
 .sf-buy-wrap .single_add_to_cart_button::before { content: "add_shopping_cart"; font-family: 'Material Icons Round'; font-size: 1.3rem; font-weight: 400; }
 .sf-buy-wrap .single_add_to_cart_button.disabled { opacity: .5; }
 .sf-buy-wrap .sf-buy-now { background: var(--sf-blue); color: #fff; }
@@ -1156,3 +1158,172 @@ a.sf-promo.t-strip:hover { color: var(--pink); }
 .sf-deal.is-flash time { font-weight: 700; color: #d32f2f; font-variant-numeric: tabular-nums; }
 .sf-deal.is-combo > i, .sf-deal.is-group > i { color: var(--sf-blue); }
 .sf-pcard-deal + .sf-pcard-vcount { top: 2rem; }
+
+/* ---------- Nút "Thêm vào giỏ" xe đẩy đón túi (port _storefront-atc.scss, inc/cart-fx.php) ---------- */
+/* Nút "Thêm vào giỏ" có hiệu ứng xe đẩy đón túi hàng (web bán hàng, /tuy-bien-web mục "Hiệu ứng", Theme::cartFx()). */
+/* Markup: app/Modules/Storefront/Views/partials/atc-button.blade.php. JS resources/js/storefront-cart-fx.js */
+/* đo --h (chiều cao nút) và --slot (chỗ icon xe bên trái chữ), thêm lớp is-adding trong --atc-ms rồi gỡ. */
+/* Diễn biến: nút nhún, chữ mờ, xe chạy ra giữa, túi hiện phía trên rồi rơi vào xe (xe đầy), xe chở ra mép phải, */
+/* xe mới chạy vào chỗ cũ, chữ hiện lại. Túi có hai bản: .sf-atc-sky (trên nút) và trong .sf-atc-stage (trong nút), */
+/* cùng một chuyển động, mỗi bản bị cắt theo khung của nó nên nhìn như một túi rơi xuyên mép nút. */
+
+body { --atc-ms: 2000ms; }
+
+.sf-atc {
+    --h: 46px;
+    --cw: calc(var(--h) * .5);
+    --slot: 1rem;
+    --land: calc(var(--h) * .2);
+    position: relative;
+    overflow: visible;
+    isolation: isolate;
+}
+.sf-atc .sf-atc-ghost, .sf-atc .sf-atc-face { display: inline-flex; align-items: center; gap: .5rem; white-space: nowrap; }
+.sf-atc .sf-atc-ghost { visibility: hidden; }
+.sf-atc .sf-atc-face { position: absolute; inset: 0; justify-content: center; }
+.sf-atc .sf-atc-sp { width: var(--cw); height: 1px; flex: none; }
+.sf-atc .sf-atc-sh { display: none; }
+.sf-atc .sf-atc-stage { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; pointer-events: none; container-type: inline-size; }
+.sf-atc .sf-atc-sky { position: absolute; left: 0; right: 0; bottom: 100%; height: 64px; overflow: hidden; pointer-events: none; }
+.sf-atc .sf-atc-cart { position: absolute; top: 0; left: 0; width: var(--cw); height: 100%; transform: translateX(var(--slot)); }
+.sf-atc .sf-atc-cart svg { position: absolute; left: 0; top: 50%; width: 100%; height: auto; transform: translateY(-52%); }
+.sf-atc .sf-atc-fill { opacity: 0; }
+.sf-atc .sf-atc-bag { position: absolute; left: 50%; top: 0; width: calc(var(--h) * .3); margin-left: calc(var(--h) * -.15); transform: translateY(-150%) scale(0); }
+.sf-atc .sf-atc-sky .sf-atc-bag { top: 64px; color: var(--sf-navy); }
+.sf-atc .sf-atc-bag svg { display: block; width: 100%; height: auto; }
+
+/* Thẻ sản phẩm: nút nhỏ hơn. Rút chữ thành "Vào giỏ" theo bề rộng hàng nút của chính thẻ (không theo màn hình): */
+/* thẻ hẹp (khối "Mua kèm" ở giỏ hàng, lưới nhiều cột, điện thoại) thì chữ dài không vừa nút cạnh nút Zalo. */
+.sf-pcard-btns:has(.sf-atc-sm) { container-type: inline-size; }
+.sf-atc.sf-atc-sm { --h: 36px; min-width: 0; }
+.sf-atc.sf-atc-sm .sf-atc-ghost, .sf-atc.sf-atc-sm .sf-atc-face { gap: .35rem; }
+@container (max-width: 185px) {
+    .sf-atc.sf-atc-sm .sf-atc-lg { display: none; }
+    .sf-atc.sf-atc-sm .sf-atc-sh { display: inline; }
+}
+@media (max-width: 575px) {
+    .sf-atc.sf-atc-sm .sf-atc-lg { display: none; }
+    .sf-atc.sf-atc-sm .sf-atc-sh { display: inline; }
+}
+
+/* Kiểu "Tối, bo tròn" (giống video Anh 2 gửi): nền màu đậm, chữ và xe trắng. */
+body[data-cart-look="dark"] .sf-atc,
+body[data-cart-look="dark"] .sf-atc:hover { background: var(--sf-navy); color: #fff; border-radius: 999px; }
+
+.sf-atc.is-adding { animation: sf-atc-press var(--atc-ms) linear; pointer-events: none; }
+.sf-atc.is-adding .sf-atc-face .sf-atc-txt { animation: sf-atc-text var(--atc-ms) linear; }
+.sf-atc.is-adding .sf-atc-cart { animation: sf-atc-cart var(--atc-ms) linear; }
+.sf-atc.is-adding .sf-atc-fill { animation: sf-atc-fill var(--atc-ms) linear; }
+.sf-atc.is-adding .sf-atc-bag { animation: sf-atc-bag var(--atc-ms) linear; }
+
+@keyframes sf-atc-press { 0% { transform: scale(1); } 5% { transform: scale(.96); } 12%, 100% { transform: scale(1); } }
+@keyframes sf-atc-text {
+    0% { opacity: 1; filter: blur(0); }
+    15%, 74% { opacity: 0; filter: blur(3px); }
+    90%, 100% { opacity: 1; filter: blur(0); }
+}
+@keyframes sf-atc-cart {
+    0%, 4% { transform: translateX(var(--slot)); animation-timing-function: cubic-bezier(.6, 0, .3, 1); }
+    30% { transform: translateX(calc(50cqw - var(--cw) / 2)); }
+    42% { transform: translateX(calc(50cqw - var(--cw) / 2)); }
+    46% { transform: translateX(calc(50cqw - var(--cw) / 2)) translateY(calc(var(--h) * .07)); }
+    52% { transform: translateX(calc(50cqw - var(--cw) / 2)); animation-timing-function: cubic-bezier(.6, 0, .9, .5); }
+    72% { transform: translateX(calc(100cqw + 8px)); }
+    72.1% { transform: translateX(calc(-1 * var(--cw) - 8px)); animation-timing-function: cubic-bezier(.2, .7, .3, 1); }
+    90%, 100% { transform: translateX(var(--slot)); }
+}
+@keyframes sf-atc-fill { 0%, 41% { opacity: 0; } 43%, 71.9% { opacity: 1; } 72%, 100% { opacity: 0; } }
+@keyframes sf-atc-bag {
+    0%, 7% { transform: translateY(-150%) scale(0); opacity: 1; }
+    14% { transform: translateY(-150%) scale(1.12); }
+    18%, 30% { transform: translateY(-150%) scale(1); animation-timing-function: cubic-bezier(.5, 0, 1, .6); }
+    42% { transform: translateY(var(--land)) scale(1); opacity: 1; }
+    43%, 100% { transform: translateY(var(--land)) scale(1); opacity: 0; }
+}
+
+/* Số trên icon giỏ đầu trang và dòng "Trong giỏ: N món" nảy lên khi thêm xong. */
+.sf-atc-count { font-size: .8125rem; color: #7b809a; margin: .25rem 0 .5rem; }
+.sf-atc-count b { color: var(--sf-navy); display: inline-block; }
+[data-sf-cart-count].is-bump { animation: sf-atc-bump .45s cubic-bezier(.3, 1.6, .5, 1); }
+[data-sf-cart-link].is-bump > i { display: inline-block; animation: sf-atc-shake .45s ease; }
+@keyframes sf-atc-bump { 40% { scale: 1.45; } }
+@keyframes sf-atc-shake { 25% { transform: rotate(-12deg); } 60% { transform: rotate(9deg); } }
+
+/* Túi bay lên icon giỏ (kiểu "túi bay lên giỏ đầu trang"), JS tạo rồi gỡ. */
+.sf-atc-fly {
+    position: fixed; z-index: 1100; width: 32px; height: 32px; padding: 7px; border-radius: 50%; pointer-events: none;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--sf-yellow); color: var(--sf-navy); box-shadow: 0 8px 24px rgba(52, 71, 103, .15);
+}
+.sf-atc-fly svg { display: block; width: 100%; height: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+    .sf-atc.is-adding, .sf-atc.is-adding * { animation: none !important; }
+}
+
+/* WordPress: nút chính trang chi tiết dùng ::before làm icon giỏ, có xe rồi thì bỏ; thanh đáy điện thoại. */
+.sf-buy-wrap .single_add_to_cart_button.sf-atc::before { content: none; }
+.sf-buy-wrap .single_add_to_cart_button.sf-atc { position: relative; }
+.sf-mbuy .sf-atc { --h: 44px; }
+a.sf-atc { text-decoration: none; }
+.sf-cart-n.is-bump { animation: sf-atc-bump .45s cubic-bezier(.3, 1.6, .5, 1); }
+
+/* ---------- Chữ cạnh logo (port _storefront-brand-fx.scss, tmt_brand_fx()) ---------- */
+/* Hiệu ứng chữ cạnh logo đầu trang web bán hàng (Anh 2 chọn 6 kiểu 22/11/2026, mockup /mnt/project-files/mockup/hieu-ung-chu-logo/). */
+/* Chọn ở Tùy biến web › Hiệu ứng › Chữ cạnh logo (Theme::brandFx()); chữ dựng ở storefront::partials.brand-text. */
+/* Lớp trên thẻ <a class="sf-brand">: sf-bfx-run-loop|once|hover (lúc chạy), sf-bfx-c-primary|dark (màu nhấn), biến --bfx-k (tốc độ). */
+/* Gõ chữ và Đổi câu do resources/js/storefront-brand-fx.js chạy; CSS ở đây chỉ lo phần nhìn. */
+
+.sf-brand { --bfx-k: 1; --bfx-c: var(--sf-blue); }
+.sf-brand.sf-bfx-c-dark { --bfx-c: var(--sf-navy); }
+.sf-bfx { position: relative; display: inline-block; }
+.sf-bfx .ch { display: inline-block; }
+
+/* Chạy một lần: mọi vòng lặp thành 1 lần. Khi rê chuột: đứng yên tới khi rê vào logo (rời ra thì về như cũ). */
+.sf-bfx-run-once .sf-bfx, .sf-bfx-run-once .sf-bfx * { animation-iteration-count: 1 !important; }
+.sf-bfx-run-hover:not(:hover) .sf-bfx, .sf-bfx-run-hover:not(:hover) .sf-bfx * { animation: none !important; }
+
+/* Ánh kim lướt: vệt sáng vàng lướt qua chữ rồi nghỉ. */
+.sf-bfx-shimmer {
+    background: linear-gradient(100deg, currentColor 0 40%, color-mix(in srgb, var(--sf-yellow) 45%, white) 47%, var(--sf-yellow) 50%, color-mix(in srgb, var(--sf-yellow) 45%, white) 53%, currentColor 60% 100%);
+    background-size: 300% 100%; background-position: 100% 0;
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    animation: sf-bfx-shimmer calc(3.2s * var(--bfx-k)) ease-in-out infinite;
+}
+@keyframes sf-bfx-shimmer { 0%, 25% { background-position: 100% 0; } 75%, 100% { background-position: 0 0; } }
+
+/* Phát sáng nhẹ: chữ đổi sang màu nhấn, quầng xanh + vàng như nhịp thở. */
+.sf-bfx-glow { animation: sf-bfx-glow calc(2.6s * var(--bfx-k)) ease-in-out infinite; }
+@keyframes sf-bfx-glow {
+    0%, 100% { text-shadow: none; }
+    50% { color: var(--bfx-c); text-shadow: 0 0 6px color-mix(in srgb, var(--bfx-c) 45%, transparent), 0 0 14px color-mix(in srgb, var(--sf-yellow) 55%, transparent); }
+}
+
+/* Hiện từng chữ: mờ rồi rõ dần từ trái qua phải. */
+.sf-bfx-reveal .ch { animation: sf-bfx-reveal calc(4s * var(--bfx-k)) ease-out infinite; animation-delay: calc(var(--i) * 35ms * var(--bfx-k)); }
+@keyframes sf-bfx-reveal { 0% { opacity: 0; filter: blur(4px); transform: translateY(4px); } 18%, 100% { opacity: 1; filter: none; transform: none; } }
+
+/* Lật chữ: từng chữ lật một vòng như bảng số sân bay. */
+.sf-bfx-flip { perspective: 300px; }
+.sf-bfx-flip .ch { animation: sf-bfx-flip calc(4s * var(--bfx-k)) ease-in-out infinite; animation-delay: calc(var(--i) * 40ms * var(--bfx-k)); backface-visibility: hidden; }
+@keyframes sf-bfx-flip { 0%, 25%, 100% { transform: none; } 12% { transform: rotateX(360deg); color: var(--bfx-c); } }
+
+/* Gõ chữ / Đổi câu: các lớp chồng lên một ô lưới, ô rộng theo câu dài nhất nên logo, thanh tìm kiếm không xê dịch. */
+.sf-bfx-stack { display: inline-grid; }
+.sf-bfx-stack > * { grid-area: 1 / 1; white-space: nowrap; }
+.sf-bfx-type .sz { visibility: hidden; }
+.sf-bfx-type .tx.typing::after { content: ""; display: inline-block; width: 1px; height: 1em; margin-left: 1px; vertical-align: -2px; background: var(--bfx-c); animation: sf-bfx-caret .8s steps(1) infinite; }
+@keyframes sf-bfx-caret { 50% { opacity: 0; } }
+
+.sf-bfx-rotate .ln { visibility: hidden; }
+.sf-bfx-rotate .ln.on { visibility: visible; }
+.sf-bfx-rotate .ln.alt { color: var(--bfx-c); font-weight: 500; }
+.sf-bfx-rotate .ln.on.run .ch { animation: sf-bfx-reveal calc(1.2s * var(--bfx-k)) ease-out both; animation-delay: calc(var(--i) * 25ms * var(--bfx-k)); }
+/* Rê chuột: lớp "run" do JS gắn khi đổi câu, nên không bị luật "đứng yên khi chưa rê" chặn. */
+.sf-bfx-run-hover .sf-bfx-rotate .ln.on.run .ch { animation: sf-bfx-reveal calc(1.2s * var(--bfx-k)) ease-out both !important; animation-delay: calc(var(--i) * 25ms * var(--bfx-k)) !important; }
+
+@media (prefers-reduced-motion: reduce) {
+    .sf-bfx, .sf-bfx * { animation: none !important; }
+    .sf-bfx-shimmer { -webkit-text-fill-color: currentColor; background: none; }
+}
+

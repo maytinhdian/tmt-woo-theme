@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'TMT_SHOP_VERSION', '0.3.0' );
+define( 'TMT_SHOP_VERSION', '0.5.1' );
 define( 'TMT_SHOP_DIR', get_template_directory() );
 define( 'TMT_SHOP_URI', get_template_directory_uri() );
 
@@ -21,6 +21,7 @@ require TMT_SHOP_DIR . '/inc/blog.php';
 
 if ( class_exists( 'WooCommerce' ) ) {
 	require TMT_SHOP_DIR . '/inc/woocommerce.php';
+	require TMT_SHOP_DIR . '/inc/cart-fx.php';
 	require TMT_SHOP_DIR . '/inc/filters.php';
 	require TMT_SHOP_DIR . '/inc/checkout.php';
 	require TMT_SHOP_DIR . '/inc/payment-qr.php';

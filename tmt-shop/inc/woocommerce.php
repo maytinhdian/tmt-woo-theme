@@ -202,18 +202,24 @@ function tmt_product_category( WC_Product $product ) {
 	return $terms[0];
 }
 
-/** Ô "Bảo hành (tháng)" ở tab Chung của sản phẩm: hiện trên thẻ, trang chi tiết, bảng thông số. */
+/**
+ * Bảo hành (tháng): đặt theo nhóm hàng (Sản phẩm → Danh mục, term meta tmt_warranty_months, nhóm con không đặt thì lấy nhóm cha),
+ * sản phẩm nào khác thì nhập riêng ở tab Chung, hoặc chọn nhiều sản phẩm → Chỉnh sửa hàng loạt. Hiện trên thẻ, trang chi tiết, bảng thông số.
+ */
 add_action(
 	'woocommerce_product_options_general_product_data',
 	function () {
+		global $post;
+		$cat = $post ? tmt_warranty_from_cats( (int) $post->ID ) : 0;
 		woocommerce_wp_text_input(
 			array(
 				'id'                => '_tmt_warranty_months',
 				'label'             => 'Bảo hành (tháng)',
 				'type'              => 'number',
+				'placeholder'       => $cat ? $cat . ' (theo nhóm hàng)' : '',
 				'custom_attributes' => array( 'min' => 0, 'step' => 1 ),
 				'desc_tip'          => true,
-				'description'       => 'Hiện "Bảo hành x tháng tại tiệm" trên thẻ và trang sản phẩm. Để trống thì không hiện.',
+				'description'       => 'Để trống thì lấy theo nhóm hàng (Sản phẩm → Danh mục → Bảo hành). Nhập số ở đây khi sản phẩm này khác nhóm.',
 			)
 		);
 	}
@@ -228,10 +234,103 @@ add_action(
 	}
 );
 
+/** Bảo hành theo nhóm hàng của sản phẩm: nhóm (hoặc nhóm cha gần nhất) có đặt; nhiều nhóm thì lấy số lớn nhất. */
+function tmt_warranty_from_cats( $product_id ) {
+	static $memo = array();
+	$best = 0;
+	foreach ( wp_get_post_terms( $product_id, 'product_cat', array( 'fields' => 'ids' ) ) as $tid ) {
+		if ( ! isset( $memo[ $tid ] ) ) {
+			$memo[ $tid ] = 0;
+			foreach ( array_merge( array( $tid ), get_ancestors( $tid, 'product_cat', 'taxonomy' ) ) as $t ) {
+				$m = (int) get_term_meta( $t, 'tmt_warranty_months', true );
+				if ( $m ) {
+					$memo[ $tid ] = $m;
+					break;
+				}
+			}
+		}
+		$best = max( $best, $memo[ $tid ] );
+	}
+	return $best;
+}
+
 function tmt_warranty_months( WC_Product $product ) {
 	$id = $product->is_type( 'variation' ) ? $product->get_parent_id() : $product->get_id();
-	return (int) get_post_meta( $id, '_tmt_warranty_months', true );
+	$m  = (int) get_post_meta( $id, '_tmt_warranty_months', true );
+	return $m ? $m : tmt_warranty_from_cats( $id );
 }
+
+/* Ô Bảo hành ở form thêm / sửa nhóm hàng + cột trong danh sách nhóm. */
+add_action(
+	'product_cat_add_form_fields',
+	function () {
+		echo '<div class="form-field"><label for="tmt-wm">Bảo hành (tháng)</label><input id="tmt-wm" type="number" min="0" step="1" name="tmt_warranty_months" value=""><p>Mọi sản phẩm trong nhóm (và nhóm con chưa đặt riêng) dùng số này, trừ sản phẩm nhập riêng.</p></div>';
+	}
+);
+add_action(
+	'product_cat_edit_form_fields',
+	function ( $term ) {
+		$m = get_term_meta( $term->term_id, 'tmt_warranty_months', true );
+		echo '<tr class="form-field"><th scope="row"><label for="tmt-wm">Bảo hành (tháng)</label></th><td><input id="tmt-wm" type="number" min="0" step="1" name="tmt_warranty_months" value="' . esc_attr( $m ) . '"><p class="description">Mọi sản phẩm trong nhóm (và nhóm con chưa đặt riêng) dùng số này, trừ sản phẩm nhập riêng. Để trống: lấy theo nhóm cha.</p></td></tr>';
+	}
+);
+foreach ( array( 'created_product_cat', 'edited_product_cat' ) as $tmt_hook ) {
+	add_action(
+		$tmt_hook,
+		function ( $term_id ) {
+			if ( ! isset( $_POST['tmt_warranty_months'] ) || ! current_user_can( 'manage_product_terms' ) ) { // phpcs:ignore WordPress.Security.NonceVerification -- WordPress đã kiểm nonce form nhóm.
+				return;
+			}
+			$m = absint( wp_unslash( $_POST['tmt_warranty_months'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
+			if ( $m ) {
+				update_term_meta( $term_id, 'tmt_warranty_months', $m );
+			} else {
+				delete_term_meta( $term_id, 'tmt_warranty_months' );
+			}
+		}
+	);
+}
+add_filter(
+	'manage_edit-product_cat_columns',
+	function ( $cols ) {
+		$cols['tmt_wm'] = 'Bảo hành';
+		return $cols;
+	}
+);
+add_filter(
+	'manage_product_cat_custom_column',
+	function ( $out, $col, $term_id ) {
+		if ( 'tmt_wm' === $col ) {
+			$m = (int) get_term_meta( $term_id, 'tmt_warranty_months', true );
+			$out = $m ? $m . ' tháng' : '–';
+		}
+		return $out;
+	},
+	10,
+	3
+);
+
+/* Chỉnh sửa hàng loạt sản phẩm: đặt / bỏ bảo hành riêng cho nhiều sản phẩm một lần. */
+add_action(
+	'woocommerce_product_bulk_edit_end',
+	function () {
+		echo '<div class="inline-edit-group"><label class="alignleft"><span class="title">Bảo hành</span><span class="input-text-wrap"><select name="tmt_wm_bulk" style="width:auto"><option value="">— Không đổi —</option><option value="set">Đặt số tháng:</option><option value="clear">Theo nhóm hàng (bỏ số riêng)</option></select> <input type="number" min="0" step="1" name="tmt_wm_months" placeholder="tháng" style="width:80px"></span></label></div>';
+	}
+);
+add_action(
+	'woocommerce_product_bulk_edit_save',
+	function ( $product ) {
+		$do = isset( $_REQUEST['tmt_wm_bulk'] ) ? sanitize_key( wp_unslash( $_REQUEST['tmt_wm_bulk'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification -- WordPress đã kiểm nonce bulk edit.
+		if ( 'set' === $do && isset( $_REQUEST['tmt_wm_months'] ) && '' !== $_REQUEST['tmt_wm_months'] ) { // phpcs:ignore WordPress.Security.NonceVerification
+			$m = absint( wp_unslash( $_REQUEST['tmt_wm_months'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
+			$product->update_meta_data( '_tmt_warranty_months', $m ? $m : '' );
+			$product->save();
+		} elseif ( 'clear' === $do ) {
+			$product->delete_meta_data( '_tmt_warranty_months' );
+			$product->save();
+		}
+	}
+);
 
 /** Vòng lặp lưới sản phẩm + phân trang, hoặc ô "chưa có sản phẩm". */
 function tmt_product_loop() {

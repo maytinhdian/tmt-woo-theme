@@ -37,11 +37,15 @@ Theme WordPress cho web bán hàng máy tính, linh kiện, camera: giao diện 
 ## Có gì trong bản này
 
 - Đầu trang: thanh trên cùng 3 vùng, ô tìm 3 kiểu, menu chính với khung xổ theo danh mục + hãng, mega menu, 15 hiệu ứng rê chuột và 9 kiểu đánh dấu trang đang mở.
-- Trang chủ theo section: slider (2 kiểu), dải cam kết, danh mục nổi bật, khuyến mãi đếm ngược, sản phẩm mới, bài viết.
+- Trang chủ theo section: slider (2 kiểu), dải cam kết, danh mục nổi bật, khuyến mãi đếm ngược, phần mềm bản quyền (tab theo danh mục, khung cam kết, các bước mua key), sản phẩm mới, bài viết.
+- Section **Quy trình sửa máy** (cần plugin TMT Shop Tools): 4 bước + 3 ô phí, dẫn sang trang `/sua-may/`.
+- **Bảo hành theo nhóm hàng**: Sản phẩm → Danh mục → sửa nhóm → ô **Bảo hành (tháng)**; nhóm con chưa đặt thì lấy nhóm cha. Sản phẩm khác nhóm thì nhập riêng ở tab Chung, hoặc tick nhiều sản phẩm → **Chỉnh sửa hàng loạt → Bảo hành** (đặt số tháng / theo nhóm hàng).
 - Danh sách sản phẩm: bộ lọc theo hãng, giá, còn hàng, mọi thuộc tính; sắp xếp; trang lọc không cho Google lập chỉ mục.
 - Thẻ sản phẩm: nhãn thông số trên ảnh, vài dòng thông số, % giảm, "N loại", nút Thêm vào giỏ (AJAX), Hỏi giá, Zalo.
 - Trang chi tiết: bộ ảnh vuốt + phóng to + toàn màn hình, chọn loại bằng nút, Mua ngay, ưu đãi, bảng thông số, sản phẩm cùng loại, thanh mua dính đáy trên điện thoại.
 - Chân trang, nút liên hệ nổi (Hotline, Zalo, Messenger), banner dọc hai bên, hiệu ứng thẻ và con trỏ chuột.
+- Hiệu ứng (Tùy biến → Hiệu ứng): nút **Thêm vào giỏ** xe đẩy đón túi (túi bay lên giỏ đầu trang, thêm không tải lại trang), **chữ cạnh logo** 6 kiểu (ánh kim, gõ chữ, phát sáng, hiện từng chữ, đổi câu, lật chữ), **máy bay giấy** ở nút Đăng ký nhận tin.
+- Ô **Nhận tin khuyến mãi** ở chân trang có sẵn (cần plugin TMT Shop Tools): email lưu ở **WooCommerce → Email nhận tin**, nút tải CSV mở bằng Excel.
 - Trang bài viết, trang tĩnh, tìm kiếm, 404.
 - Giỏ hàng + thanh toán trên một trang: sửa số lượng, mã giảm giá, mua kèm, chọn giao tận nơi / nhận tại tiệm, thanh tổng xanh đậm, thanh đặt hàng dính đáy trên điện thoại. Chỉ hỏi họ tên, số điện thoại, email (không bắt buộc), địa chỉ.
 - Mã QR chuyển khoản (VietQR, tạo ngay trên máy chủ, không gọi dịch vụ ngoài), nút chép số tài khoản / số tiền / nội dung.
@@ -65,12 +69,15 @@ Cài đặt:
 
 Cấu hình có lỗi đỏ (không lắp được) không vào giỏ được, máy chủ kiểm tra lại. Món chưa có giá, tạm hết hoặc không đủ số lượng không vào giỏ (hoặc vào phần còn), web báo rõ để tiệm gọi xác nhận.
 
+
+**Phụ kiện thêm**: WooCommerce → Lên cấu hình → mục 2, mỗi dòng một khe (Tai nghe, Loa, Webcam, Card WiFi, Windows...): tên, biểu tượng, số tối đa. Lưu xong chọn nhóm hàng cho khe ở mục 1 (nhóm trùng tên khe được tự nhận). Khe phụ kiện không bắt buộc, không có luật lắp ráp, hiện cuối trang dưới tiêu đề "Phụ kiện", có trong giỏ, link chia sẻ và bản in. Nút **Thêm sẵn khe Windows, Office, Diệt virus** tạo 3 khe phần mềm bản quyền (khe nào có rồi thì bỏ qua).
 ## Mẹo vặt (Bài viết)
 
 Trang Bài viết (Cài đặt → Đọc → "Trang bài viết", nên đặt tên **Mẹo vặt**) hiện kiểu "dòng tin + video" giống web của app:
 
 - **Bài chọn** ở đầu trang = bài tick "Ghim lên đầu blog" (tối đa 5, tự chạy vòng).
-- Cột **Chủ đề** = chuyên mục bài viết (icon tự đoán theo tên: windows, laptop, mạng, linh kiện...), tab **Mới nhất / Đọc nhiều / Video**, ô tìm bài.
+- Cột **Chủ đề** = chuyên mục bài viết (icon tự đoán theo tên: windows, laptop, mạng, linh kiện...), tab **Mới nhất / Đọc nhiều / Video**, ô tìm bài ngay dưới Chủ đề (điện thoại: trên tab).
+- Khối **Nhờ tiệm làm** (Tùy biến → Mẹo vặt: khối nhờ tiệm làm): 3 kiểu (vàng / kỹ thuật / dịch vụ), chữ, các ý, 2 nút, đang mở cửa hay đã đóng; chọn hiện ở trang danh sách, trang bài hay cả hai.
 - Trang bài: ảnh đại diện tràn ngang, mục lục tự lấy từ các tiêu đề H2, nút chia sẻ, "Bài này có giúp ích?", khung gọi tiệm, bài đọc tiếp.
 - Khung **Mẹo vặt** bên phải trang sửa bài: link video YouTube/TikTok (hiện ở "Mẹo 60 giây" và tab Video), mức độ Dễ/Vừa/Khó, **Sản phẩm gợi ý** theo mã SKU. Lượt xem và lượt "hữu ích" cũng xem ở đây.
 
@@ -78,7 +85,18 @@ Trang Bài viết (Cài đặt → Đọc → "Trang bài viết", nên đặt t
 
 - Menu **Giải pháp** (`/giai-phap/`) và **Phần mềm** (`/phan-mem/`): mỗi trang là một trang giới thiệu kiểu landing (đầu trang xanh + ảnh, dải cam kết, "Lắp cho đâu?" hoặc tính năng, gói giá chia tab, các bước, ảnh giới thiệu, thiết bị đang bán theo danh mục, hỏi đáp, form cuối trang). Sửa mọi chữ trong khung **Nội dung trang**, phần nào để trống thì tự ẩn. Ảnh đầu trang = "Ảnh đầu trang" bên phải. Thứ tự trong danh sách = ô "Thứ tự".
 - Sản phẩm **chưa nhập giá bán** có nút **Yêu cầu báo giá** (trang sản phẩm và thẻ sản phẩm). Sản phẩm có giá luôn vào giỏ, kể cả tạm hết.
-- Form báo giá, **Đặt lịch khảo sát** (Giải pháp), **Đăng ký dùng thử** (Phần mềm) vào menu **Yêu cầu khách** với mã YC/KS/DT + tháng (vd. `YC2611-0001`), có tình trạng Mới → Đang liên hệ → Đã báo giá → Đã chốt / Không thành, và gửi email cho tiệm (đổi email ở **Yêu cầu khách → Cài đặt**). Chống spam bằng ô bẫy và giới hạn 5 lần / 10 phút mỗi máy.
+- Form báo giá, **Đặt lịch khảo sát** (Giải pháp), **Đăng ký dùng thử** (Phần mềm), **Gửi yêu cầu sửa máy** vào menu **Yêu cầu khách** với mã YC/KS/DT/SM + tháng (vd. `YC2611-0001`), có tình trạng Mới → Đang liên hệ → Đã báo giá → Đã chốt / Không thành, và gửi email cho tiệm (đổi email ở **Yêu cầu khách → Cài đặt**). Chống spam bằng ô bẫy và giới hạn 5 lần / 10 phút mỗi máy.
+
+## Sửa máy (trong plugin TMT Shop Tools)
+
+Trang **`/sua-may/`** giới thiệu cách tiệm nhận sửa máy: 5 bước, 3 trường hợp sau kiểm tra (không hư / sửa / không sửa), bảng phí, khối **Tính thử** (khách chọn mang tới hay thợ tới, số máy, kết quả kiểm tra thì thấy phải trả bao nhiêu), hỏi đáp và form **Gửi yêu cầu sửa máy** (vào **Yêu cầu khách** với mã `SM`). Phí kiểm tra mỗi máy, phí di chuyển tối thiểu + mỗi km, hạn mức "dưới bao nhiêu cứ thay", miễn hay trừ phí kiểm tra khi đồng ý sửa: **Tùy biến → Sửa máy: quy trình và phí**; trang và section trang chủ luôn cùng số. Thêm link `/sua-may/` vào menu chính.
+
+## Ảnh (trong plugin TMT Shop Tools)
+
+- Tải ảnh lên là tự **thu nhỏ** (cạnh dài tối đa 2400px), xoay đúng chiều ảnh điện thoại, **đổi sang WebP**, bỏ thông tin GPS / máy chụp. Ảnh chụp 3–4 MB còn khoảng 300–600 KB.
+- Ảnh tải lên ở trang sửa sản phẩm tự đặt **tên file + chữ mô tả theo tên sản phẩm** (`laptop-dell-3530-i5-1.webp`).
+- Trang sửa sản phẩm, khung **Bộ ảnh sản phẩm**: kéo thả nhiều ảnh, bấm chọn, hoặc **Ctrl+V** dán ảnh vừa chụp màn hình / chép từ web. Chưa có ảnh đại diện thì ảnh đầu làm ảnh đại diện. Kéo ảnh để đổi thứ tự.
+- **Media → Ảnh sản phẩm**: xem ảnh theo nhóm hàng, tìm theo tên / SKU / tên file; tab **Ảnh không dùng** (không nằm ở sản phẩm, bài, trang, nhóm hàng, Tùy biến) chọn rồi xóa hàng loạt để dọn hosting; tab **Cài đặt** bật tắt từng việc, cạnh tối đa, chất lượng, nút điền chữ mô tả cho ảnh sản phẩm cũ.
 
 ## Trang sản phẩm: ngừng bán, quà tặng, giới thiệu nâng cao (trong plugin TMT Shop Tools)
 
@@ -98,7 +116,7 @@ Giá món luôn là giá thấp nhất trong giá đang bán, giá KM có hạn 
 
 ## Dữ liệu mẫu
 
-**WooCommerce → Dữ liệu mẫu → Nạp dữ liệu mẫu**: danh mục, khoảng 28 sản phẩm có thông số (lắp thử được ở Xây dựng cấu hình), 1 sản phẩm chưa có giá, 1 sản phẩm ngừng kinh doanh, laptop có Giới thiệu nâng cao và quà tặng kèm, giá sốc SSD 7 ngày và combo CPU + Main, 2 cấu hình mẫu, 6 bài Mẹo vặt, trang Giải pháp Camera + Mạng WiFi, trang Phần mềm chấm công, và nếu web chưa có thì trang chủ tĩnh, trang Mẹo vặt, menu chính, tiền VNĐ. **Xóa dữ liệu mẫu** gỡ đúng những gì đã nạp, không đụng đồ tự tạo.
+**WooCommerce → Dữ liệu mẫu → Nạp dữ liệu mẫu**: danh mục, khoảng 28 sản phẩm có thông số (lắp thử được ở Xây dựng cấu hình), 6 phần mềm bản quyền (Windows, Office, Diệt virus) kèm 3 khe phần mềm ở Lên cấu hình, 1 sản phẩm chưa có giá, 1 sản phẩm ngừng kinh doanh, laptop có Giới thiệu nâng cao và quà tặng kèm, giá sốc SSD 7 ngày và combo CPU + Main, 2 cấu hình mẫu, 6 bài Mẹo vặt, trang Giải pháp Camera + Mạng WiFi, trang Phần mềm chấm công, và nếu web chưa có thì trang chủ tĩnh, trang Mẹo vặt, menu chính, tiền VNĐ. **Xóa dữ liệu mẫu** gỡ đúng những gì đã nạp, không đụng đồ tự tạo.
 
 ## Giấy phép
 

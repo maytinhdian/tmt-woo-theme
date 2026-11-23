@@ -82,6 +82,12 @@ function tmt_enqueue() {
 	wp_add_inline_style( 'tmt-theme', tmt_inline_css( $font ) );
 
 	wp_enqueue_script( 'tmt-theme', TMT_SHOP_URI . '/assets/js/theme.js', array(), $v, array( 'in_footer' => true, 'strategy' => 'defer' ) );
+	if ( tmt_brand_fx()['js'] ) {
+		wp_enqueue_script( 'tmt-brand-fx', TMT_SHOP_URI . '/assets/js/brand-fx.js', array(), $v, array( 'in_footer' => true, 'strategy' => 'defer' ) );
+	}
+	if ( tmt_opt( 'footer.newsletter' ) && tmt_opt( 'effects.nl_plane' ) && function_exists( 'tmt_nl_action' ) ) {
+		wp_enqueue_script( 'tmt-newsletter', TMT_SHOP_URI . '/assets/js/newsletter.js', array(), $v, array( 'in_footer' => true, 'strategy' => 'defer' ) );
+	}
 	if ( tmt_effects()['js'] ) {
 		wp_enqueue_script( 'tmt-fx', TMT_SHOP_URI . '/assets/js/fx.js', array(), $v, array( 'in_footer' => true, 'strategy' => 'defer' ) );
 	}
@@ -164,7 +170,7 @@ add_action(
 			array(
 				'name'          => 'Chân trang: ô nhận tin',
 				'id'            => 'footer-newsletter',
-				'description'   => 'Bật "Ô nhận tin" ở Tùy biến → Chân trang, rồi thả widget form nhận email vào đây.',
+				'description'   => 'Chỉ dùng khi không cài plugin TMT Shop Tools (plugin đã có ô nhận tin sẵn). Bật "Ô nhận tin" ở Tùy biến → Chân trang, rồi thả widget form nhận email vào đây.',
 				'before_widget' => '<div id="%1$s" class="sf-nl %2$s">',
 				'after_widget'  => '</div>',
 				'before_title'  => '<span class="visually-hidden">',

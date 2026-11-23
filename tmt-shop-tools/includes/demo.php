@@ -30,7 +30,7 @@ function tmt_demo_page() {
 		<ul style="list-style:disc;padding-left:20px">
 			<li>Danh mục linh kiện, laptop, màn hình, camera, máy chấm công, thiết bị mạng.</li>
 			<li>Khoảng 25 sản phẩm có giá, tồn kho, bảo hành và thông số (lắp thử được ở trang Xây dựng cấu hình), 1 sản phẩm chưa có giá để thử "Yêu cầu báo giá", 1 sản phẩm ngừng kinh doanh, laptop có "Giới thiệu nâng cao" và quà tặng kèm.</li>
-			<li>2 cấu hình mẫu (Văn phòng, Chơi game), 6 bài Mẹo vặt, trang Giải pháp Camera + Mạng WiFi, trang Phần mềm chấm công.</li>
+			<li>6 phần mềm bản quyền (Windows, Office, Diệt virus) kèm 3 khe phần mềm ở Lên cấu hình, 2 cấu hình mẫu (Văn phòng, Chơi game), 6 bài Mẹo vặt, trang Giải pháp Camera + Mạng WiFi, trang Phần mềm chấm công.</li>
 			<li>Nếu web chưa có: trang chủ tĩnh + trang Mẹo vặt, menu chính, tiền tệ VNĐ.</li>
 		</ul>
 		<p>Đồ anh chị tự tạo không bị đụng tới. Bấm "Xóa dữ liệu mẫu" là gỡ đúng những gì đã nạp.</p>
@@ -159,7 +159,7 @@ function tmt_demo_product( array $p ) {
 	$product->set_stock_quantity( isset( $p['stock'] ) ? $p['stock'] : 8 );
 	$product->set_backorders( 'notify' );
 	$product->set_short_description( isset( $p['short'] ) ? $p['short'] : '' );
-	$product->set_description( '<p>' . esc_html( $p['name'] ) . ' chính hãng, mới 100%, có serial, bảo hành tại tiệm.</p><h2>Điểm nổi bật</h2><ul><li>Hàng chính hãng, xuất hóa đơn được</li><li>Giao trong ngày ở nội thành</li><li>Đổi mới trong 7 ngày nếu lỗi do nhà sản xuất</li></ul>' );
+	$product->set_description( isset( $p['desc'] ) ? $p['desc'] : '<p>' . esc_html( $p['name'] ) . ' chính hãng, mới 100%, có serial, bảo hành tại tiệm.</p><h2>Điểm nổi bật</h2><ul><li>Hàng chính hãng, xuất hóa đơn được</li><li>Giao trong ngày ở nội thành</li><li>Đổi mới trong 7 ngày nếu lỗi do nhà sản xuất</li></ul>' );
 	$attrs = array();
 	$all   = array();
 	foreach ( isset( $p['specs'] ) ? $p['specs'] : array() as $key => $v ) {
@@ -226,6 +226,11 @@ function tmt_demo_import() {
 		$c[ $slug ] = tmt_demo_term( 'product_cat', $name, $slug );
 	}
 
+	$pm = tmt_demo_term( 'product_cat', 'Phần mềm bản quyền', 'phan-mem-ban-quyen' );
+	foreach ( array( 'windows' => 'Windows', 'office' => 'Office', 'diet-virus' => 'Diệt virus' ) as $slug => $name ) {
+		$c[ $slug ] = tmt_demo_term( 'product_cat', $name, $slug, $pm );
+	}
+
 	// Thuộc tính thông số.
 	tmt_pcb_create_attributes();
 	foreach ( array( 'dung-luong' => 'Dung lượng', 'kich-thuoc-man-hinh' => 'Kích thước màn hình', 'do-phan-giai' => 'Độ phân giải', 'so-cong' => 'Số cổng' ) as $slug => $label ) {
@@ -263,10 +268,24 @@ function tmt_demo_import() {
 		array( 'name' => 'Router WiFi TP-Link Archer AX23', 'sku' => 'NET-TP-AX23', 'cat' => $c['thiet-bi-mang'], 'price' => 990000, 'bh' => 24, 'brand' => 'TP-Link' ),
 		array( 'name' => 'Switch TP-Link 8 cổng Gigabit TL-SG1008D', 'sku' => 'NET-TP-SG1008D', 'cat' => $c['thiet-bi-mang'], 'price' => 390000, 'sale' => 350000, 'bh' => 24, 'brand' => 'TP-Link', 'attrs' => array( 'so-cong' => '8 cổng' ) ),
 	);
+	$key  = '<p>Key bản quyền chính hãng Microsoft / hãng phần mềm, kích hoạt online, dùng mãi trên máy đã kích hoạt (gói năm thì gia hạn theo năm).</p><h2>Nhận key thế nào?</h2><ul><li>Thanh toán xong, tiệm gửi key qua email hoặc Zalo trong 15 phút</li><li>Tiệm cài giúp miễn phí qua UltraViewer hoặc tại tiệm</li><li>Xuất hóa đơn VAT cho công ty</li></ul>';
+	$soft = array(
+		array( 'name' => 'Windows 11 Home bản quyền (key điện tử)', 'sku' => 'PM-MS-WIN11-HOME', 'cat' => $c['windows'], 'price' => 2990000, 'brand' => 'Microsoft' ),
+		array( 'name' => 'Windows 11 Pro bản quyền (key điện tử)', 'sku' => 'PM-MS-WIN11-PRO', 'cat' => $c['windows'], 'price' => 3890000, 'sale' => 3490000, 'brand' => 'Microsoft' ),
+		array( 'name' => 'Microsoft 365 Family 1 năm (6 người)', 'sku' => 'PM-MS-365-FAMILY', 'cat' => $c['office'], 'price' => 1990000, 'sale' => 1590000, 'brand' => 'Microsoft' ),
+		array( 'name' => 'Office Home 2024 dùng vĩnh viễn', 'sku' => 'PM-MS-OFFICE-2024', 'cat' => $c['office'], 'price' => 3490000, 'brand' => 'Microsoft' ),
+		array( 'name' => 'Kaspersky Standard 1 máy 1 năm', 'sku' => 'PM-KAS-STD-1PC', 'cat' => $c['diet-virus'], 'price' => 290000, 'brand' => 'Kaspersky' ),
+		array( 'name' => 'ESET NOD32 Antivirus 1 máy 1 năm', 'sku' => 'PM-ESET-NOD32-1PC', 'cat' => $c['diet-virus'], 'price' => 250000, 'sale' => 220000, 'brand' => 'ESET' ),
+	);
+	foreach ( $soft as $it ) {
+		$items[] = $it + array( 'bh' => 0, 'stock' => 50, 'desc' => $key, 'short' => 'Gửi key qua email, Zalo trong 15 phút. Tiệm cài giúp miễn phí.' );
+	}
 	$ids = array();
 	foreach ( $items as $it ) {
 		$ids[ $it['sku'] ] = tmt_demo_product( $it );
 	}
+	// Khe Windows / Office / Diệt virus ở Lên cấu hình (nhớ khe nào do dữ liệu mẫu thêm để xóa đúng).
+	update_option( 'tmt_demo_slots', array_values( array_unique( array_merge( (array) get_option( 'tmt_demo_slots', array() ), tmt_pcb_add_software_slots() ) ) ), false );
 	tmt_pcb_flush();
 
 	// Cấu hình mẫu ở trang Xây dựng cấu hình.
@@ -506,6 +525,7 @@ function tmt_demo_site() {
 					'Xây dựng cấu hình' => function_exists( 'tmt_pcb_url' ) ? tmt_pcb_url() : '',
 					'Giải pháp'         => get_post_type_archive_link( 'tmt_solution' ),
 					'Phần mềm'          => get_post_type_archive_link( 'tmt_software' ),
+					'Sửa máy'           => function_exists( 'tmt_repair_url' ) ? tmt_repair_url() : '',
 					'Mẹo vặt'           => get_option( 'page_for_posts' ) ? get_permalink( get_option( 'page_for_posts' ) ) : '',
 				);
 				foreach ( $links as $title => $url ) {
@@ -565,6 +585,11 @@ function tmt_demo_remove() {
 		}
 	}
 	update_option( 'tmt_pcb_presets', array_values( array_filter( tmt_pcb_presets(), function ( $p ) { return empty( $p['demo'] ); } ) ), false );
+	$demo_slots = (array) get_option( 'tmt_demo_slots', array() );
+	if ( $demo_slots ) {
+		update_option( 'tmt_pcb_extra_slots', array_values( array_filter( (array) get_option( 'tmt_pcb_extra_slots', array() ), function ( $x ) use ( $demo_slots ) { return ! in_array( isset( $x['key'] ) ? $x['key'] : '', $demo_slots, true ); } ) ), false );
+		delete_option( 'tmt_demo_slots' );
+	}
 	$sticky = array_values( array_filter( (array) get_option( 'sticky_posts', array() ), 'get_post' ) );
 	update_option( 'sticky_posts', $sticky );
 	tmt_pcb_flush();

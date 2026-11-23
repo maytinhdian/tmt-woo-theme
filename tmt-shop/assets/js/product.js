@@ -32,6 +32,8 @@
 			on: { slideChange(s) { if (counter) counter.textContent = `${s.realIndex + 1} / ${count}`; } },
 		});
 		const toggleFull = (on) => {
+			// Nhấp đúp để mở thì Swiper cũng phóng ảnh theo khung nhỏ: trả về 1x rồi mới đổi khung, kẻo ảnh lệch/méo.
+			if (swiper.zoom && swiper.zoom.out) swiper.zoom.out();
 			root.classList.toggle('is-full', on);
 			document.documentElement.style.overflow = on ? 'hidden' : '';
 			swiper.update();

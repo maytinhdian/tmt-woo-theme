@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce → Lên cấu hình: gán danh mục cho từng khe, tạo sẵn thuộc tính thông số, ghi chú, số Zalo.
+ * WooCommerce → Lên cấu hình: gán danh mục cho từng khe, khe phụ kiện tự thêm, tạo sẵn thuộc tính thông số, ghi chú, số Zalo.
  *
  * @package TMT_Shop_Tools
  */
@@ -87,6 +87,19 @@ add_action(
 				$cats[ $slot ] = isset( $_POST['slot'][ $slot ] ) ? array_values( array_filter( array_map( 'absint', (array) wp_unslash( $_POST['slot'][ $slot ] ) ) ) ) : array();
 			}
 			update_option( 'tmt_pcb_slot_categories', $cats, false );
+			$extra = array();
+			foreach ( isset( $_POST['extra'] ) ? (array) wp_unslash( $_POST['extra'] ) : array() as $x ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				$label = sanitize_text_field( isset( $x['label'] ) ? $x['label'] : '' );
+				if ( '' === $label ) {
+					continue; // Xóa tên = bỏ khe.
+				}
+				$key     = isset( $x['key'] ) && preg_match( '/^x[a-z0-9]{1,12}$/', (string) $x['key'] ) ? (string) $x['key'] : 'x' . substr( md5( uniqid( $label, true ) ), 0, 6 );
+				$extra[] = array( 'key' => $key, 'label' => $label, 'icon' => sanitize_key( isset( $x['icon'] ) ? $x['icon'] : '' ), 'max' => absint( isset( $x['max'] ) ? $x['max'] : 1 ) );
+			}
+			update_option( 'tmt_pcb_extra_slots', $extra, false );
+			if ( isset( $_POST['soft_slots'] ) ) {
+				$msg = 'soft-' . count( tmt_pcb_add_software_slots() );
+			}
 			update_option( 'tmt_pcb_note', sanitize_text_field( wp_unslash( isset( $_POST['note'] ) ? $_POST['note'] : '' ) ), false );
 			update_option( 'tmt_pcb_zalo', preg_replace( '/[^\d]/', '', (string) wp_unslash( isset( $_POST['zalo'] ) ? $_POST['zalo'] : '' ) ), false );
 			tmt_pcb_flush();
@@ -142,6 +155,8 @@ function tmt_pcb_admin_page() {
 			<div class="notice notice-success is-dismissible"><p>Đã lưu.</p></div>
 		<?php elseif ( 0 === strpos( $msg, 'attrs-' ) ) : ?>
 			<div class="notice notice-success is-dismissible"><p>Đã tạo <?php echo (int) substr( $msg, 6 ); ?> thuộc tính mới. Giờ vào sửa từng linh kiện → tab Thuộc tính để chọn giá trị.</p></div>
+		<?php elseif ( 0 === strpos( $msg, 'soft-' ) ) : ?>
+			<div class="notice notice-success is-dismissible"><p><?php echo (int) substr( $msg, 5 ) ? 'Đã thêm ' . (int) substr( $msg, 5 ) . ' khe phần mềm. Chọn danh mục cho chúng ở mục 1.' : 'Các khe phần mềm đã có sẵn.'; ?></p></div>
 		<?php endif; ?>
 		<p>
 			<?php if ( $page ) : ?>
@@ -174,7 +189,36 @@ function tmt_pcb_admin_page() {
 				<?php endforeach; ?>
 			</table>
 
-			<h2>2. Hiển thị</h2>
+			<h2>2. Phụ kiện thêm</h2>
+			<p>Thêm khe cho phụ kiện tiệm bán kèm (tai nghe, loa, webcam, card WiFi, Windows...). Khe phụ kiện không bắt buộc, không có luật lắp ráp, hiện cuối danh sách dưới tiêu đề "Phụ kiện".
+				Bấm Lưu xong, khe mới hiện ở mục 1 để chọn danh mục (danh mục trùng tên khe được tự nhận). Xóa tên để bỏ khe.</p>
+			<table class="widefat striped" style="max-width: 760px">
+				<thead><tr><th>Tên khe</th><th>Biểu tượng</th><th style="width:110px">Tối đa mỗi món</th></tr></thead>
+				<tbody>
+					<?php
+					$tmt_rows = tmt_pcb_extra_slots();
+					for ( $i = 0; $i < 3; $i++ ) {
+						$tmt_rows[] = array( 'key' => '', 'label' => '', 'icon' => 'extension', 'max' => 1 );
+					}
+					foreach ( $tmt_rows as $i => $x ) :
+						?>
+						<tr>
+							<td><input type="hidden" name="extra[<?php echo (int) $i; ?>][key]" value="<?php echo esc_attr( $x['key'] ); ?>">
+								<input type="text" class="regular-text" name="extra[<?php echo (int) $i; ?>][label]" value="<?php echo esc_attr( $x['label'] ); ?>" placeholder="<?php echo $x['key'] ? '' : 'vd. Tai nghe'; ?>" aria-label="Tên khe"></td>
+							<td><select name="extra[<?php echo (int) $i; ?>][icon]" aria-label="Biểu tượng">
+								<?php foreach ( tmt_pcb_extra_icons() as $icon => $name ) : ?>
+									<option value="<?php echo esc_attr( $icon ); ?>" <?php selected( $x['icon'], $icon ); ?>><?php echo esc_html( $name ); ?></option>
+								<?php endforeach; ?>
+							</select></td>
+							<td><input type="number" min="1" max="10" name="extra[<?php echo (int) $i; ?>][max]" value="<?php echo (int) $x['max']; ?>" style="width:80px" aria-label="Tối đa"></td>
+						</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+			<p><button type="submit" class="button" name="soft_slots" value="1">Thêm sẵn khe Windows, Office, Diệt virus</button>
+				<span class="description">Khe nào đã có thì bỏ qua. Danh mục tên Windows / Office / Diệt virus được tự nhận.</span></p>
+
+			<h2>3. Hiển thị</h2>
 			<table class="form-table" role="presentation">
 				<tr>
 					<th scope="row"><label for="tmt-pcb-note">Ghi chú dưới tổng tiền</label></th>
@@ -189,7 +233,7 @@ function tmt_pcb_admin_page() {
 			</table>
 			<?php submit_button( 'Lưu' ); ?>
 
-			<h2>3. Thông số dùng để kiểm tra lắp ráp</h2>
+			<h2>4. Thông số dùng để kiểm tra lắp ráp</h2>
 			<p>Web đọc thông số từ <b>thuộc tính chung</b> của WooCommerce (Sản phẩm → Thuộc tính). Thiếu thông số thì web không đoán, chỉ nhắc khách hỏi tiệm.
 				Số đọc theo số đầu tiên ("65W" hiểu là 65). Có / Không ghi "Có" hoặc "Không". "Socket hỗ trợ" của tản nhiệt chọn nhiều giá trị.</p>
 			<table class="widefat striped" style="max-width: 900px">

@@ -89,3 +89,57 @@ function tmt_shop_url() {
 function tmt_builder_url() {
 	return (string) apply_filters( 'tmt_pc_builder_url', '' );
 }
+
+/**
+ * Tab của section "Phần mềm bản quyền" (giống HomeSoftware của app): danh mục chủ tiệm chọn (slug), trống thì danh mục
+ * cấp 1 có tên chứa "phần mềm" hoặc "bản quyền". Đúng một danh mục và nó có danh mục con thì mỗi con là một tab.
+ * Tab không có sản phẩm thì bỏ.
+ *
+ * @return list<array{term: WP_Term, products: list<WC_Product>}>
+ */
+function tmt_home_software_tabs() {
+	if ( ! function_exists( 'wc_get_products' ) ) {
+		return array();
+	}
+	$slugs = array_filter( array_map( 'trim', explode( ',', (string) tmt_opt( 'home.software_cats' ) ) ) );
+	$terms = array();
+	if ( $slugs ) {
+		foreach ( $slugs as $slug ) {
+			$t = get_term_by( 'slug', sanitize_title( $slug ), 'product_cat' );
+			if ( $t ) {
+				$terms[] = $t;
+			}
+		}
+	} else {
+		foreach ( get_terms( array( 'taxonomy' => 'product_cat', 'parent' => 0, 'hide_empty' => false ) ) as $t ) {
+			$name = mb_strtolower( $t->name );
+			if ( false !== strpos( $name, 'phần mềm' ) || false !== strpos( $name, 'bản quyền' ) ) {
+				$terms[] = $t;
+			}
+		}
+	}
+	if ( 1 === count( $terms ) ) {
+		$kids = get_terms( array( 'taxonomy' => 'product_cat', 'parent' => $terms[0]->term_id, 'hide_empty' => false, 'orderby' => 'term_order' ) );
+		if ( $kids && ! is_wp_error( $kids ) ) {
+			$terms = $kids;
+		}
+	}
+	$count = max( 2, min( 12, (int) tmt_opt( 'home.software_count' ) ) );
+	$tabs  = array();
+	foreach ( $terms as $t ) {
+		$products = wc_get_products(
+			array(
+				'status'     => 'publish',
+				'visibility' => 'catalog',
+				'category'   => array( $t->slug ),
+				'limit'      => $count,
+				'orderby'    => 'menu_order',
+				'order'      => 'ASC',
+			)
+		);
+		if ( $products ) {
+			$tabs[] = array( 'term' => $t, 'products' => $products );
+		}
+	}
+	return $tabs;
+}

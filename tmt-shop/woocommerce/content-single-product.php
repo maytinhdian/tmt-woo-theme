@@ -220,7 +220,11 @@ $tmt_tabs     = array_filter(
 			<a href="<?php echo esc_url( $tmt_alt->get_permalink() ); ?>" class="sf-btn blue sf-mbuy-wide">Xem mẫu thay thế</a>
 		<?php elseif ( $tmt_eol ) : // Ngừng bán, không có mẫu thay thế: không nút mua. ?>
 		<?php elseif ( $product->is_purchasable() && $product->is_in_stock() ) : ?>
-			<button type="button" class="sf-btn" data-sf-buy="add"><?php echo tmt_icon( 'add_shopping_cart' ); // phpcs:ignore ?>Thêm giỏ</button>
+			<?php if ( tmt_cart_fx()['product'] ) : ?>
+				<button type="button" class="sf-btn sf-atc" data-sf-buy="add" data-sf-atc aria-label="Thêm giỏ"><?php echo tmt_atc_inner( 'Thêm giỏ' ); // phpcs:ignore ?></button>
+			<?php else : ?>
+				<button type="button" class="sf-btn" data-sf-buy="add"><?php echo tmt_icon( 'add_shopping_cart' ); // phpcs:ignore ?>Thêm giỏ</button>
+			<?php endif; ?>
 			<button type="button" class="sf-btn blue" data-sf-buy="now">Mua ngay</button>
 		<?php elseif ( $tmt_quote ) : ?>
 			<button type="button" class="sf-btn blue sf-mbuy-wide" data-quote-open>Yêu cầu báo giá</button>
